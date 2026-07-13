@@ -1,2 +1,13 @@
 venv/
-*.csv
+
+data/raw/
+
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.env
+.env.local
+.vscode/
+.DS_Store
+Thumbs.db
