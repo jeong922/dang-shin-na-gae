@@ -25,10 +25,10 @@ API_KEY = os.getenv("GOOGLE_MAPS_API_KEY")
 if not API_KEY:
     raise ValueError("GOOGLE_MAPS_API_KEY가 없습니다.")
 
-# 공원당 샘플 개수
+# 중심 좌표에서 100m 떨어진 위치에 샘플 좌표 생성
 SAMPLE_DISTANCE = 100
 
-# 중심 + 8방향
+# 중심과 주변 8방향(총 9개 지점)
 DIRECTIONS = [
     (0, 0),
     (1, 0),
