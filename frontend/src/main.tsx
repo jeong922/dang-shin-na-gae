@@ -1,8 +1,10 @@
 import { StrictMode } from 'react';
 import { createRoot } from 'react-dom/client';
 import './index.css';
-import App from './App.tsx';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
+import { createBrowserRouter, RouterProvider } from 'react-router';
+import { RootLayout } from './layouts/RootLayout.tsx';
+import { HomePage } from './pages/HomePage.tsx';
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -15,10 +17,18 @@ const queryClient = new QueryClient({
   },
 });
 
+const router = createBrowserRouter([
+  {
+    path: '/',
+    Component: RootLayout,
+    children: [{ index: true, Component: HomePage }],
+  },
+]);
+
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
     <QueryClientProvider client={queryClient}>
-      <App />
+      <RouterProvider router={router} />
     </QueryClientProvider>
   </StrictMode>,
 );
