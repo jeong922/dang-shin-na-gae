@@ -1,4 +1,4 @@
-import { Link } from 'react-router';
+import { NavLink } from 'react-router';
 import { Map, List } from 'lucide-react';
 
 const menus = [
@@ -19,15 +19,28 @@ export const Navbar = () => {
     <nav className='sticky bottom-0 z-50 border-t border-border bg-surface/80 backdrop-blur-md'>
       <div className='mx-auto flex h-16 max-w-5xl items-center justify-around px-4'>
         {menus.map(({ label, icon: Icon, path }) => (
-          <Link
+          <NavLink
             key={path}
             to={path}
-            className='group flex flex-col items-center gap-1 text-text-muted transition-colors hover:text-brand'
+            end={path === '/'}
+            className={({ isActive }) =>
+              `group flex flex-col items-center gap-1 transition-colors ${
+                isActive ? 'text-brand' : 'text-text-muted hover:text-brand'
+              }`
+            }
           >
-            <Icon size={22} className='transition-transform duration-200 group-hover:scale-110' />
+            {({ isActive }) => (
+              <>
+                <Icon
+                  size={22}
+                  strokeWidth={isActive ? 2.5 : 2}
+                  className={`transition-transform duration-200 ${isActive ? 'scale-110' : 'group-hover:scale-110'}`}
+                />
 
-            <span className='text-caption font-medium'>{label}</span>
-          </Link>
+                <span className='text-caption font-medium'>{label}</span>
+              </>
+            )}
+          </NavLink>
         ))}
       </div>
     </nav>

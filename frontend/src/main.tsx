@@ -5,6 +5,8 @@ import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { createBrowserRouter, RouterProvider } from 'react-router';
 import { RootLayout } from './layouts/RootLayout.tsx';
 import { HomePage } from './pages/HomePage.tsx';
+import { Parks } from './pages/Parks.tsx';
+import { ParkDetail } from './pages/ParkDetail.tsx';
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -21,7 +23,14 @@ const router = createBrowserRouter([
   {
     path: '/',
     Component: RootLayout,
-    children: [{ index: true, Component: HomePage }],
+    children: [
+      { index: true, Component: HomePage },
+      { path: 'parks', Component: Parks },
+      {
+        path: 'parks/:parkId',
+        Component: ParkDetail,
+      },
+    ],
   },
 ]);
 
