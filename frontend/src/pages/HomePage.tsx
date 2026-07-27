@@ -1,9 +1,9 @@
-import { Map } from '../components/Map';
+import { MapView } from '../components/MapView';
 
 export const HomePage = () => {
   return (
     <section className='min-h-full'>
-      <Map />
+      <MapView />
     </section>
   );
 };
