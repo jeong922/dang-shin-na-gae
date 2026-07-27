@@ -1,3 +1,9 @@
+import { Map } from '../components/Map';
+
 export const HomePage = () => {
-  return <section className='min-h-full'>HomePage</section>;
+  return (
+    <section className='min-h-full'>
+      <Map />
+    </section>
+  );
 };
