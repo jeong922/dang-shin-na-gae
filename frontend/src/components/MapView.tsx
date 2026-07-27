@@ -1,5 +1,7 @@
 import { useEffect, useRef } from 'react';
-import { Map, NavigationControl } from 'maplibre-gl';
+import { Map, NavigationControl, Marker } from 'maplibre-gl';
+import { parks } from '../mocks/parks';
+import type { Park } from '../types/park';
 
 export const MapView = () => {
   const mapContainer = useRef<HTMLDivElement>(null);
@@ -8,7 +10,7 @@ export const MapView = () => {
   useEffect(() => {
     if (!mapContainer.current || mapRef.current) return;
 
-    mapRef.current = new Map({
+    const map = new Map({
       container: mapContainer.current,
       style: 'https://tiles.openfreemap.org/styles/bright',
       center: [126.978, 37.5665],
@@ -23,10 +25,16 @@ export const MapView = () => {
       ],
     });
 
-    mapRef.current.addControl(new NavigationControl(), 'top-right');
+    map.addControl(new NavigationControl(), 'top-right');
+
+    parks.forEach((park: Park) => {
+      new Marker().setLngLat([park.lon, park.lat]).addTo(map);
+    });
+
+    mapRef.current = map;
 
     return () => {
-      mapRef.current?.remove();
+      map.remove();
       mapRef.current = null;
     };
   }, []);
