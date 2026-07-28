@@ -22,9 +22,10 @@
   --color-border: #e2e8f0;
 
   /* Level Colors */
-  --color-level-easy: #22c55e;
-  --color-level-medium: #f59e0b;
-  --color-level-hard: #ef4444;
+  --color-level-easy: #22c55e; /* green */
+  --color-level-medium: #f59e0b; /* amber */
+  --color-level-hard: #ef4444; /* red */
+  --color-level-expert: #7c3aed; /* purple */
 
   /* Typography */
   --text-display: 2rem;
