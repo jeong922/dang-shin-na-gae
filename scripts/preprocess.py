@@ -77,6 +77,17 @@ def parse_area(value):
     return float(match.group().replace(",", ""))
 
 
+def extract_district(address):
+    if not address:
+        return ""
+
+    for part in str(address).split():
+        if part.endswith("구"):
+            return part
+
+    return ""
+
+
 # 결측치 처리
 text_columns = [
     "description",
@@ -91,6 +102,14 @@ text_columns = [
 ]
 
 parks[text_columns] = parks[text_columns].fillna("")
+
+# 지역 정보 보정
+parks["district"] = parks.apply(
+    lambda row: (
+        row["district"] if row["district"] else extract_district(row["address"])
+    ),
+    axis=1,
+)
 
 
 # 면적 숫자 변환
