@@ -1,6 +1,6 @@
 import type { MouseEvent } from 'react';
 import { AnimatePresence, motion } from 'motion/react';
-import { Gauge, Mountain, TrendingUp, X } from 'lucide-react';
+import { Gauge, MapPin, Mountain, TrendingUp, X } from 'lucide-react';
 import type { Park } from '../types/park';
 
 interface Props {
@@ -81,7 +81,10 @@ export const ParkBottomSheet = ({ park, onClose }: Props) => {
             <div className='flex items-start justify-between'>
               <div>
                 <h2 className='text-xl font-bold text-text-primary'>{park.name}</h2>
-                <p className='mt-1 text-sm text-text-muted'>{park.district}</p>
+                <div className='mt-2 flex items-center gap-1.5 text-sm text-text-muted'>
+                  <MapPin size={15} className='shrink-0' />
+                  <span>{park.district}</span>
+                </div>
               </div>
 
               <button
