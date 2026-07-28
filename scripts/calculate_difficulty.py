@@ -17,7 +17,7 @@ OUTPUT_PATH = BASE_DIR / "data" / "features" / "parks_difficulty.csv"
 # 데이터 불러오기
 # ==========================================================
 
-parks = pd.read_csv(INPUT_PATH)
+parks = pd.read_csv(INPUT_PATH, keep_default_na=False)
 
 print(f"공원 수 : {len(parks)}")
 
