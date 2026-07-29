@@ -1,28 +1,10 @@
-import { ChevronRight, Gauge, MapPin, Mountain, TrendingUp } from 'lucide-react';
+import { ChevronRight, Gauge, MapPin, Maximize2, Mountain, TrendingUp } from 'lucide-react';
 import type { Park } from '../types/park';
+import { difficultyMap } from '../utils/difficultyMap';
 
 interface Props {
   park: Park;
 }
-
-const difficultyMap = {
-  easy: {
-    label: '쉬움',
-    className: 'bg-level-easy/10 text-level-easy',
-  },
-  medium: {
-    label: '보통',
-    className: 'bg-level-medium/10 text-level-medium',
-  },
-  hard: {
-    label: '어려움',
-    className: 'bg-level-hard/10 text-level-hard',
-  },
-  expert: {
-    label: '매우 어려움',
-    className: 'bg-level-expert/10 text-level-expert',
-  },
-} as const;
 
 export const ParkCard = ({ park }: Props) => {
   const difficulty = difficultyMap[park.difficulty];
@@ -71,7 +53,10 @@ export const ParkCard = ({ park }: Props) => {
       </div>
 
       <div className='mt-4 rounded-2xl bg-slate-50 p-4'>
-        <p className='text-xs text-text-muted'>면적</p>
+        <div className='flex items-center gap-2 text-text-muted'>
+          <Maximize2 size={18} />
+          <p className='text-xs text-text-muted'>면적</p>
+        </div>
 
         <p className='mt-1 text-lg font-semibold'>{park.area.toLocaleString()}㎡</p>
       </div>

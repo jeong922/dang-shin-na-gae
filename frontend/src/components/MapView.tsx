@@ -1,7 +1,7 @@
 import { useEffect, useRef } from 'react';
 import { Map, NavigationControl, Marker } from 'maplibre-gl';
-import { parks } from '../mocks/parks';
 import type { Park } from '../types/park';
+import { useMapParks } from '../hooks/useMapParks';
 
 interface Props {
   onSelectPark: (park: Park) => void;
@@ -10,6 +10,8 @@ interface Props {
 export const MapView = ({ onSelectPark }: Props) => {
   const mapContainer = useRef<HTMLDivElement>(null);
   const mapRef = useRef<Map | null>(null);
+
+  const { parks } = useMapParks();
 
   useEffect(() => {
     if (!mapContainer.current || mapRef.current) return;
@@ -29,21 +31,25 @@ export const MapView = ({ onSelectPark }: Props) => {
 
     map.addControl(new NavigationControl({ showCompass: false }), 'top-right');
 
-    parks.forEach((park: Park) => {
-      const marker = new Marker().setLngLat([park.lon, park.lat]).addTo(map);
-
-      marker.getElement().addEventListener('click', () => {
-        onSelectPark(park);
-      });
-    });
-
     mapRef.current = map;
 
     return () => {
       map.remove();
       mapRef.current = null;
     };
-  }, [onSelectPark]);
+  }, []);
+
+  useEffect(() => {
+    if (!mapRef.current || !parks) return;
+
+    parks.forEach((park: Park) => {
+      const marker = new Marker().setLngLat([park.lon, park.lat]).addTo(mapRef.current!);
+
+      marker.getElement().addEventListener('click', () => {
+        onSelectPark(park);
+      });
+    });
+  }, [parks, onSelectPark]);
 
   return <div ref={mapContainer} className='h-[calc(100dvh-8rem)] overflow-hidden rounded-2xl border border-border' />;
 };

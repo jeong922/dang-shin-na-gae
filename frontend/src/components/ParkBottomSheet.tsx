@@ -1,31 +1,15 @@
-import type { MouseEvent } from 'react';
+import { type MouseEvent } from 'react';
 import { AnimatePresence, motion } from 'motion/react';
-import { Gauge, MapPin, Mountain, TrendingUp, X } from 'lucide-react';
+import { Gauge, MapPin, Maximize2, Mountain, TrendingUp, X } from 'lucide-react';
 import type { Park } from '../types/park';
+import { formatArea, formatMeter, formatPercent } from '../utils/format';
+import { difficultyMap } from '../utils/difficultyMap';
+import { Guide } from './Guide';
 
 interface Props {
   park: Park | null;
   onClose: () => void;
 }
-
-const difficultyMap = {
-  easy: {
-    label: '쉬움',
-    className: 'bg-level-easy/10 text-level-easy',
-  },
-  medium: {
-    label: '보통',
-    className: 'bg-level-medium/10 text-level-medium',
-  },
-  hard: {
-    label: '어려움',
-    className: 'bg-level-hard/10 text-level-hard',
-  },
-  expert: {
-    label: '매우 어려움',
-    className: 'bg-level-expert/10 text-level-expert',
-  },
-} as const;
 
 export const ParkBottomSheet = ({ park, onClose }: Props) => {
   const handleOverlayClick = (e: MouseEvent<HTMLDivElement>) => {
@@ -81,6 +65,7 @@ export const ParkBottomSheet = ({ park, onClose }: Props) => {
             <div className='flex items-start justify-between'>
               <div>
                 <h2 className='text-xl font-bold text-text-primary'>{park.name}</h2>
+
                 <div className='mt-2 flex items-center gap-1.5 text-sm text-text-muted'>
                   <MapPin size={15} className='shrink-0' />
                   <span>{park.district}</span>
@@ -106,21 +91,34 @@ export const ParkBottomSheet = ({ park, onClose }: Props) => {
 
             <div className='mt-4 grid grid-cols-2 gap-3'>
               <div className='flex items-center gap-3 rounded-2xl bg-slate-50 p-3'>
+                <Maximize2 size={20} className='text-brand' />
+
+                <div>
+                  <p className='text-xs text-text-muted'>면적</p>
+                  <p className='font-semibold'>{formatArea(park.area)}</p>
+                </div>
+              </div>
+
+              <div className='flex items-center gap-3 rounded-2xl bg-slate-50 p-3'>
                 <TrendingUp size={20} className='text-brand' />
+
                 <div>
                   <p className='text-xs text-text-muted'>평균 경사도</p>
-                  <p className='font-semibold'>{park.avgSlope}%</p>
+                  <p className='font-semibold'>{formatPercent(park.avgSlope)}</p>
                 </div>
               </div>
 
               <div className='flex items-center gap-3 rounded-2xl bg-slate-50 p-3'>
                 <Mountain size={20} className='text-brand' />
+
                 <div>
                   <p className='text-xs text-text-muted'>고도 차이</p>
-                  <p className='font-semibold'>{park.elevationDiff}m</p>
+                  <p className='font-semibold'>{formatMeter(park.elevationDiff)}m</p>
                 </div>
               </div>
             </div>
+
+            <Guide />
 
             <button className='mt-4 w-full cursor-pointer rounded-xl bg-brand py-3 font-semibold text-white transition hover:opacity-90'>
               상세 보기
