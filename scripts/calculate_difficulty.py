@@ -1,58 +1,80 @@
 from pathlib import Path
 
+import numpy as np
 import pandas as pd
+
 from sklearn.preprocessing import MinMaxScaler
 
-# ==========================================================
-# 경로 설정
-# ==========================================================
+# 기본 설정
+
 
 BASE_DIR = Path(__file__).resolve().parent.parent
 
+
 INPUT_PATH = BASE_DIR / "data" / "features" / "parks_features.csv"
+
 
 OUTPUT_PATH = BASE_DIR / "data" / "features" / "parks_difficulty.csv"
 
-# ==========================================================
-# 데이터 불러오기
-# ==========================================================
 
-parks = pd.read_csv(INPUT_PATH, keep_default_na=False)
+# 데이터 로드
 
-print(f"공원 수 : {len(parks)}")
 
-# ==========================================================
-# 사용할 Feature
-# ==========================================================
+parks = pd.read_csv(
+    INPUT_PATH,
+    keep_default_na=False,
+)
 
+
+# 난이도 계산에 사용할 Feature
 feature_columns = [
     "area",
     "elevation_diff",
     "avg_slope",
 ]
 
-# 결측치 제거
+
+# 결측 데이터 제거
 parks = parks.dropna(subset=feature_columns).reset_index(drop=True)
 
-# ==========================================================
-# Feature 정규화
-# ==========================================================
 
+# Feature 전처리
+
+
+scaled_features = parks[feature_columns].copy()
+
+
+# 면적과 고도차는 값의 범위가 크기 때문에 로그 변환
+scaled_features["area"] = np.log1p(scaled_features["area"])
+
+
+scaled_features["elevation_diff"] = np.log1p(scaled_features["elevation_diff"])
+
+
+# 모든 Feature를 0~1 사이로 정규화
 scaler = MinMaxScaler()
 
-normalized = scaler.fit_transform(parks[feature_columns])
+
+normalized = scaler.fit_transform(scaled_features)
+
 
 parks["area_score"] = normalized[:, 0]
+
 parks["elevation_score"] = normalized[:, 1]
+
 parks["slope_score"] = normalized[:, 2]
 
-# ==========================================================
-# 난이도 점수 계산
-# ==========================================================
 
+# 난이도 점수 계산
+
+
+# 가중치
 AREA_WEIGHT = 0.3
-ELEVATION_WEIGHT = 0.4
-SLOPE_WEIGHT = 0.3
+
+ELEVATION_WEIGHT = 0.3
+
+SLOPE_WEIGHT = 0.4
+
 
 parks["difficulty_score"] = (
     parks["area_score"] * AREA_WEIGHT
@@ -60,61 +82,43 @@ parks["difficulty_score"] = (
     + parks["slope_score"] * SLOPE_WEIGHT
 )
 
-# ==========================================================
+
 # 난이도 분류
-# ==========================================================
 
-parks["difficulty"] = pd.cut(
-    parks["difficulty_score"],
-    bins=[0.0, 0.25, 0.5, 0.75, 1.0],
-    labels=[
-        "easy",
-        "medium",
-        "hard",
-        "expert",
-    ],
-    include_lowest=True,
-)
 
-# ==========================================================
-# 결과 확인
-# ==========================================================
+def classify_difficulty(score):
 
-print("\n난이도 분포")
+    if score < 0.25:
+        return "easy"
 
-print(parks["difficulty"].value_counts().sort_index())
+    elif score < 0.5:
+        return "medium"
 
-print("\n상위 10개 난이도")
+    elif score < 0.75:
+        return "hard"
 
-print(
-    parks[
-        [
-            "name",
-            "difficulty_score",
-            "difficulty",
-        ]
-    ]
-    .sort_values(
-        "difficulty_score",
-        ascending=False,
-    )
-    .head(10)
-)
+    else:
+        return "expert"
 
-# ==========================================================
+
+parks["difficulty"] = parks["difficulty_score"].apply(classify_difficulty)
+
+
 # 저장
-# ==========================================================
+
 
 OUTPUT_PATH.parent.mkdir(
     parents=True,
     exist_ok=True,
 )
 
+
 parks.to_csv(
     OUTPUT_PATH,
     index=False,
     encoding="utf-8-sig",
 )
+
 
 print("=" * 50)
 print("난이도 계산 완료")
