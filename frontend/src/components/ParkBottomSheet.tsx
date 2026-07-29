@@ -1,10 +1,11 @@
 import { type MouseEvent } from 'react';
 import { AnimatePresence, motion } from 'motion/react';
-import { Gauge, MapPin, Maximize2, Mountain, TrendingUp, X } from 'lucide-react';
+import { Accessibility, Gauge, MapPin, Maximize2, Mountain, PawPrint, TrendingUp, X } from 'lucide-react';
 import type { Park } from '../types/park';
 import { formatArea, formatMeter, formatPercent } from '../utils/format';
 import { difficultyMap } from '../utils/difficultyMap';
 import { Guide } from './Guide';
+import { petStatusMap } from '../utils/petStatusMap';
 
 interface Props {
   park: Park | null;
@@ -116,6 +117,46 @@ export const ParkBottomSheet = ({ park, onClose }: Props) => {
                   <p className='font-semibold'>{formatMeter(park.elevationDiff)}m</p>
                 </div>
               </div>
+            </div>
+
+            <div className='mt-4 rounded-2xl bg-slate-50 p-4'>
+              <div className='flex items-center justify-between'>
+                <div className='flex items-center gap-2'>
+                  <PawPrint size={20} className='text-brand' />
+
+                  <p className='font-semibold text-text-primary'>반려동물 안내</p>
+                </div>
+
+                <span
+                  className={`rounded-full px-3 py-1 text-sm font-semibold ${petStatusMap[park.petStatus].className}`}
+                >
+                  {petStatusMap[park.petStatus].label}
+                </span>
+              </div>
+
+              {park.petRestrictedLocations.length > 0 && (
+                <div className='mt-3'>
+                  <p className='text-sm text-text-muted'>출입 제한 구역</p>
+
+                  <div className='mt-2 flex flex-wrap gap-2'>
+                    {park.petRestrictedLocations.map((location) => (
+                      <span
+                        key={location}
+                        className='rounded-full bg-white px-3 py-1 text-sm text-text-primary shadow-sm'
+                      >
+                        {location}
+                      </span>
+                    ))}
+                  </div>
+                </div>
+              )}
+
+              {park.serviceAnimalAllowed && (
+                <div className='mt-3 flex items-center gap-2 rounded-xl bg-white px-3 py-2 text-sm text-text-muted'>
+                  <Accessibility size={16} className='shrink-0 text-brand' />
+                  <span>일부 제한 구역은 안내견 출입 가능합니다.</span>
+                </div>
+              )}
             </div>
 
             <Guide />
