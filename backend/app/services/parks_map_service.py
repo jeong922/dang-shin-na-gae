@@ -58,4 +58,9 @@ def get_map_parks():
         ]
     ]
 
-    return df.to_dict(orient="records")
+    result = df.to_dict(orient="records")
+
+    return {
+        "items": result,
+        "total": len(result),
+    }
