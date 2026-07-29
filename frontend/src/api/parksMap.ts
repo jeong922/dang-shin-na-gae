@@ -7,11 +7,15 @@ if (!API_URL) {
 }
 
 export const getMapParks = async (): Promise<Park[]> => {
-  const response = await fetch(`${API_URL}/parks/map`);
+  try {
+    const response = await fetch(`${API_URL}/parks/map`);
 
-  if (!response.ok) {
-    throw new Error('공원 데이터를 가져오는데 실패했습니다.');
+    if (!response.ok) {
+      throw new Error('공원 데이터를 가져오는데 실패했습니다.');
+    }
+
+    return await response.json();
+  } catch {
+    throw new Error('서버와 연결할 수 없습니다.');
   }
-
-  return (await response.json()) as Park[];
 };
