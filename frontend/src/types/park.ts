@@ -33,3 +33,8 @@ export interface Park {
   petRestrictedLocations: string[];
   serviceAnimalAllowed: boolean;
 }
+
+export interface ParkMapResponse {
+  items: Park[];
+  total: number;
+}
