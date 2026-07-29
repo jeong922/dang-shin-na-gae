@@ -11,7 +11,7 @@ from sklearn.preprocessing import MinMaxScaler
 BASE_DIR = Path(__file__).resolve().parent.parent
 
 
-INPUT_PATH = BASE_DIR / "data" / "features" / "parks_features.csv"
+INPUT_PATH = BASE_DIR / "data" / "features" / "parks_pet_features.csv"
 
 
 OUTPUT_PATH = BASE_DIR / "data" / "features" / "parks_difficulty.csv"
