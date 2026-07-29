@@ -143,7 +143,15 @@ for idx, row in parks.iterrows():
 
         diff = max_e - min_e
 
-        slope = diff / SAMPLE_DISTANCE
+        center = elevations[0]
+        surroundings = elevations[1:]
+
+        slopes = [
+            abs(elevation - center) / SAMPLE_DISTANCE for elevation in surroundings
+        ]
+
+        # 단위: ratio (0~1)
+        avg_slope = sum(slopes) / len(slopes)
 
         results.append(
             {
@@ -151,7 +159,7 @@ for idx, row in parks.iterrows():
                 "min_elevation": min_e,
                 "max_elevation": max_e,
                 "elevation_diff": diff,
-                "avg_slope": slope,
+                "avg_slope": avg_slope,
             }
         )
 
