@@ -1,6 +1,6 @@
 from app.utils.park_loader import load_parks
 
-PARK_LIST_COLUMNS = [
+PARK_MAP_COLUMNS = [
     "id",
     "name",
     "lat",
@@ -10,13 +10,16 @@ PARK_LIST_COLUMNS = [
     "elevationDiff",
     "area",
     "district",
+    "petStatus",
+    "petRestrictedLocations",
+    "serviceAnimalAllowed",
 ]
 
 
 def get_map_parks():
     df = load_parks()
 
-    df = df[PARK_LIST_COLUMNS]
+    df = df[PARK_MAP_COLUMNS]
 
     result = df.to_dict(orient="records")
 

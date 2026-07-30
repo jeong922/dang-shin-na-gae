@@ -10,6 +10,7 @@ PARK_LIST_COLUMNS = [
     "elevationDiff",
     "area",
     "district",
+    "petStatus",
 ]
 
 
