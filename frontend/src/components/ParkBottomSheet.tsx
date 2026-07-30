@@ -1,14 +1,14 @@
 import { type MouseEvent } from 'react';
 import { AnimatePresence, motion } from 'motion/react';
-import { Accessibility, Gauge, MapPin, Maximize2, Mountain, PawPrint, TrendingUp, X } from 'lucide-react';
-import type { Park } from '../types/park';
+import { Dog, Gauge, MapPin, Maximize2, Mountain, PawPrint, TrendingUp, X } from 'lucide-react';
+import type { ParkMap } from '../types/park';
 import { formatArea, formatMeter, formatPercent } from '../utils/format';
 import { difficultyMap } from '../utils/difficultyMap';
 import { Guide } from './Guide';
 import { petStatusMap } from '../utils/petStatusMap';
 
 interface Props {
-  park: Park | null;
+  park: ParkMap | null;
   onClose: () => void;
 }
 
@@ -153,7 +153,7 @@ export const ParkBottomSheet = ({ park, onClose }: Props) => {
 
               {park.serviceAnimalAllowed && (
                 <div className='mt-3 flex items-center gap-2 rounded-xl bg-white px-3 py-2 text-sm text-text-muted'>
-                  <Accessibility size={16} className='shrink-0 text-brand' />
+                  <Dog size={16} className='shrink-0 text-brand' />
                   <span>안내견은 제한 구역에서도 출입 가능합니다.</span>
                 </div>
               )}
