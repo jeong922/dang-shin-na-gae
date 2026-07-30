@@ -1,10 +1,10 @@
 import { useEffect, useRef } from 'react';
-import { ParkCard } from '../components/ParkCard';
+import { ParkCard } from './ParkCard';
 import { useParks } from '../hooks/useParks';
-import { LoadingOverlay } from '../components/LoadingOverlay';
-import { ErrorOverlay } from '../components/ErrorOverlay';
+import { LoadingOverlay } from './LoadingOverlay';
+import { ErrorOverlay } from './ErrorOverlay';
 
-export const Parks = () => {
+export const ParkList = () => {
   const { parks, total, fetchNextPage, hasNextPage, isFetchingNextPage, isLoading, error, refetch } = useParks({
     pageSize: 20,
   });
