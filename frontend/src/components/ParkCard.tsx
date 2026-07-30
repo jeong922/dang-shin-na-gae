@@ -1,6 +1,8 @@
-import { ChevronRight, Gauge, MapPin, Maximize2, Mountain, TrendingUp } from 'lucide-react';
+import { ChevronRight, Gauge, MapPin, Maximize2, Mountain, PawPrint, TrendingUp } from 'lucide-react';
 import type { Park } from '../types/park';
 import { difficultyMap } from '../utils/difficultyMap';
+import { formatArea, formatMeter, formatPercent } from '../utils/format';
+import { petStatusMap } from '../utils/petStatusMap';
 
 interface Props {
   park: Park;
@@ -10,10 +12,7 @@ export const ParkCard = ({ park }: Props) => {
   const difficulty = difficultyMap[park.difficulty];
 
   return (
-    <article
-      key={park.id}
-      className='group cursor-pointer rounded-3xl border border-border bg-white p-6 transition hover:-translate-y-1 hover:border-brand hover:shadow-lg'
-    >
+    <article className='group cursor-pointer rounded-3xl border border-border bg-white p-6 transition hover:-translate-y-1 hover:border-brand hover:shadow-lg'>
       <div className='flex items-start justify-between'>
         <div>
           <h2 className='text-xl font-bold'>{park.name}</h2>
@@ -39,7 +38,7 @@ export const ParkCard = ({ park }: Props) => {
             <span className='text-xs'>평균 경사도</span>
           </div>
 
-          <p className='mt-2 text-lg font-semibold'>{park.avgSlope}%</p>
+          <p className='mt-2 text-lg font-semibold'>{formatPercent(park.avgSlope)}</p>
         </div>
 
         <div className='rounded-2xl bg-slate-50 p-4'>
@@ -48,7 +47,7 @@ export const ParkCard = ({ park }: Props) => {
             <span className='text-xs'>고도 차이</span>
           </div>
 
-          <p className='mt-2 text-lg font-semibold'>{park.elevationDiff}m</p>
+          <p className='mt-2 text-lg font-semibold'>{formatMeter(park.elevationDiff)}m</p>
         </div>
       </div>
 
@@ -58,7 +57,21 @@ export const ParkCard = ({ park }: Props) => {
           <p className='text-xs text-text-muted'>면적</p>
         </div>
 
-        <p className='mt-1 text-lg font-semibold'>{park.area.toLocaleString()}㎡</p>
+        <p className='mt-1 text-lg font-semibold'>{formatArea(park.area)}</p>
+      </div>
+
+      <div className='mt-4 rounded-2xl bg-slate-50 p-4'>
+        <div className='flex items-center justify-between'>
+          <div className='flex items-center gap-2'>
+            <PawPrint size={20} className='text-brand' />
+
+            <p className='font-semibold text-text-primary'>반려견 이용</p>
+          </div>
+
+          <span className={`rounded-full px-3 py-1 text-sm font-semibold ${petStatusMap[park.petStatus].className}`}>
+            {petStatusMap[park.petStatus].label}
+          </span>
+        </div>
       </div>
 
       <div className='mt-6 flex items-center justify-end text-brand font-medium'>

@@ -1,4 +1,5 @@
 export type Difficulty = 'easy' | 'medium' | 'hard' | 'expert';
+export type PetStatus = 'allowed' | 'restricted' | 'prohibited' | 'unknown';
 
 // export interface Park {
 //   id: number;
@@ -26,15 +27,23 @@ export interface Park {
   lon: number;
   district: string;
   area: number;
-  difficulty: 'easy' | 'medium' | 'hard' | 'expert';
+  difficulty: Difficulty;
   avgSlope: number;
   elevationDiff: number;
-  petStatus: 'allowed' | 'restricted' | 'prohibited' | 'unknown';
+  petStatus: PetStatus;
   petRestrictedLocations: string[];
   serviceAnimalAllowed: boolean;
 }
 
-export interface ParkMapResponse {
+export interface ParksResponse {
   items: Park[];
   total: number;
 }
+
+export interface ParkListResponse extends ParksResponse {
+  page: number;
+  pageSize: number;
+  totalPages: number;
+}
+
+export type ParkMapResponse = ParksResponse;
