@@ -86,7 +86,7 @@ export const ParkBottomSheet = ({ park, onClose }: Props) => {
                 className={`inline-flex items-center rounded-full px-3 py-1 text-sm font-semibold ${difficultyMap[park.difficulty].className}`}
               >
                 <Gauge size={16} className='mr-1' />
-                난이도 {difficultyMap[park.difficulty].label}
+                {difficultyMap[park.difficulty].label}
               </span>
             </div>
 
@@ -124,7 +124,7 @@ export const ParkBottomSheet = ({ park, onClose }: Props) => {
                 <div className='flex items-center gap-2'>
                   <PawPrint size={20} className='text-brand' />
 
-                  <p className='font-semibold text-text-primary'>반려동물 안내</p>
+                  <p className='font-semibold text-text-primary'>반려견 이용</p>
                 </div>
 
                 <span
@@ -154,7 +154,7 @@ export const ParkBottomSheet = ({ park, onClose }: Props) => {
               {park.serviceAnimalAllowed && (
                 <div className='mt-3 flex items-center gap-2 rounded-xl bg-white px-3 py-2 text-sm text-text-muted'>
                   <Accessibility size={16} className='shrink-0 text-brand' />
-                  <span>일부 제한 구역은 안내견 출입 가능합니다.</span>
+                  <span>안내견은 제한 구역에서도 출입 가능합니다.</span>
                 </div>
               )}
             </div>
