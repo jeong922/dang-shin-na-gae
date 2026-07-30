@@ -4,7 +4,7 @@ from dotenv import load_dotenv
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 
-from app.api import parks_map
+from app.api import parks_map, parks
 
 load_dotenv()
 
@@ -32,3 +32,4 @@ app.add_middleware(
 
 
 app.include_router(parks_map.router)
+app.include_router(parks.router)
