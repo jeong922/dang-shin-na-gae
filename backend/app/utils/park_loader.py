@@ -1,6 +1,7 @@
 from functools import lru_cache
 from pathlib import Path
 import json
+
 import pandas as pd
 
 BASE_DIR = Path(__file__).resolve().parents[3]
@@ -23,10 +24,10 @@ def parse_json_column(value):
         return []
 
 
-@lru_cache
+@lru_cache()
 def load_parks():
     """
-    공원 데이터 로드 및 API 응답 형태 변환
+    공원 데이터 로드 및 전처리
     """
 
     df = pd.read_csv(
@@ -55,6 +56,16 @@ def load_parks():
         }
     )
 
+    # JSON 컬럼 변환
     df["petRestrictedLocations"] = df["petRestrictedLocations"].apply(parse_json_column)
+
+    # numpy 타입 제거
+    bool_columns = [
+        "serviceAnimalAllowed",
+    ]
+
+    for column in bool_columns:
+        if column in df.columns:
+            df[column] = df[column].astype(bool)
 
     return df
