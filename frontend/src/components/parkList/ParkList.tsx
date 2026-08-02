@@ -1,8 +1,8 @@
 import { useEffect, useRef } from 'react';
 import { ParkCard } from './ParkCard';
 import { useParks } from '../../hooks/useParks';
-import { LoadingOverlay } from '../common/LoadingOverlay';
 import { ErrorOverlay } from '../common/ErrorOverlay';
+import { ParkListSkeleton } from './ParkListSkeleton';
 
 export const ParkList = () => {
   const { parks, total, fetchNextPage, hasNextPage, isFetchingNextPage, isLoading, error, refetch } = useParks({
@@ -34,7 +34,7 @@ export const ParkList = () => {
   }, [fetchNextPage, hasNextPage, isFetchingNextPage]);
 
   if (isLoading) {
-    return <LoadingOverlay title='공원 정보를 불러오는 중' description='잠시만 기다려주세요.' />;
+    return <ParkListSkeleton />;
   }
 
   if (error) {
