@@ -3,16 +3,21 @@ import type { Park } from '../types/park';
 import { difficultyMap } from '../utils/difficultyMap';
 import { formatArea, formatMeter, formatPercent } from '../utils/format';
 import { petStatusMap } from '../utils/petStatusMap';
+import { useNavigate } from 'react-router';
 
 interface Props {
   park: Park;
 }
 
 export const ParkCard = ({ park }: Props) => {
+  const navigate = useNavigate();
   const difficulty = difficultyMap[park.difficulty];
 
   return (
-    <article className='group cursor-pointer rounded-3xl border border-border bg-white p-6 transition hover:-translate-y-1 hover:border-brand hover:shadow-lg'>
+    <article
+      onClick={() => navigate(`/parks/${park.id}`)}
+      className='group cursor-pointer rounded-3xl border border-border bg-white p-6 transition hover:-translate-y-1 hover:border-brand hover:shadow-lg'
+    >
       <div className='flex items-start justify-between'>
         <div>
           <h2 className='text-xl font-bold'>{park.name}</h2>

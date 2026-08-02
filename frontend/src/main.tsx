@@ -7,7 +7,7 @@ import { createBrowserRouter, RouterProvider } from 'react-router';
 import { RootLayout } from './layouts/RootLayout.tsx';
 import { HomePage } from './pages/HomePage.tsx';
 import { ParksPage } from './pages/ParksPage.tsx';
-import { ParkDetail } from './pages/ParkDetail.tsx';
+import { ParkDetailPage } from './pages/ParkDetailPage.tsx';
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -29,7 +29,7 @@ const router = createBrowserRouter([
       { path: 'parks', Component: ParksPage },
       {
         path: 'parks/:parkId',
-        Component: ParkDetail,
+        Component: ParkDetailPage,
       },
     ],
   },

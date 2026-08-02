@@ -6,6 +6,7 @@ import { formatArea, formatMeter, formatPercent } from '../utils/format';
 import { difficultyMap } from '../utils/difficultyMap';
 import { Guide } from './Guide';
 import { petStatusMap } from '../utils/petStatusMap';
+import { useNavigate } from 'react-router';
 
 interface Props {
   park: ParkMap | null;
@@ -13,6 +14,7 @@ interface Props {
 }
 
 export const ParkBottomSheet = ({ park, onClose }: Props) => {
+  const navigate = useNavigate();
   const handleOverlayClick = (e: MouseEvent<HTMLDivElement>) => {
     if (e.target === e.currentTarget) {
       onClose();
@@ -161,7 +163,10 @@ export const ParkBottomSheet = ({ park, onClose }: Props) => {
 
             <Guide />
 
-            <button className='mt-4 w-full cursor-pointer rounded-xl bg-brand py-3 font-semibold text-white transition hover:opacity-90'>
+            <button
+              className='mt-4 w-full cursor-pointer rounded-xl bg-brand py-3 font-semibold text-white transition hover:opacity-90'
+              onClick={() => navigate(`parks/${park.id}`)}
+            >
               상세 보기
             </button>
           </motion.div>
