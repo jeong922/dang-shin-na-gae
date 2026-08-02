@@ -1,9 +1,9 @@
 import { useEffect, useRef } from 'react';
 import { Map, NavigationControl, Marker } from 'maplibre-gl';
-import type { ParkMap } from '../types/park';
-import { useMapParks } from '../hooks/useMapParks';
-import { LoadingOverlay } from './LoadingOverlay';
-import { ErrorOverlay } from './ErrorOverlay';
+import type { ParkMap } from '../../types/park';
+import { useMapParks } from '../../hooks/useMapParks';
+import { LoadingOverlay } from '../common/LoadingOverlay';
+import { ErrorOverlay } from '../common/ErrorOverlay';
 
 interface Props {
   onSelectPark: (park: ParkMap) => void;

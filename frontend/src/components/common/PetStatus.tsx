@@ -1,5 +1,5 @@
 import { PawPrint } from 'lucide-react';
-import { PetStatusBadge } from './common/PetStatusBadge';
+import { PetStatusBadge } from './PetStatusBadge';
 
 interface Props {
   status: {

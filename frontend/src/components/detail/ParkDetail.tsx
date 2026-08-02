@@ -12,20 +12,20 @@ import {
   TrendingUp,
 } from 'lucide-react';
 import { useParams } from 'react-router';
-import { usePark } from '../hooks/usePark';
-import { LoadingOverlay } from './LoadingOverlay';
-import { difficultyMap } from '../utils/difficultyMap';
-import { petStatusMap } from '../utils/petStatusMap';
-import { formatArea, formatMeter, formatPercent } from '../utils/format';
-import { BackButton } from './BackButton';
-import { ParkStats } from './ParkStats';
-import { CardSection } from './CardSection';
-import { ContentCard } from './ContentCard';
-import { NoData } from './NoData';
-import { ImageWithFallback } from './ImageWithFallback';
-import { PetStatus } from './PetStatus';
-import { DifficultyBadge } from './common/DifficultyBadge';
-import { Badge } from './common/Badge';
+import { usePark } from '../../hooks/usePark';
+import { LoadingOverlay } from '../common/LoadingOverlay';
+import { difficultyMap } from '../../utils/difficultyMap';
+import { petStatusMap } from '../../utils/petStatusMap';
+import { formatArea, formatMeter, formatPercent } from '../../utils/format';
+import { BackButton } from '../common/BackButton';
+import { ParkStats } from '../common/ParkStats';
+import { CardSection } from '../common/CardSection';
+import { ContentCard } from '../common/ContentCard';
+import { NoData } from '../common/NoData';
+import { ImageWithFallback } from '../common/ImageWithFallback';
+import { DifficultyBadge } from '../common/DifficultyBadge';
+import { Badge } from '../common/Badge';
+import { PetStatus } from '../common/PetStatus';
 
 export const ParkDetail = () => {
   const { parkId } = useParams();

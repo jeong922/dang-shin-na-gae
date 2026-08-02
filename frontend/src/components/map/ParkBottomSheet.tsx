@@ -1,16 +1,16 @@
 import { type MouseEvent } from 'react';
 import { AnimatePresence, motion } from 'motion/react';
 import { Dog, MapPin, Maximize2, Mountain, TrendingUp, X } from 'lucide-react';
-import type { ParkMap } from '../types/park';
-import { formatArea, formatMeter, formatPercent } from '../utils/format';
-import { difficultyMap } from '../utils/difficultyMap';
-import { Guide } from './Guide';
-import { petStatusMap } from '../utils/petStatusMap';
+import type { ParkMap } from '../../types/park';
+import { formatArea, formatMeter, formatPercent } from '../../utils/format';
+import { difficultyMap } from '../../utils/difficultyMap';
+import { Guide } from '../guide/Guide';
+import { petStatusMap } from '../../utils/petStatusMap';
 import { useNavigate } from 'react-router';
-import { ParkStats } from './ParkStats';
-import { PetStatus } from './PetStatus';
-import { DifficultyBadge } from './common/DifficultyBadge';
-import { Badge } from './common/Badge';
+import { ParkStats } from '../common/ParkStats';
+import { DifficultyBadge } from '../common/DifficultyBadge';
+import { Badge } from '../common/Badge';
+import { PetStatus } from '../common/PetStatus';
 
 interface Props {
   park: ParkMap | null;

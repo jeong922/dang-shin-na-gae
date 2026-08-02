@@ -1,8 +1,8 @@
 import { useEffect, useRef } from 'react';
 import { ParkCard } from './ParkCard';
-import { useParks } from '../hooks/useParks';
-import { LoadingOverlay } from './LoadingOverlay';
-import { ErrorOverlay } from './ErrorOverlay';
+import { useParks } from '../../hooks/useParks';
+import { LoadingOverlay } from '../common/LoadingOverlay';
+import { ErrorOverlay } from '../common/ErrorOverlay';
 
 export const ParkList = () => {
   const { parks, total, fetchNextPage, hasNextPage, isFetchingNextPage, isLoading, error, refetch } = useParks({
