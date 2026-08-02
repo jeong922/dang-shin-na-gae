@@ -61,6 +61,7 @@ FACILITY_CATEGORIES = [
     "교양시설",
     "편익시설",
     "기타시설",
+    "편의시설",
 ]
 
 
@@ -71,7 +72,9 @@ def parse_facilities(value):
 
     value = normalize_text(value)
 
-    pattern = r"(기반시설|조경시설|운동시설|교양시설|편익시설|기타시설)" r"\s*:"
+    category_pattern = "|".join(FACILITY_CATEGORIES)
+
+    pattern = rf"({category_pattern})\s*:"
 
     matches = list(re.finditer(pattern, value))
 
@@ -88,7 +91,6 @@ def parse_facilities(value):
         content = value[start:end].strip()
 
         if content:
-
             result.append(
                 {
                     "category": category,
@@ -96,9 +98,7 @@ def parse_facilities(value):
                 }
             )
 
-    # 카테고리 없는 데이터 보존
     if not result:
-
         result.append(
             {
                 "category": None,
