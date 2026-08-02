@@ -23,6 +23,7 @@ import { ParkStats } from './ParkStats';
 import { CardSection } from './CardSection';
 import { ContentCard } from './ContentCard';
 import { NoData } from './NoData';
+import { ImageWithFallback } from './ImageWithFallback';
 
 export const ParkDetail = () => {
   const { parkId } = useParams();
@@ -95,7 +96,7 @@ export const ParkDetail = () => {
       </section>
 
       <section className='overflow-hidden rounded-3xl border border-border'>
-        <img src={park.images.image} alt={park.name} className='h-96 w-full object-cover' />
+        <ImageWithFallback src={park.images.image} alt={park.name} className='h-96 w-full object-cover' />
       </section>
 
       <ParkStats variant='detail' stats={parkStats} />
@@ -107,7 +108,12 @@ export const ParkDetail = () => {
       {park.images.map && (
         <CardSection icon={<MapPin size={20} />} title='공원 안내도'>
           <div className='overflow-hidden rounded-2xl border border-border bg-slate-50'>
-            <img src={park.images.map} alt={`${park.name} 안내도`} className='max-h-150 w-full object-contain' />
+            <ImageWithFallback
+              src={park.images.map}
+              alt={`${park.name} 안내도`}
+              fallbackText='안내도가 제공되지 않습니다.'
+              className='max-h-150 min-h-80 w-full object-contain'
+            />
           </div>
         </CardSection>
       )}
