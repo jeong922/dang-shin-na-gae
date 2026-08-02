@@ -1,12 +1,12 @@
 import { useEffect, useRef } from 'react';
 import { Map, NavigationControl, Marker } from 'maplibre-gl';
-import type { Park } from '../types/park';
+import type { ParkMap } from '../types/park';
 import { useMapParks } from '../hooks/useMapParks';
 import { LoadingOverlay } from './LoadingOverlay';
 import { ErrorOverlay } from './ErrorOverlay';
 
 interface Props {
-  onSelectPark: (park: Park) => void;
+  onSelectPark: (park: ParkMap) => void;
 }
 
 export const MapView = ({ onSelectPark }: Props) => {
@@ -49,7 +49,7 @@ export const MapView = ({ onSelectPark }: Props) => {
   useEffect(() => {
     if (!mapRef.current || !parks) return;
 
-    parks.forEach((park: Park) => {
+    parks.forEach((park: ParkMap) => {
       const marker = new Marker().setLngLat([park.lon, park.lat]).addTo(mapRef.current!);
 
       marker.getElement().addEventListener('click', () => {

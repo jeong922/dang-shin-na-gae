@@ -1,9 +1,11 @@
-import { ChevronRight, Gauge, MapPin, Maximize2, Mountain, PawPrint, TrendingUp } from 'lucide-react';
+import { ChevronRight, Gauge, MapPin, Maximize2, Mountain, TrendingUp } from 'lucide-react';
 import type { Park } from '../types/park';
 import { difficultyMap } from '../utils/difficultyMap';
 import { formatArea, formatMeter, formatPercent } from '../utils/format';
 import { petStatusMap } from '../utils/petStatusMap';
 import { useNavigate } from 'react-router';
+import { ParkStats } from './ParkStats';
+import { PetStatus } from './PetStatus';
 
 interface Props {
   park: Park;
@@ -12,6 +14,24 @@ interface Props {
 export const ParkCard = ({ park }: Props) => {
   const navigate = useNavigate();
   const difficulty = difficultyMap[park.difficulty];
+
+  const stats = [
+    {
+      icon: <TrendingUp size={18} />,
+      label: '평균 경사도',
+      value: formatPercent(park.avgSlope),
+    },
+    {
+      icon: <Mountain size={18} />,
+      label: '고도 차이',
+      value: `${formatMeter(park.elevationDiff)}m`,
+    },
+    {
+      icon: <Maximize2 size={18} />,
+      label: '면적',
+      value: formatArea(park.area),
+    },
+  ];
 
   return (
     <article
@@ -36,47 +56,10 @@ export const ParkCard = ({ park }: Props) => {
         </span>
       </div>
 
-      <div className='mt-6 grid grid-cols-2 gap-3'>
-        <div className='rounded-2xl bg-slate-50 p-4'>
-          <div className='flex items-center gap-2 text-text-muted'>
-            <TrendingUp size={18} />
-            <span className='text-xs'>평균 경사도</span>
-          </div>
-
-          <p className='mt-2 text-lg font-semibold'>{formatPercent(park.avgSlope)}</p>
-        </div>
-
-        <div className='rounded-2xl bg-slate-50 p-4'>
-          <div className='flex items-center gap-2 text-text-muted'>
-            <Mountain size={18} />
-            <span className='text-xs'>고도 차이</span>
-          </div>
-
-          <p className='mt-2 text-lg font-semibold'>{formatMeter(park.elevationDiff)}m</p>
-        </div>
-      </div>
+      <ParkStats stats={stats} className='grid-cols-2 mt-6 gap-3' />
 
       <div className='mt-4 rounded-2xl bg-slate-50 p-4'>
-        <div className='flex items-center gap-2 text-text-muted'>
-          <Maximize2 size={18} />
-          <p className='text-xs text-text-muted'>면적</p>
-        </div>
-
-        <p className='mt-1 text-lg font-semibold'>{formatArea(park.area)}</p>
-      </div>
-
-      <div className='mt-4 rounded-2xl bg-slate-50 p-4'>
-        <div className='flex items-center justify-between'>
-          <div className='flex items-center gap-2'>
-            <PawPrint size={20} className='text-brand' />
-
-            <p className='font-semibold text-text-primary'>반려견 이용</p>
-          </div>
-
-          <span className={`rounded-full px-3 py-1 text-sm font-semibold ${petStatusMap[park.petStatus].className}`}>
-            {petStatusMap[park.petStatus].label}
-          </span>
-        </div>
+        <PetStatus status={petStatusMap[park.petStatus]} />
       </div>
 
       <div className='mt-6 flex items-center justify-end text-brand font-medium'>

@@ -1,12 +1,12 @@
 import { useCallback, useState } from 'react';
-import type { Park } from '../types/park';
+import type { ParkMap as Map } from '../types/park';
 import { MapView } from './MapView';
 import { ParkBottomSheet } from './ParkBottomSheet';
 
 export const ParkMap = () => {
-  const [selectedPark, setSelectedPark] = useState<Park | null>(null);
+  const [selectedPark, setSelectedPark] = useState<Map | null>(null);
 
-  const handleSelectPark = useCallback((park: Park) => {
+  const handleSelectPark = useCallback((park: Map) => {
     setSelectedPark(park);
   }, []);
 

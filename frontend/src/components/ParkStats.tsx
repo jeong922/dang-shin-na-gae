@@ -10,12 +10,13 @@ interface ParkStat {
 
 interface Props {
   stats: ParkStat[];
+  className?: string;
   variant?: 'card' | 'detail';
 }
 
-export const ParkStats = ({ stats, variant = 'detail' }: Props) => {
+export const ParkStats = ({ stats, className, variant = 'card' }: Props) => {
   return (
-    <section className={variant === 'card' ? 'grid grid-cols-2 gap-3' : 'grid gap-4 md:grid-cols-4'}>
+    <section className={`grid gap-4 ${className}`}>
       {stats.map((stat) => (
         <InfoCard key={stat.label} icon={stat.icon} title={stat.label} value={stat.value} variant={variant} />
       ))}

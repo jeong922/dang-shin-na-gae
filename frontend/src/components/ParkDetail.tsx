@@ -1,7 +1,6 @@
 import {
   Dog,
   ExternalLink,
-  Gauge,
   Leaf,
   MapPin,
   Maximize2,
@@ -24,6 +23,9 @@ import { CardSection } from './CardSection';
 import { ContentCard } from './ContentCard';
 import { NoData } from './NoData';
 import { ImageWithFallback } from './ImageWithFallback';
+import { PetStatus } from './PetStatus';
+import { DifficultyBadge } from './common/DifficultyBadge';
+import { Badge } from './common/Badge';
 
 export const ParkDetail = () => {
   const { parkId } = useParams();
@@ -82,16 +84,11 @@ export const ParkDetail = () => {
 
             <div className='mt-3 flex items-center gap-2 text-sm text-text-muted'>
               <MapPin size={17} />
-
               {park.location.address}
             </div>
           </div>
 
-          <span className={`rounded-full px-4 py-2 text-sm font-semibold ${difficulty.className}`}>
-            <Gauge size={16} className='mr-1 inline' />
-
-            {difficulty.label}
-          </span>
+          <DifficultyBadge difficulty={difficulty} />
         </div>
       </section>
 
@@ -99,7 +96,7 @@ export const ParkDetail = () => {
         <ImageWithFallback src={park.images.image} alt={park.name} className='h-96 w-full object-cover' />
       </section>
 
-      <ParkStats variant='detail' stats={parkStats} />
+      <ParkStats stats={parkStats} className='md:grid-cols-4' variant='detail' />
 
       <CardSection title='공원 소개'>
         <p className='whitespace-pre-line leading-8 text-text-secondary'>{park.description}</p>
@@ -151,7 +148,9 @@ export const ParkDetail = () => {
       </CardSection>
 
       <CardSection icon={<PawPrint size={20} />} title='반려견 이용 안내'>
-        <span className={`rounded-full px-3 py-1 text-sm font-semibold ${petStatus.className}`}>{petStatus.label}</span>
+        <div className='mt-4 rounded-2xl bg-slate-50 p-4'>
+          <PetStatus status={petStatus} />
+        </div>
 
         {park.pet.notices.length > 0 && (
           <ul className='mt-4 space-y-2 text-sm leading-6 text-text-secondary'>
@@ -167,9 +166,9 @@ export const ParkDetail = () => {
 
             <div className='mt-2 flex flex-wrap gap-2'>
               {park.pet.restrictedLocations.map((location) => (
-                <span key={location} className='rounded-full bg-slate-100 px-3 py-1 text-sm'>
+                <Badge key={location} className='bg-slate-100 text-text-primary shadow-sm'>
                   {location}
-                </span>
+                </Badge>
               ))}
             </div>
           </div>
@@ -178,7 +177,7 @@ export const ParkDetail = () => {
         {park.pet.serviceAnimalAllowed && (
           <p className='mt-4 flex items-center gap-2 text-sm text-text-muted'>
             <Dog size={17} />
-            안내견 출입 가능
+            안내견은 제한 구역에서도 출입 가능합니다.
           </p>
         )}
       </CardSection>

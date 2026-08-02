@@ -1,12 +1,16 @@
 import { type MouseEvent } from 'react';
 import { AnimatePresence, motion } from 'motion/react';
-import { Dog, Gauge, MapPin, Maximize2, Mountain, PawPrint, TrendingUp, X } from 'lucide-react';
+import { Dog, MapPin, Maximize2, Mountain, TrendingUp, X } from 'lucide-react';
 import type { ParkMap } from '../types/park';
 import { formatArea, formatMeter, formatPercent } from '../utils/format';
 import { difficultyMap } from '../utils/difficultyMap';
 import { Guide } from './Guide';
 import { petStatusMap } from '../utils/petStatusMap';
 import { useNavigate } from 'react-router';
+import { ParkStats } from './ParkStats';
+import { PetStatus } from './PetStatus';
+import { DifficultyBadge } from './common/DifficultyBadge';
+import { Badge } from './common/Badge';
 
 interface Props {
   park: ParkMap | null;
@@ -20,6 +24,26 @@ export const ParkBottomSheet = ({ park, onClose }: Props) => {
       onClose();
     }
   };
+
+  if (!park) return null;
+
+  const stats = [
+    {
+      icon: <Maximize2 size={18} />,
+      label: '면적',
+      value: formatArea(park.area),
+    },
+    {
+      icon: <TrendingUp size={18} />,
+      label: '평균 경사도',
+      value: formatPercent(park.avgSlope),
+    },
+    {
+      icon: <Mountain size={18} />,
+      label: '고도 차이',
+      value: `${formatMeter(park.elevationDiff)}m`,
+    },
+  ];
 
   return (
     <AnimatePresence>
@@ -65,8 +89,8 @@ export const ParkBottomSheet = ({ park, onClose }: Props) => {
               />
             </div>
 
-            <div className='flex items-start justify-between'>
-              <div>
+            <div className='relative flex min-h-20 items-start justify-between'>
+              <div className='pr-20'>
                 <h2 className='text-xl font-bold text-text-primary'>{park.name}</h2>
 
                 <div className='mt-2 flex items-center gap-1.5 text-sm text-text-muted'>
@@ -77,64 +101,22 @@ export const ParkBottomSheet = ({ park, onClose }: Props) => {
 
               <button
                 onClick={onClose}
-                className='cursor-pointer rounded-full p-2 text-text-muted transition hover:bg-gray-100'
+                className='absolute right-0 top-0 cursor-pointer rounded-full p-2 text-text-muted transition hover:bg-gray-100'
               >
                 <X size={20} />
               </button>
+
+              <div className='absolute right-0 top-12'>
+                <DifficultyBadge difficulty={difficultyMap[park.difficulty]} />
+              </div>
             </div>
 
             <div className='mt-4'>
-              <span
-                className={`inline-flex items-center rounded-full px-3 py-1 text-sm font-semibold ${difficultyMap[park.difficulty].className}`}
-              >
-                <Gauge size={16} className='mr-1' />
-                {difficultyMap[park.difficulty].label}
-              </span>
-            </div>
-
-            <div className='mt-4 grid grid-cols-2 gap-3'>
-              <div className='flex items-center gap-3 rounded-2xl bg-slate-50 p-3'>
-                <Maximize2 size={20} className='text-brand' />
-
-                <div>
-                  <p className='text-xs text-text-muted'>면적</p>
-                  <p className='font-semibold'>{formatArea(park.area)}</p>
-                </div>
-              </div>
-
-              <div className='flex items-center gap-3 rounded-2xl bg-slate-50 p-3'>
-                <TrendingUp size={20} className='text-brand' />
-
-                <div>
-                  <p className='text-xs text-text-muted'>평균 경사도</p>
-                  <p className='font-semibold'>{formatPercent(park.avgSlope)}</p>
-                </div>
-              </div>
-
-              <div className='flex items-center gap-3 rounded-2xl bg-slate-50 p-3'>
-                <Mountain size={20} className='text-brand' />
-
-                <div>
-                  <p className='text-xs text-text-muted'>고도 차이</p>
-                  <p className='font-semibold'>{formatMeter(park.elevationDiff)}m</p>
-                </div>
-              </div>
+              <ParkStats stats={stats} className='grid-cols-2 gap-3' />
             </div>
 
             <div className='mt-4 rounded-2xl bg-slate-50 p-4'>
-              <div className='flex items-center justify-between'>
-                <div className='flex items-center gap-2'>
-                  <PawPrint size={20} className='text-brand' />
-
-                  <p className='font-semibold text-text-primary'>반려견 이용</p>
-                </div>
-
-                <span
-                  className={`rounded-full px-3 py-1 text-sm font-semibold ${petStatusMap[park.petStatus].className}`}
-                >
-                  {petStatusMap[park.petStatus].label}
-                </span>
-              </div>
+              <PetStatus status={petStatusMap[park.petStatus]} />
 
               {park.petRestrictedLocations.length > 0 && (
                 <div className='mt-3'>
@@ -142,12 +124,9 @@ export const ParkBottomSheet = ({ park, onClose }: Props) => {
 
                   <div className='mt-2 flex flex-wrap gap-2'>
                     {park.petRestrictedLocations.map((location) => (
-                      <span
-                        key={location}
-                        className='rounded-full bg-white px-3 py-1 text-sm text-text-primary shadow-sm'
-                      >
+                      <Badge key={location} className='text-text-primary shadow-sm'>
                         {location}
-                      </span>
+                      </Badge>
                     ))}
                   </div>
                 </div>
@@ -156,6 +135,7 @@ export const ParkBottomSheet = ({ park, onClose }: Props) => {
               {park.serviceAnimalAllowed && (
                 <div className='mt-3 flex items-center gap-2 rounded-xl bg-white px-3 py-2 text-sm text-text-muted'>
                   <Dog size={16} className='shrink-0 text-brand' />
+
                   <span>안내견은 제한 구역에서도 출입 가능합니다.</span>
                 </div>
               )}
