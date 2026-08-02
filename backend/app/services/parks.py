@@ -14,8 +14,18 @@ PARK_LIST_COLUMNS = [
 ]
 
 
-def get_parks(page: int = 1, page_size: int = 20):
+def get_parks(page: int = 1, page_size: int = 20, keyword: str | None = None):
     df = load_parks()
+
+    # 검색
+    if keyword:
+        df = df[
+            df["name"].str.contains(
+                keyword,
+                case=False,
+                na=False,
+            )
+        ]
 
     df = df[PARK_LIST_COLUMNS]
 
