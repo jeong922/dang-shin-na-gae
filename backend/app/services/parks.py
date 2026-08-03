@@ -14,7 +14,14 @@ PARK_LIST_COLUMNS = [
 ]
 
 
-def get_parks(page: int = 1, page_size: int = 20, keyword: str | None = None):
+def get_parks(
+    page: int = 1,
+    page_size: int = 20,
+    keyword: str | None = None,
+    difficulty: str | None = None,
+    district: str | None = None,
+    pet_status: str | None = None,
+):
     df = load_parks()
 
     # 검색
@@ -26,6 +33,15 @@ def get_parks(page: int = 1, page_size: int = 20, keyword: str | None = None):
                 na=False,
             )
         ]
+
+    if difficulty:
+        df = df[df["difficulty"] == difficulty]
+
+    if district:
+        df = df[df["district"] == district]
+
+    if pet_status:
+        df = df[df["petStatus"] == pet_status]
 
     df = df[PARK_LIST_COLUMNS]
 
