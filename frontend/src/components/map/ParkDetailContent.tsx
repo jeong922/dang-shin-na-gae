@@ -1,4 +1,4 @@
-import { Dog, MapPin, Maximize2, Mountain, TrendingUp, X } from 'lucide-react';
+import { Dog, MapPin, Maximize2, Mountain, TrendingUp } from 'lucide-react';
 import { useNavigate } from 'react-router';
 import type { ParkMap } from '../../types/park';
 import { formatArea, formatMeter, formatPercent } from '../../utils/format';
@@ -12,10 +12,9 @@ import { PetStatus } from '../common/PetStatus';
 
 interface Props {
   park: ParkMap;
-  onClose: () => void;
 }
 
-export const ParkDetailContent = ({ park, onClose }: Props) => {
+export const ParkDetailContent = ({ park }: Props) => {
   const navigate = useNavigate();
 
   const stats = [
@@ -47,13 +46,6 @@ export const ParkDetailContent = ({ park, onClose }: Props) => {
             <span>{park.district}</span>
           </div>
         </div>
-
-        <button
-          onClick={onClose}
-          className='absolute right-0 top-0 cursor-pointer rounded-full p-2 text-text-muted transition hover:bg-gray-100'
-        >
-          <X size={20} />
-        </button>
 
         <div className='absolute right-0 top-12'>
           <DifficultyBadge difficulty={difficultyMap[park.difficulty]} />

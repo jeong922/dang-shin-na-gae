@@ -1,18 +1,37 @@
-import { type ReactNode, type MouseEvent } from 'react';
+import { type ReactNode, type MouseEvent, useEffect } from 'react';
 import { AnimatePresence, motion } from 'motion/react';
+import { X } from 'lucide-react';
 
 interface Props {
   open: boolean;
   onClose: () => void;
   children: ReactNode;
+  variant?: 'map' | 'filter';
 }
 
-export const BottomSheet = ({ open, onClose, children }: Props) => {
+export const BottomSheet = ({ open, onClose, children, variant = 'map' }: Props) => {
+  const positionClass =
+    variant === 'filter'
+      ? 'fixed bottom-14 left-4 right-4 max-w-[calc(64rem-3rem)] mx-auto'
+      : 'absolute bottom-4 left-4 right-4';
+
   const handleOverlayClick = (e: MouseEvent<HTMLDivElement>) => {
     if (e.target === e.currentTarget) {
       onClose();
     }
   };
+
+  useEffect(() => {
+    if (!open) return;
+
+    const originalOverflow = document.body.style.overflow;
+
+    document.body.style.overflow = 'hidden';
+
+    return () => {
+      document.body.style.overflow = originalOverflow;
+    };
+  }, [open]);
 
   return (
     <AnimatePresence>
@@ -28,7 +47,7 @@ export const BottomSheet = ({ open, onClose, children }: Props) => {
           />
 
           <motion.div
-            className='absolute bottom-4 left-4 right-4 z-20 rounded-3xl border border-border bg-white/95 p-5 shadow-xl backdrop-blur-md'
+            className={`${positionClass} z-50 rounded-3xl border border-border bg-white/95 p-5 shadow-xl backdrop-blur-md`}
             initial={{ y: '120%', opacity: 0 }}
             animate={{ y: 0, opacity: 1 }}
             exit={{ y: '120%', opacity: 0 }}
@@ -49,6 +68,12 @@ export const BottomSheet = ({ open, onClose, children }: Props) => {
               }
             }}
           >
+            <button
+              onClick={onClose}
+              className='absolute right-4 top-4 rounded-full p-2 text-text-muted transition hover:bg-gray-100'
+            >
+              <X size={20} />
+            </button>
             <div className='mb-4 flex justify-center'>
               <motion.div
                 className='h-1.5 w-12 rounded-full bg-gray-300'

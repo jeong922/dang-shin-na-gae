@@ -1,7 +1,8 @@
 import { useCallback, useState } from 'react';
 import type { ParkMap as Map } from '../../types/park';
 import { MapView } from './MapView';
-import { ParkBottomSheet } from './ParkBottomSheet';
+import { BottomSheet } from '../common/BottomSheet';
+import { ParkDetailContent } from './ParkDetailContent';
 
 export const ParkMap = () => {
   const [selectedPark, setSelectedPark] = useState<Map | null>(null);
@@ -17,7 +18,9 @@ export const ParkMap = () => {
   return (
     <section className='relative h-[calc(100dvh-8rem)]'>
       <MapView onSelectPark={handleSelectPark} />
-      <ParkBottomSheet park={selectedPark} onClose={onClose} />
+      <BottomSheet open={!!selectedPark} onClose={onClose}>
+        {selectedPark && <ParkDetailContent park={selectedPark} />}
+      </BottomSheet>
     </section>
   );
 };
