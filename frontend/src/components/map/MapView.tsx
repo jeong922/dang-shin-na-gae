@@ -22,12 +22,12 @@ export const MapView = ({ onSelectPark }: Props) => {
       container: mapContainer.current,
       style: 'https://tiles.openfreemap.org/styles/bright',
       center: [126.978, 37.5665],
-      zoom: 11,
+      zoom: 13,
       minZoom: 10,
       maxZoom: 18,
       maxBounds: [
-        [126.7, 37.4],
-        [127.2, 37.72],
+        [126.6, 37.3],
+        [127.3, 37.8],
       ],
     });
 
