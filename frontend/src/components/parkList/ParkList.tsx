@@ -1,15 +1,27 @@
-import { useEffect, useRef } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { ParkCard } from './ParkCard';
 import { useParks } from '../../hooks/useParks';
 import { ErrorOverlay } from '../common/ErrorOverlay';
 import { ParkListSkeleton } from './ParkListSkeleton';
+import { SearchBar } from '../common/SearchBar';
+import { useDebounce } from '../../hooks/useDebounce';
+import type { ParkFilter as ParkFilterType } from '../../types/park';
+import { BottomSheet } from '../common/BottomSheet';
+import { ParkFilter } from '../common/ParkFilter';
+import { ActiveFilters } from '../common/ActiveFilters';
 
 export const ParkList = () => {
+  const observerTarget = useRef<HTMLDivElement | null>(null);
+  const [keyword, setKeyword] = useState<string>('');
+  const debouncedKeyword = useDebounce(keyword, 300);
+  const [filters, setFilters] = useState<ParkFilterType>({});
+  const [isFilterOpen, setIsFilterOpen] = useState(false);
+
   const { parks, total, fetchNextPage, hasNextPage, isFetchingNextPage, isLoading, error, refetch } = useParks({
     pageSize: 20,
+    keyword: debouncedKeyword,
+    filters,
   });
-
-  const observerTarget = useRef<HTMLDivElement | null>(null);
 
   useEffect(() => {
     if (!observerTarget.current) return;
@@ -33,47 +45,59 @@ export const ParkList = () => {
     };
   }, [fetchNextPage, hasNextPage, isFetchingNextPage]);
 
-  if (isLoading) {
-    return <ParkListSkeleton />;
-  }
-
-  if (error) {
-    return <ErrorOverlay onRetry={refetch} />;
-  }
+  useEffect(() => {
+    console.log({
+      parksLength: parks.length,
+      hasNextPage,
+      isFetchingNextPage,
+    });
+  }, [parks, hasNextPage, isFetchingNextPage]);
 
   return (
-    <section className='mx-auto my-6 max-w-5xl space-y-6 px-6'>
-      <header>
-        <h1 className='text-3xl font-bold'>공원 목록</h1>
+    <section className='relative mx-auto my-6 max-w-5xl space-y-6 px-6'>
+      <SearchBar keyword={keyword} onKeywordChange={setKeyword} onFilterClick={() => setIsFilterOpen(true)} />
 
-        <p className='mt-1 text-text-muted'>
-          총 <span className='font-semibold text-brand'>{total}</span>
-          개의 공원
-        </p>
-      </header>
+      <ActiveFilters filters={filters} onChange={setFilters} />
 
-      {/* 필터 구현 필요 */}
-      <div className='flex gap-3'>
-        <button className='rounded-full border border-border bg-white px-4 py-2 text-sm font-medium hover:bg-gray-50'>
-          난이도
-        </button>
+      <BottomSheet open={isFilterOpen} onClose={() => setIsFilterOpen(false)} variant='filter'>
+        <ParkFilter
+          filters={filters}
+          onChange={(nextFilters) => {
+            console.log(nextFilters);
+            setFilters(nextFilters);
+            setIsFilterOpen(false);
+          }}
+        />
+      </BottomSheet>
 
-        <button className='rounded-full border border-border bg-white px-4 py-2 text-sm font-medium hover:bg-gray-50'>
-          지역
-        </button>
-      </div>
+      {error ? (
+        <ErrorOverlay onRetry={refetch} />
+      ) : isLoading && parks.length === 0 ? (
+        <ParkListSkeleton />
+      ) : (
+        <>
+          <header>
+            <h1 className='text-3xl font-bold'>공원 목록</h1>
 
-      <div className='grid gap-5 md:grid-cols-2'>
-        {parks.map((park) => (
-          <ParkCard key={park.id} park={park} />
-        ))}
-      </div>
+            <p className='mt-1 text-text-muted'>
+              총 <span className='font-semibold text-brand'>{total}</span>
+              개의 공원
+            </p>
+          </header>
 
-      <div ref={observerTarget} className='flex h-20 items-center justify-center'>
-        {isFetchingNextPage && <p className='text-sm text-text-muted'>공원을 더 불러오는 중...</p>}
+          <div className='grid gap-5 md:grid-cols-2'>
+            {parks.map((park) => (
+              <ParkCard key={park.id} park={park} />
+            ))}
+          </div>
 
-        {!hasNextPage && <p className='text-sm text-text-muted'>모든 공원을 불러왔습니다.</p>}
-      </div>
+          <div ref={observerTarget} className='flex h-20 items-center justify-center'>
+            {isFetchingNextPage && <p className='text-sm text-text-muted'>공원을 더 불러오는 중...</p>}
+
+            {!hasNextPage && <p className='text-sm text-text-muted'>모든 공원을 불러왔습니다.</p>}
+          </div>
+        </>
+      )}
     </section>
   );
 };

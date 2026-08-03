@@ -9,9 +9,17 @@ if (!API_URL) {
 export const getParks = async ({
   page,
   pageSize = 20,
+  keyword = '',
+  difficulty,
+  district,
+  petStatus,
 }: {
   page: number;
   pageSize?: number;
+  keyword?: string;
+  difficulty?: string;
+  district?: string;
+  petStatus?: string;
 }): Promise<ParkListResponse> => {
   if (page < 1) {
     throw new Error('page는 1 이상이어야 합니다.');
@@ -21,6 +29,22 @@ export const getParks = async ({
     page: String(page),
     page_size: String(pageSize),
   });
+
+  if (keyword) {
+    params.set('keyword', keyword);
+  }
+
+  if (difficulty) {
+    params.set('difficulty', difficulty);
+  }
+
+  if (district) {
+    params.set('district', district);
+  }
+
+  if (petStatus) {
+    params.set('pet_status', petStatus);
+  }
 
   try {
     const response = await fetch(`${API_URL}/parks?${params}`);

@@ -1,20 +1,24 @@
 import { useInfiniteQuery } from '@tanstack/react-query';
 import { getParks } from '../api/parks';
-import type { ParkListResponse } from '../types/park';
+import type { ParkFilter, ParkListResponse } from '../types/park';
 
 interface Props {
   pageSize?: number;
+  keyword?: string;
+  filters?: ParkFilter;
 }
 
-export const useParks = ({ pageSize = 20 }: Props) => {
+export const useParks = ({ pageSize = 20, keyword = '', filters }: Props) => {
   const { data, isLoading, error, refetch, isRefetching, fetchNextPage, hasNextPage, isFetchingNextPage } =
     useInfiniteQuery<ParkListResponse, Error>({
-      queryKey: ['parks', pageSize],
+      queryKey: ['parks', { pageSize, keyword, filters }],
 
       queryFn: ({ pageParam }) =>
         getParks({
           page: pageParam as number,
           pageSize,
+          keyword,
+          ...(filters ?? {}),
         }),
 
       initialPageParam: 1,

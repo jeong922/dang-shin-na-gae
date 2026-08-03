@@ -58,6 +58,12 @@ export interface ParkDetail {
   };
 }
 
+export interface ParkFilter {
+  difficulty?: string;
+  district?: string;
+  petStatus?: string;
+}
+
 export interface Facility {
   category: string | null;
   content: string;
