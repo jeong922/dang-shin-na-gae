@@ -94,4 +94,13 @@ export interface ParkListResponse extends ParksResponse<Park> {
   totalPages: number;
 }
 
+export interface MapParkParams {
+  west?: number;
+  south?: number;
+  east?: number;
+  north?: number;
+  keyword?: string;
+  filters?: ParkFilter;
+}
+
 export type ParkMapResponse = ParksResponse<ParkMap>;

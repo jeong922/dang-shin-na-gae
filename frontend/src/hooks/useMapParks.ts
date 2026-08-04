@@ -1,19 +1,37 @@
 import { useQuery } from '@tanstack/react-query';
+import type { MapParkParams, ParkMapResponse } from '../types/park';
 import { getMapParks } from '../api/parksMap';
-import type { ParkMapResponse } from '../types/park';
 
-export const useMapParks = () => {
-  const { data, isLoading, error, refetch, isRefetching } = useQuery<ParkMapResponse>({
-    queryKey: ['parks', 'map'],
-    queryFn: getMapParks,
+export const useMapParks = (params: MapParkParams) => {
+  const query = useQuery<ParkMapResponse, Error>({
+    queryKey: [
+      'parks-map',
+      {
+        west: params.west,
+        south: params.south,
+        east: params.east,
+        north: params.north,
+      },
+    ],
+
+    queryFn: () => getMapParks(params),
+
+    enabled:
+      params.west !== undefined &&
+      params.south !== undefined &&
+      params.east !== undefined &&
+      params.north !== undefined,
+    staleTime: 1000 * 60,
+    gcTime: 1000 * 60 * 30,
+    placeholderData: (previous) => previous,
   });
 
   return {
-    parks: data?.items ?? [],
-    total: data?.total ?? 0,
-    isLoading,
-    error,
-    refetch,
-    isRefetching,
+    parks: query.data?.items ?? [],
+    total: query.data?.total ?? 0,
+    isLoading: query.isLoading,
+    isFetching: query.isFetching,
+    error: query.error,
+    refetch: query.refetch,
   };
 };
