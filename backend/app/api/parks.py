@@ -5,6 +5,19 @@ router = APIRouter(
     prefix="/parks",
 )
 
+PARK_LIST_COLUMNS = [
+    "id",
+    "name",
+    "lat",
+    "lon",
+    "difficulty",
+    "avgSlope",
+    "elevationDiff",
+    "area",
+    "district",
+    "petStatus",
+]
+
 
 @router.get("")
 def read_parks(
@@ -16,10 +29,11 @@ def read_parks(
     pet_status: str | None = Query(None),
 ):
     return get_parks(
-        page,
-        page_size,
-        keyword,
-        difficulty,
-        district,
-        pet_status,
+        page=page,
+        page_size=page_size,
+        keyword=keyword,
+        difficulty=difficulty,
+        district=district,
+        pet_status=pet_status,
+        columns=PARK_LIST_COLUMNS,
     )
