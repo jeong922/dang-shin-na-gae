@@ -1,25 +1,29 @@
-interface Props<T extends string> {
+interface FilterItem<T> {
+  value: T;
+  label: string;
+}
+
+interface Props<T> {
   title: string;
-  items: { value: T; label: string }[];
+  items: FilterItem<T>[];
   selectedValues: T[];
   onToggle: (value: T) => void;
 }
 
-export const FilterChipGroup = <T extends string>({ title, items, selectedValues, onToggle }: Props<T>) => {
+export const FilterChipGroup = <T,>({ title, items, selectedValues, onToggle }: Props<T>) => {
   return (
     <section className='mt-6'>
       <h3 className='text-sm font-semibold text-text-secondary'>{title}</h3>
 
       <div className='mt-3 flex flex-wrap gap-2'>
-        {Object.entries(items).map(([key, item]) => {
-          const value = key as T;
-          const selected = selectedValues.includes(value);
+        {items.map((item) => {
+          const selected = selectedValues.includes(item.value);
 
           return (
             <button
-              key={value}
+              key={String(item.value)}
               type='button'
-              onClick={() => onToggle(value)}
+              onClick={() => onToggle(item.value)}
               className={`rounded-full border px-4 py-2 text-sm transition cursor-pointer ${
                 selected ? 'border-brand bg-brand text-white' : 'border-border bg-white hover:bg-slate-50'
               }`}
