@@ -1,10 +1,10 @@
 import { useNavigate } from 'react-router';
 import type { Park } from '../../types/park';
-import { difficultyMap } from '../../utils/difficultyMap';
+import { difficultyMap } from '../../constants/difficulty';
 import { ChevronRight, Gauge, MapPin, Maximize2, Mountain, TrendingUp } from 'lucide-react';
 import { formatArea, formatMeter, formatPercent } from '../../utils/format';
 import { ParkStats } from '../common/ParkStats';
-import { petStatusMap } from '../../utils/petStatusMap';
+import { petStatusMap } from '../../constants/petStatus';
 import { PetStatus } from '../common/PetStatus';
 
 interface Props {

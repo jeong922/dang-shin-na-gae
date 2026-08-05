@@ -1,7 +1,7 @@
 import { X } from 'lucide-react';
 import type { ParkFilter } from '../../types/park';
-import { difficultyMap } from '../../utils/difficultyMap';
-import { petStatusMap } from '../../utils/petStatusMap';
+import { difficultyMap } from '../../constants/difficulty';
+import { petStatusMap } from '../../constants/petStatus';
 
 interface Props {
   filters: ParkFilter;

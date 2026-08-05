@@ -14,8 +14,8 @@ import {
 import { useParams } from 'react-router';
 import { usePark } from '../../hooks/usePark';
 import { LoadingOverlay } from '../common/LoadingOverlay';
-import { difficultyMap } from '../../utils/difficultyMap';
-import { petStatusMap } from '../../utils/petStatusMap';
+import { difficultyMap } from '../../constants/difficulty';
+import { petStatusMap } from '../../constants/petStatus';
 import { formatArea, formatMeter, formatPercent } from '../../utils/format';
 import { BackButton } from '../common/BackButton';
 import { ParkStats } from '../common/ParkStats';
