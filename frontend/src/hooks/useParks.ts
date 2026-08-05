@@ -18,7 +18,7 @@ export const useParks = ({ pageSize = 20, keyword = '', filters }: Props) => {
           page: pageParam as number,
           pageSize,
           keyword,
-          ...(filters ?? {}),
+          filters,
         }),
 
       initialPageParam: 1,

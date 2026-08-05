@@ -1,8 +1,8 @@
 import { useQuery } from '@tanstack/react-query';
-import type { MapParkParams, ParkMapResponse } from '../types/park';
+import type { ParkParams, ParkMapResponse } from '../types/park';
 import { getMapParks } from '../api/parksMap';
 
-export const useMapParks = (params: MapParkParams) => {
+export const useMapParks = (params: ParkParams) => {
   const query = useQuery<ParkMapResponse, Error>({
     queryKey: [
       'parks-map',

@@ -1,4 +1,4 @@
-import type { ParkListResponse } from '../types/park';
+import type { ParkFilter, ParkListResponse } from '../types/park';
 
 const API_URL = import.meta.env.VITE_API_BASE_URL;
 
@@ -10,16 +10,12 @@ export const getParks = async ({
   page,
   pageSize = 20,
   keyword = '',
-  difficulty,
-  district,
-  petStatus,
+  filters,
 }: {
   page: number;
   pageSize?: number;
   keyword?: string;
-  difficulty?: string;
-  district?: string;
-  petStatus?: string;
+  filters?: ParkFilter;
 }): Promise<ParkListResponse> => {
   if (page < 1) {
     throw new Error('page는 1 이상이어야 합니다.');
@@ -34,17 +30,17 @@ export const getParks = async ({
     params.set('keyword', keyword);
   }
 
-  if (difficulty) {
-    params.set('difficulty', difficulty);
-  }
+  filters?.difficulty?.forEach((value) => {
+    params.append('difficulty', value);
+  });
 
-  if (district) {
-    params.set('district', district);
-  }
+  filters?.district?.forEach((value) => {
+    params.append('district', value);
+  });
 
-  if (petStatus) {
-    params.set('pet_status', petStatus);
-  }
+  filters?.petStatus?.forEach((value) => {
+    params.append('pet_status', value);
+  });
 
   try {
     const response = await fetch(`${API_URL}/parks?${params}`);

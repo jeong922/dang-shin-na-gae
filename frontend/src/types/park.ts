@@ -59,9 +59,9 @@ export interface ParkDetail {
 }
 
 export interface ParkFilter {
-  difficulty?: string;
-  district?: string;
-  petStatus?: string;
+  difficulty?: Difficulty[];
+  district?: string[];
+  petStatus?: PetStatus[];
 }
 
 export interface Facility {
@@ -94,7 +94,7 @@ export interface ParkListResponse extends ParksResponse<Park> {
   totalPages: number;
 }
 
-export interface MapParkParams {
+export interface ParkParams {
   west?: number;
   south?: number;
   east?: number;

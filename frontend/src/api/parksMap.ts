@@ -1,4 +1,4 @@
-import type { ParkMapResponse, MapParkParams } from '../types/park';
+import type { ParkMapResponse, ParkParams } from '../types/park';
 
 const API_URL = import.meta.env.VITE_API_BASE_URL;
 
@@ -6,7 +6,7 @@ if (!API_URL) {
   throw new Error('VITE_API_BASE_URL이 설정되지 않았습니다.');
 }
 
-export const getMapParks = async ({ filters, keyword, ...bounds }: MapParkParams): Promise<ParkMapResponse> => {
+export const getMapParks = async ({ filters, keyword, ...bounds }: ParkParams): Promise<ParkMapResponse> => {
   const params = new URLSearchParams();
 
   if (bounds.west !== undefined) params.set('west', String(bounds.west));
@@ -18,17 +18,17 @@ export const getMapParks = async ({ filters, keyword, ...bounds }: MapParkParams
     params.set('keyword', keyword);
   }
 
-  if (filters?.difficulty) {
-    params.set('difficulty', filters.difficulty);
-  }
+  filters?.difficulty?.forEach((value) => {
+    params.append('difficulty', value);
+  });
 
-  if (filters?.district) {
-    params.set('district', filters.district);
-  }
+  filters?.district?.forEach((value) => {
+    params.append('district', value);
+  });
 
-  if (filters?.petStatus) {
-    params.set('pet_status', filters.petStatus);
-  }
+  filters?.petStatus?.forEach((value) => {
+    params.append('pet_status', value);
+  });
 
   const response = await fetch(`${API_URL}/parks/map?${params}`);
 
