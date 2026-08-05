@@ -20,9 +20,9 @@ def get_parks(
     page: int | None = None,
     page_size: int | None = None,
     keyword: str | None = None,
-    difficulty: str | None = None,
-    district: str | None = None,
-    pet_status: str | None = None,
+    difficulty: list[str] | None = None,
+    district: list[str] | None = None,
+    pet_status: list[str] | None = None,
     bbox: tuple[float, float, float, float] | None = None,
     columns: list[str] | None = None,
 ):
@@ -51,13 +51,13 @@ def get_parks(
 
     # 필터
     if difficulty:
-        df = df[df["difficulty"] == difficulty]
+        df = df[df["difficulty"].isin(difficulty)]
 
     if district:
-        df = df[df["district"] == district]
+        df = df[df["district"].isin(district)]
 
     if pet_status:
-        df = df[df["petStatus"] == pet_status]
+        df = df[df["petStatus"].isin(pet_status)]
 
     # 필요한 컬럼만 선택
     if columns:
@@ -81,6 +81,10 @@ def get_parks(
             "total": total,
             "totalPages": (total + page_size - 1) // page_size,
         }
+
+    print(difficulty)
+    print(district)
+    print(pet_status)
 
     # 지도에서는 전체 반환
     return {

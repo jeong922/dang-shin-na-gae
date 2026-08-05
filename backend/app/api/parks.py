@@ -1,4 +1,5 @@
 from fastapi import APIRouter, Query
+from typing import Annotated
 from app.services.parks import get_parks
 
 router = APIRouter(
@@ -21,12 +22,12 @@ PARK_LIST_COLUMNS = [
 
 @router.get("")
 def read_parks(
-    page: int = Query(1, ge=1),
-    page_size: int = Query(20, ge=1, le=100),
-    keyword: str | None = Query(None),
-    difficulty: str | None = Query(None),
-    district: str | None = Query(None),
-    pet_status: str | None = Query(None),
+    page: Annotated[int, Query(ge=1)] = 1,
+    page_size: Annotated[int, Query(ge=1, le=100)] = 20,
+    keyword: Annotated[str | None, Query()] = None,
+    difficulty: Annotated[list[str] | None, Query()] = None,
+    district: Annotated[list[str] | None, Query()] = None,
+    pet_status: Annotated[list[str] | None, Query()] = None,
 ):
     return get_parks(
         page=page,
