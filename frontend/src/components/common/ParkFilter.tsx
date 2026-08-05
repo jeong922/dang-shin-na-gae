@@ -4,6 +4,7 @@ import { PET_STATUS_OPTIONS } from '../../constants/petStatus';
 import { Button } from './Button';
 import { FilterChipGroup } from './FilterChipGroup';
 import { DISTRICTS_OPTIONS } from '../../constants/districts';
+import { useState } from 'react';
 
 interface Props {
   filters: ParkFilterType;
@@ -28,45 +29,45 @@ const petStatusOptions = Object.entries(PET_STATUS_OPTIONS)
   }));
 
 export const ParkFilter = ({ filters, onChange }: Props) => {
-  // const [tempFilters, setTempFilters] = useState<ParkFilterType>({
-  //   difficulty: filters.difficulty ?? [],
-  //   petStatus: filters.petStatus ?? [],
-  //   district: filters.district ?? [],
-  // });
-
-  const tempFilters = filters;
+  const [tempFilters, setTempFilters] = useState<ParkFilterType>({
+    difficulty: filters.difficulty ?? [],
+    petStatus: filters.petStatus ?? [],
+    district: filters.district ?? [],
+  });
 
   const toggleValue = <T,>(values: T[] = [], value: T) => {
     return values.includes(value) ? values.filter((item) => item !== value) : [...values, value];
   };
 
   const handleDifficulty = (value: Difficulty) => {
-    onChange({
-      ...filters,
-      difficulty: toggleValue(filters.difficulty, value),
-    });
+    setTempFilters((prev) => ({
+      ...prev,
+      difficulty: toggleValue(prev.difficulty, value),
+    }));
   };
 
   const handlePetStatus = (value: PetStatus) => {
-    onChange({
-      ...filters,
-      petStatus: toggleValue(filters.petStatus, value),
-    });
+    setTempFilters((prev) => ({
+      ...prev,
+      petStatus: toggleValue(prev.petStatus, value),
+    }));
   };
 
   const handleDistrict = (value: string) => {
-    onChange({
-      ...filters,
-      district: toggleValue(filters.district, value),
-    });
+    setTempFilters((prev) => ({
+      ...prev,
+      district: toggleValue(prev.district, value),
+    }));
   };
 
   const handleReset = () => {
-    onChange({
+    const resetFilters = {
       difficulty: [],
       petStatus: [],
       district: [],
-    });
+    };
+
+    setTempFilters(resetFilters);
   };
 
   const handleApply = () => {
