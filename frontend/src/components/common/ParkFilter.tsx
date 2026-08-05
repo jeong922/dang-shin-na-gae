@@ -1,8 +1,7 @@
 import { useState } from 'react';
-import type { ParkFilter as ParkFilterType } from '../../types/park';
+import type { Difficulty, ParkFilter as ParkFilterType, PetStatus } from '../../types/park';
 import { difficultyMap } from '../../utils/difficultyMap';
 import { petStatusMap } from '../../utils/petStatusMap';
-import { ChevronDown } from 'lucide-react';
 import { Button } from './Button';
 
 interface Props {
@@ -38,25 +37,46 @@ const districts = [
   '중랑구',
 ] as const;
 
-export const ParkFilter = ({ filters, onChange }: Props) => {
-  const [tempFilters, setTempFilters] = useState<ParkFilterType>(filters);
+type District = (typeof districts)[number];
 
-  const handleDifficultyChange = (value: string) => {
+export const ParkFilter = ({ filters, onChange }: Props) => {
+  const [tempFilters, setTempFilters] = useState<ParkFilterType>({
+    difficulty: filters.difficulty ?? [],
+    petStatus: filters.petStatus ?? [],
+    district: filters.district ?? [],
+  });
+
+  const toggleValue = <T,>(values: T[] = [], value: T) => {
+    return values.includes(value) ? values.filter((item) => item !== value) : [...values, value];
+  };
+
+  const handleDifficulty = (value: Difficulty) => {
     setTempFilters((prev) => ({
       ...prev,
-      difficulty: prev.difficulty === value ? undefined : value,
+      difficulty: toggleValue(prev.difficulty, value),
     }));
   };
 
-  const handlePetStatusChange = (value: string) => {
+  const handlePetStatus = (value: PetStatus) => {
     setTempFilters((prev) => ({
       ...prev,
-      petStatus: prev.petStatus === value ? undefined : value,
+      petStatus: toggleValue(prev.petStatus, value),
+    }));
+  };
+
+  const handleDistrict = (value: District) => {
+    setTempFilters((prev) => ({
+      ...prev,
+      district: toggleValue(prev.district, value),
     }));
   };
 
   const handleReset = () => {
-    setTempFilters({});
+    setTempFilters({
+      difficulty: [],
+      petStatus: [],
+      district: [],
+    });
   };
 
   const handleApply = () => {
@@ -72,17 +92,19 @@ export const ParkFilter = ({ filters, onChange }: Props) => {
         <h3 className='text-sm font-semibold text-text-secondary'>난이도</h3>
 
         <div className='mt-3 flex flex-wrap gap-2'>
-          {Object.entries(difficultyMap).map(([value, item]) => {
-            const selected = tempFilters.difficulty === value;
+          {Object.entries(difficultyMap).map(([key, item]) => {
+            const value = key as Difficulty;
+
+            const selected = tempFilters.difficulty?.includes(value) ?? false;
 
             return (
               <button
                 key={value}
-                onClick={() => handleDifficultyChange(value)}
-                className={`
-                  rounded-full border px-4 py-2 text-sm transition cursor-pointer
-                  ${selected ? 'border-brand bg-brand text-white' : 'border-border bg-white hover:bg-slate-50'}
-                `}
+                type='button'
+                onClick={() => handleDifficulty(value)}
+                className={`rounded-full border px-4 py-2 text-sm transition cursor-pointer ${
+                  selected ? 'border-brand bg-brand text-white' : 'border-border bg-white hover:bg-slate-50'
+                }`}
               >
                 {item.label}
               </button>
@@ -98,17 +120,19 @@ export const ParkFilter = ({ filters, onChange }: Props) => {
         <div className='mt-3 flex flex-wrap gap-2'>
           {Object.entries(petStatusMap)
             .filter(([key]) => key !== 'unknown')
-            .map(([value, item]) => {
-              const selected = tempFilters.petStatus === value;
+            .map(([key, item]) => {
+              const value = key as PetStatus;
+
+              const selected = tempFilters.petStatus?.includes(value) ?? false;
 
               return (
                 <button
                   key={value}
-                  onClick={() => handlePetStatusChange(value)}
-                  className={`
-                    rounded-full border px-4 py-2 text-sm transition cursor-pointer
-                    ${selected ? 'border-brand bg-brand text-white' : 'border-border bg-white hover:bg-slate-50'}
-                  `}
+                  type='button'
+                  onClick={() => handlePetStatus(value)}
+                  className={`rounded-full border px-4 py-2 text-sm transition cursor-pointer ${
+                    selected ? 'border-brand bg-brand text-white' : 'border-border bg-white hover:bg-slate-50'
+                  }`}
                 >
                   {item.label}
                 </button>
@@ -121,25 +145,23 @@ export const ParkFilter = ({ filters, onChange }: Props) => {
       <section className='mt-6'>
         <h3 className='text-sm font-semibold text-text-secondary'>지역</h3>
 
-        <div className='relative mt-3'>
-          <select
-            value={tempFilters.district ?? ''}
-            onChange={(e) => setTempFilters((prev) => ({ ...prev, district: e.target.value || undefined }))}
-            className='w-full appearance-none rounded-xl border border-border bg-white px-4 py-3 pr-10'
-          >
-            <option value=''>전체 지역</option>
+        <div className='mt-3 flex flex-wrap gap-2'>
+          {districts.map((district) => {
+            const selected = tempFilters.district?.includes(district) ?? false;
 
-            {districts.map((district) => (
-              <option key={district} value={district}>
+            return (
+              <button
+                key={district}
+                type='button'
+                onClick={() => handleDistrict(district)}
+                className={`rounded-full border px-4 py-2 text-sm transition cursor-pointer ${
+                  selected ? 'border-brand bg-brand text-white' : 'border-border bg-white hover:bg-slate-50'
+                }`}
+              >
                 {district}
-              </option>
-            ))}
-          </select>
-
-          <ChevronDown
-            size={18}
-            className='pointer-events-none absolute right-4 top-1/2 -translate-y-1/2 text-text-muted'
-          />
+              </button>
+            );
+          })}
         </div>
       </section>
 

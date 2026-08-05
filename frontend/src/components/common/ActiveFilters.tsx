@@ -22,35 +22,40 @@ const getFilterLabel = (key: keyof ParkFilter, value: string) => {
 };
 
 export const ActiveFilters = ({ filters, onChange }: Props) => {
-  const entries = Object.entries(filters);
+  const removeFilter = (key: keyof ParkFilter, value: string) => {
+    const currentValues = filters[key] ?? [];
 
-  if (entries.length === 0) {
-    return null;
-  }
+    const nextValues = currentValues.filter((item) => item !== value);
 
-  const removeFilter = (key: keyof ParkFilter) => {
     onChange({
       ...filters,
-      [key]: undefined,
+      [key]: nextValues,
     });
   };
 
+  const entries = Object.entries(filters) as [keyof ParkFilter, string[] | undefined][];
+
+  if (entries.every(([, values]) => !values || values.length === 0)) {
+    return null;
+  }
+
   return (
     <div className='flex flex-wrap gap-2'>
-      {entries.map(([key, value]) => {
-        if (!value) return null;
+      {entries.map(([key, values]) => {
+        if (!values) return null;
 
-        return (
+        return values.map((value) => (
           <button
-            key={key}
-            onClick={() => removeFilter(key as keyof ParkFilter)}
+            key={`${key}-${value}`}
+            type='button'
+            onClick={() => removeFilter(key as keyof ParkFilter, value)}
             className='flex items-center gap-1 cursor-pointer rounded-full bg-slate-100 px-3 py-1.5 text-sm text-text-primary transition hover:bg-slate-200'
           >
             {getFilterLabel(key as keyof ParkFilter, value)}
 
             <X size={14} />
           </button>
-        );
+        ));
       })}
     </div>
   );

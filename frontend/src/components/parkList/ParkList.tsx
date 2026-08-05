@@ -45,30 +45,24 @@ export const ParkList = () => {
     };
   }, [fetchNextPage, hasNextPage, isFetchingNextPage]);
 
-  useEffect(() => {
-    console.log({
-      parksLength: parks.length,
-      hasNextPage,
-      isFetchingNextPage,
-    });
-  }, [parks, hasNextPage, isFetchingNextPage]);
-
   return (
     <section className='relative mx-auto my-6 max-w-5xl space-y-6 px-6'>
       <SearchBar keyword={keyword} onKeywordChange={setKeyword} onFilterClick={() => setIsFilterOpen(true)} />
 
       <ActiveFilters filters={filters} onChange={setFilters} />
 
-      <BottomSheet open={isFilterOpen} onClose={() => setIsFilterOpen(false)} variant='filter'>
-        <ParkFilter
-          filters={filters}
-          onChange={(nextFilters) => {
-            console.log(nextFilters);
-            setFilters(nextFilters);
-            setIsFilterOpen(false);
-          }}
-        />
-      </BottomSheet>
+      {isFilterOpen && (
+        <BottomSheet open={isFilterOpen} onClose={() => setIsFilterOpen(false)} variant='filter'>
+          <ParkFilter
+            key={JSON.stringify(filters)}
+            filters={filters}
+            onChange={(nextFilters) => {
+              setFilters(nextFilters);
+              setIsFilterOpen(false);
+            }}
+          />
+        </BottomSheet>
+      )}
 
       {error ? (
         <ErrorOverlay onRetry={refetch} />
