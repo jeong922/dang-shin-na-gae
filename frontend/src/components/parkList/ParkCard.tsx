@@ -1,10 +1,10 @@
 import { useNavigate } from 'react-router';
 import type { Park } from '../../types/park';
-import { difficultyMap } from '../../constants/difficulty';
+import { DIFFICULTY_OPTIONS } from '../../constants/difficulty';
 import { ChevronRight, Gauge, MapPin, Maximize2, Mountain, TrendingUp } from 'lucide-react';
 import { formatArea, formatMeter, formatPercent } from '../../utils/format';
 import { ParkStats } from '../common/ParkStats';
-import { petStatusMap } from '../../constants/petStatus';
+import { PET_STATUS_OPTIONS } from '../../constants/petStatus';
 import { PetStatus } from '../common/PetStatus';
 
 interface Props {
@@ -13,7 +13,7 @@ interface Props {
 
 export const ParkCard = ({ park }: Props) => {
   const navigate = useNavigate();
-  const difficulty = difficultyMap[park.difficulty];
+  const difficulty = DIFFICULTY_OPTIONS[park.difficulty];
 
   const stats = [
     {
@@ -59,7 +59,7 @@ export const ParkCard = ({ park }: Props) => {
       <ParkStats stats={stats} className='grid-cols-2 mt-6 gap-3' />
 
       <div className='mt-4 rounded-2xl bg-slate-50 p-4'>
-        <PetStatus status={petStatusMap[park.petStatus]} />
+        <PetStatus status={PET_STATUS_OPTIONS[park.petStatus]} />
       </div>
 
       <div className='mt-6 flex items-center justify-end text-brand font-medium'>

@@ -14,8 +14,8 @@ import {
 import { useParams } from 'react-router';
 import { usePark } from '../../hooks/usePark';
 import { LoadingOverlay } from '../common/LoadingOverlay';
-import { difficultyMap } from '../../constants/difficulty';
-import { petStatusMap } from '../../constants/petStatus';
+import { DIFFICULTY_OPTIONS } from '../../constants/difficulty';
+import { PET_STATUS_OPTIONS } from '../../constants/petStatus';
 import { formatArea, formatMeter, formatPercent } from '../../utils/format';
 import { BackButton } from '../common/BackButton';
 import { ParkStats } from '../common/ParkStats';
@@ -47,8 +47,8 @@ export const ParkDetail = () => {
     );
   }
 
-  const difficulty = difficultyMap[park.difficulty.level];
-  const petStatus = petStatusMap[park.pet.status];
+  const difficulty = DIFFICULTY_OPTIONS[park.difficulty.level];
+  const petStatus = PET_STATUS_OPTIONS[park.pet.status];
 
   const parkStats = [
     {

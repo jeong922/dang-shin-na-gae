@@ -1,4 +1,4 @@
-export const petStatusMap = {
+export const PET_STATUS_OPTIONS = {
   allowed: {
     label: '동반 가능',
     className: 'bg-green-100 text-green-700',

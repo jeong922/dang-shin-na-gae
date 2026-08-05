@@ -1,4 +1,4 @@
-export const districts = [
+export const DISTRICTS_OPTIONS = [
   '강남구',
   '강동구',
   '강북구',

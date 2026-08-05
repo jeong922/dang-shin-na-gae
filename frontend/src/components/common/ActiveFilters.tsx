@@ -1,7 +1,7 @@
 import { X } from 'lucide-react';
 import type { ParkFilter } from '../../types/park';
-import { difficultyMap } from '../../constants/difficulty';
-import { petStatusMap } from '../../constants/petStatus';
+import { DIFFICULTY_OPTIONS } from '../../constants/difficulty';
+import { PET_STATUS_OPTIONS } from '../../constants/petStatus';
 
 interface Props {
   filters: ParkFilter;
@@ -11,10 +11,10 @@ interface Props {
 const getFilterLabel = (key: keyof ParkFilter, value: string) => {
   switch (key) {
     case 'difficulty':
-      return difficultyMap[value as keyof typeof difficultyMap]?.label;
+      return DIFFICULTY_OPTIONS[value as keyof typeof DIFFICULTY_OPTIONS]?.label;
 
     case 'petStatus':
-      return petStatusMap[value as keyof typeof petStatusMap]?.label;
+      return PET_STATUS_OPTIONS[value as keyof typeof PET_STATUS_OPTIONS]?.label;
 
     default:
       return value;

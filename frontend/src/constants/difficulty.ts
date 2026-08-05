@@ -1,4 +1,4 @@
-export const difficultyMap = {
+export const DIFFICULTY_OPTIONS = {
   easy: {
     label: '쉬움',
     className: 'bg-level-easy/10 text-level-easy',

@@ -2,8 +2,8 @@ import { Dog, MapPin, Maximize2, Mountain, TrendingUp } from 'lucide-react';
 import { useNavigate } from 'react-router';
 import type { ParkMap } from '../../types/park';
 import { formatArea, formatMeter, formatPercent } from '../../utils/format';
-import { difficultyMap } from '../../constants/difficulty';
-import { petStatusMap } from '../../constants/petStatus';
+import { DIFFICULTY_OPTIONS } from '../../constants/difficulty';
+import { PET_STATUS_OPTIONS } from '../../constants/petStatus';
 import { Guide } from '../guide/Guide';
 import { ParkStats } from '../common/ParkStats';
 import { DifficultyBadge } from '../common/DifficultyBadge';
@@ -49,7 +49,7 @@ export const ParkDetailContent = ({ park }: Props) => {
         </div>
 
         <div className='absolute right-0 top-12'>
-          <DifficultyBadge difficulty={difficultyMap[park.difficulty]} />
+          <DifficultyBadge difficulty={DIFFICULTY_OPTIONS[park.difficulty]} />
         </div>
       </div>
 
@@ -58,7 +58,7 @@ export const ParkDetailContent = ({ park }: Props) => {
       </div>
 
       <div className='mt-4 rounded-2xl bg-slate-50 p-4'>
-        <PetStatus status={petStatusMap[park.petStatus]} />
+        <PetStatus status={PET_STATUS_OPTIONS[park.petStatus]} />
 
         {park.petRestrictedLocations.length > 0 && (
           <div className='mt-3'>

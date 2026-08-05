@@ -1,27 +1,27 @@
 import { useState } from 'react';
 import type { Difficulty, ParkFilter as ParkFilterType, PetStatus } from '../../types/park';
-import { difficultyMap } from '../../constants/difficulty';
-import { petStatusMap } from '../../constants/petStatus';
+import { DIFFICULTY_OPTIONS } from '../../constants/difficulty';
+import { PET_STATUS_OPTIONS } from '../../constants/petStatus';
 import { Button } from './Button';
 import { FilterChipGroup } from './FilterChipGroup';
-import { districts } from '../../constants/districts';
+import { DISTRICTS_OPTIONS } from '../../constants/districts';
 
 interface Props {
   filters: ParkFilterType;
   onChange: (filters: ParkFilterType) => void;
 }
 
-const districtOptions = districts.map((district) => ({
+const districtOptions = DISTRICTS_OPTIONS.map((district) => ({
   value: district,
   label: district,
 }));
 
-const difficultyOptions = Object.entries(difficultyMap).map(([value, item]) => ({
+const difficultyOptions = Object.entries(DIFFICULTY_OPTIONS).map(([value, item]) => ({
   value: value as Difficulty,
   label: item.label,
 }));
 
-const petStatusOptions = Object.entries(petStatusMap)
+const petStatusOptions = Object.entries(PET_STATUS_OPTIONS)
   .filter(([key]) => key !== 'unknown')
   .map(([value, item]) => ({
     value: value as PetStatus,
