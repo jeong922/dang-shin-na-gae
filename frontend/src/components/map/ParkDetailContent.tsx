@@ -9,6 +9,7 @@ import { ParkStats } from '../common/ParkStats';
 import { DifficultyBadge } from '../common/DifficultyBadge';
 import { Badge } from '../common/Badge';
 import { PetStatus } from '../common/PetStatus';
+import { Button } from '../common/Button';
 
 interface Props {
   park: ParkMap;
@@ -83,12 +84,9 @@ export const ParkDetailContent = ({ park }: Props) => {
 
       <Guide />
 
-      <button
-        className='mt-4 w-full cursor-pointer rounded-xl bg-brand py-3 font-semibold text-white transition hover:opacity-90'
-        onClick={() => navigate(`parks/${park.id}`)}
-      >
-        상세 보기
-      </button>
+      <Button variant='primary' className='mt-4 w-full' onClick={() => navigate(`/parks/${park.id}`)}>
+        상세보기
+      </Button>
     </>
   );
 };

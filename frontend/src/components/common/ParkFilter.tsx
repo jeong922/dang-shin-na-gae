@@ -3,6 +3,7 @@ import type { ParkFilter as ParkFilterType } from '../../types/park';
 import { difficultyMap } from '../../utils/difficultyMap';
 import { petStatusMap } from '../../utils/petStatusMap';
 import { ChevronDown } from 'lucide-react';
+import { Button } from './Button';
 
 interface Props {
   filters: ParkFilterType;
@@ -143,24 +144,13 @@ export const ParkFilter = ({ filters, onChange }: Props) => {
       </section>
 
       <div className='mt-8 flex gap-3'>
-        <button
-          onClick={handleReset}
-          className='
-            flex-1 rounded-xl border border-border py-3 font-semibold hover:bg-slate-50'
-        >
+        <Button variant='secondary' className='flex-1' onClick={handleReset}>
           초기화
-        </button>
+        </Button>
 
-        <button
-          onClick={handleApply}
-          className='
-            flex-1 rounded-xl bg-brand
-            py-3 font-semibold text-white
-            hover:opacity-90
-          '
-        >
+        <Button variant='primary' className='flex-1' onClick={handleApply}>
           적용하기
-        </button>
+        </Button>
       </div>
     </div>
   );
