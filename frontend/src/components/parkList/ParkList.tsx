@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from 'react';
 import { ParkCard } from './ParkCard';
 import { useParks } from '../../hooks/useParks';
-import { ErrorOverlay } from '../common/ErrorOverlay';
+import { ErrorState } from '../common/error/ErrorState';
 import { ParkListSkeleton } from './ParkListSkeleton';
 import { SearchBar } from '../common/SearchBar';
 import { useDebounce } from '../../hooks/useDebounce';
@@ -65,7 +65,11 @@ export const ParkList = () => {
       )}
 
       {error ? (
-        <ErrorOverlay onRetry={refetch} />
+        <ErrorState
+          title='공원 목록을 불러올 수 없습니다.'
+          description='잠시 후 다시 시도해주세요.'
+          onRetry={refetch}
+        />
       ) : isLoading && parks.length === 0 ? (
         <ParkListSkeleton />
       ) : (

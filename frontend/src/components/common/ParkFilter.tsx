@@ -1,4 +1,3 @@
-import { useState } from 'react';
 import type { Difficulty, ParkFilter as ParkFilterType, PetStatus } from '../../types/park';
 import { DIFFICULTY_OPTIONS } from '../../constants/difficulty';
 import { PET_STATUS_OPTIONS } from '../../constants/petStatus';
@@ -29,39 +28,41 @@ const petStatusOptions = Object.entries(PET_STATUS_OPTIONS)
   }));
 
 export const ParkFilter = ({ filters, onChange }: Props) => {
-  const [tempFilters, setTempFilters] = useState<ParkFilterType>({
-    difficulty: filters.difficulty ?? [],
-    petStatus: filters.petStatus ?? [],
-    district: filters.district ?? [],
-  });
+  // const [tempFilters, setTempFilters] = useState<ParkFilterType>({
+  //   difficulty: filters.difficulty ?? [],
+  //   petStatus: filters.petStatus ?? [],
+  //   district: filters.district ?? [],
+  // });
+
+  const tempFilters = filters;
 
   const toggleValue = <T,>(values: T[] = [], value: T) => {
     return values.includes(value) ? values.filter((item) => item !== value) : [...values, value];
   };
 
   const handleDifficulty = (value: Difficulty) => {
-    setTempFilters((prev) => ({
-      ...prev,
-      difficulty: toggleValue(prev.difficulty, value),
-    }));
+    onChange({
+      ...filters,
+      difficulty: toggleValue(filters.difficulty, value),
+    });
   };
 
   const handlePetStatus = (value: PetStatus) => {
-    setTempFilters((prev) => ({
-      ...prev,
-      petStatus: toggleValue(prev.petStatus, value),
-    }));
+    onChange({
+      ...filters,
+      petStatus: toggleValue(filters.petStatus, value),
+    });
   };
 
   const handleDistrict = (value: string) => {
-    setTempFilters((prev) => ({
-      ...prev,
-      district: toggleValue(prev.district, value),
-    }));
+    onChange({
+      ...filters,
+      district: toggleValue(filters.district, value),
+    });
   };
 
   const handleReset = () => {
-    setTempFilters({
+    onChange({
       difficulty: [],
       petStatus: [],
       district: [],

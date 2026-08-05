@@ -11,7 +11,7 @@ import {
   Trees,
   TrendingUp,
 } from 'lucide-react';
-import { useParams } from 'react-router';
+import { useNavigate, useParams } from 'react-router';
 import { usePark } from '../../hooks/usePark';
 import { LoadingOverlay } from '../common/LoadingOverlay';
 import { DIFFICULTY_OPTIONS } from '../../constants/difficulty';
@@ -26,25 +26,47 @@ import { ImageWithFallback } from '../common/ImageWithFallback';
 import { DifficultyBadge } from '../common/DifficultyBadge';
 import { Badge } from '../common/Badge';
 import { PetStatus } from '../common/PetStatus';
+import { ErrorState } from '../common/error/ErrorState';
+import { EmptyState } from '../common/empty/EmptyState';
+import { ApiError } from '../../errors/ApiError';
 
 export const ParkDetail = () => {
+  const navigate = useNavigate();
+
   const { parkId } = useParams();
 
   const id = Number(parkId);
 
-  const { park, isLoading, error } = usePark({ id });
+  const isValidId = !Number.isNaN(id) && id > 0;
+
+  const { park, isLoading, error, refetch } = usePark({ id });
+
+  if (!isValidId) {
+    return <EmptyState title='유효하지 않은 공원 ID입니다.' onAction={() => navigate(-1)} />;
+  }
 
   if (isLoading) {
     return <LoadingOverlay title='공원 정보를 불러오는 중' description='잠시만 기다려주세요.' />;
   }
 
-  // TODO: UI 만들기
-  if (error || !park) {
+  if (error instanceof ApiError && error.status === 404) {
     return (
-      <section className='mx-auto max-w-5xl py-20 text-center'>
-        <h1 className='text-2xl font-bold'>공원을 찾을 수 없습니다.</h1>
-      </section>
+      <EmptyState
+        title='공원을 찾을 수 없습니다.'
+        description='존재하지 않거나 삭제된 공원입니다.'
+        onAction={() => navigate(-1)}
+      />
     );
+  }
+
+  if (error) {
+    return (
+      <ErrorState title='공원 정보를 불러오지 못했습니다.' description='잠시 후 다시 시도해주세요.' onRetry={refetch} />
+    );
+  }
+
+  if (!park) {
+    return null;
   }
 
   const difficulty = DIFFICULTY_OPTIONS[park.difficulty.level];
@@ -223,7 +245,12 @@ export const ParkDetail = () => {
           </p>
 
           {park.contact.url && (
-            <a href={park.contact.url} target='_blank' className='flex items-center gap-2 text-brand'>
+            <a
+              href={park.contact.url}
+              target='_blank'
+              rel='noopener noreferrer'
+              className='flex items-center gap-2 text-brand'
+            >
               홈페이지 방문
               <ExternalLink size={16} />
             </a>

@@ -3,8 +3,9 @@ import { Map as MapLibreMap, NavigationControl, Marker } from 'maplibre-gl';
 import type { ParkMap } from '../../types/park';
 import { useMapParks } from '../../hooks/useMapParks';
 import { LoadingOverlay } from '../common/LoadingOverlay';
-import { ErrorOverlay } from '../common/ErrorOverlay';
 import { useDebounce } from '../../hooks/useDebounce';
+import { Overlay } from '../common/Overlay';
+import { ErrorState } from '../common/error/ErrorState';
 
 interface Props {
   onSelectPark: (park: ParkMap) => void;
@@ -125,8 +126,8 @@ export const MapView = ({ onSelectPark }: Props) => {
   }, [updateBounds]);
 
   return (
-    <div className='relative'>
-      <div ref={mapContainer} className='h-[calc(100dvh-8rem)] overflow-hidden rounded-2xl border border-border' />
+    <div className='relative h-[calc(100dvh-8rem)]'>
+      <div ref={mapContainer} className='h-full overflow-hidden rounded-2xl border border-border' />
 
       {isLoading && parks.length === 0 && (
         <LoadingOverlay title='공원 정보를 불러오는 중' description='잠시만 기다려주세요.' />
@@ -137,11 +138,13 @@ export const MapView = ({ onSelectPark }: Props) => {
       )}
 
       {error && (
-        <ErrorOverlay
-          title='공원 정보를 불러올 수 없습니다.'
-          description={`서버와 연결할 수 없습니다.\n잠시 후 다시 시도해주세요.`}
-          onRetry={refetch}
-        />
+        <Overlay>
+          <ErrorState
+            title='공원 정보를 불러올 수 없습니다.'
+            description={`서버와 연결할 수 없습니다.\n잠시 후 다시 시도해주세요.`}
+            onRetry={refetch}
+          />
+        </Overlay>
       )}
     </div>
   );
