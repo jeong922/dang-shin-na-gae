@@ -1,5 +1,7 @@
 import { ParkDetail } from '../components/detail/ParkDetail';
 
-export const ParkDetailPage = () => {
+const ParkDetailPage = () => {
   return <ParkDetail />;
 };
+
+export default ParkDetailPage;

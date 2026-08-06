@@ -1,5 +1,7 @@
-import { ParkMap } from '../components/map/ParkMap';
+import { ParkMapContainer } from '../components/map/ParkMapContainer';
 
-export const HomePage = () => {
-  return <ParkMap />;
+const HomePage = () => {
+  return <ParkMapContainer />;
 };
+
+export default HomePage;

@@ -1,5 +1,7 @@
 import { ParkList } from '../components/parkList/ParkList';
 
-export const ParksPage = () => {
+const ParksPage = () => {
   return <ParkList />;
 };
+
+export default ParksPage;

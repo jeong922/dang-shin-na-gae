@@ -1,3 +1,4 @@
+import 'maplibre-gl/dist/maplibre-gl.css';
 import { useCallback, useEffect, useRef, useState } from 'react';
 import { Map as MapLibreMap, NavigationControl, Marker } from 'maplibre-gl';
 import type { ParkMap } from '../../types/park';
@@ -6,6 +7,7 @@ import { LoadingOverlay } from '../ui/loading/LoadingOverlay';
 import { useDebounce } from '../../hooks/useDebounce';
 import { Overlay } from '../ui/Overlay';
 import { ErrorState } from '../ui/error/ErrorState';
+import { LoaderCircle } from 'lucide-react';
 
 interface Props {
   onSelectPark: (park: ParkMap) => void;
@@ -134,7 +136,10 @@ export const MapView = ({ onSelectPark }: Props) => {
       )}
 
       {isFetching && parks.length > 0 && (
-        <div className='absolute right-4 top-4 rounded-lg bg-white px-3 py-2 text-sm shadow'>업데이트 중...</div>
+        <div className='absolute bottom-6 left-1/2 flex -translate-x-1/2 items-center gap-2 rounded-full bg-white px-4 py-2 text-sm shadow-md'>
+          <LoaderCircle size={16} className='animate-spin' />
+          공원 정보를 업데이트하는 중입니다.
+        </div>
       )}
 
       {error && (

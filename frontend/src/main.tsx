@@ -1,13 +1,10 @@
-import { StrictMode } from 'react';
-import { createRoot } from 'react-dom/client';
 import './index.css';
-import 'maplibre-gl/dist/maplibre-gl.css';
+import { StrictMode, Suspense } from 'react';
+import { createRoot } from 'react-dom/client';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { createBrowserRouter, RouterProvider } from 'react-router';
 import { RootLayout } from './layouts/RootLayout.tsx';
-import { HomePage } from './pages/HomePage.tsx';
-import { ParksPage } from './pages/ParksPage.tsx';
-import { ParkDetailPage } from './pages/ParkDetailPage.tsx';
+import { LoadingOverlay } from './components/ui/loading/LoadingOverlay.tsx';
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -25,11 +22,32 @@ const router = createBrowserRouter([
     path: '/',
     Component: RootLayout,
     children: [
-      { index: true, Component: HomePage },
-      { path: 'parks', Component: ParksPage },
+      {
+        index: true,
+        lazy: async () => {
+          const { default: HomePage } = await import('./pages/HomePage');
+          return {
+            Component: HomePage,
+          };
+        },
+      },
+      {
+        path: 'parks',
+        lazy: async () => {
+          const { default: ParksPage } = await import('./pages/ParksPage');
+          return {
+            Component: ParksPage,
+          };
+        },
+      },
       {
         path: 'parks/:parkId',
-        Component: ParkDetailPage,
+        lazy: async () => {
+          const { default: ParkDetailPage } = await import('./pages/ParkDetailPage');
+          return {
+            Component: ParkDetailPage,
+          };
+        },
       },
     ],
   },
@@ -38,7 +56,9 @@ const router = createBrowserRouter([
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
     <QueryClientProvider client={queryClient}>
-      <RouterProvider router={router} />
+      <Suspense fallback={<LoadingOverlay title='페이지를 불러오는 중' description='잠시만 기다려주세요.' />}>
+        <RouterProvider router={router} />
+      </Suspense>
     </QueryClientProvider>
   </StrictMode>,
 );
