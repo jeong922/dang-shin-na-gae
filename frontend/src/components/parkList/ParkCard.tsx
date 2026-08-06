@@ -3,9 +3,9 @@ import type { Park } from '../../types/park';
 import { DIFFICULTY_OPTIONS } from '../../constants/difficulty';
 import { ChevronRight, Gauge, MapPin, Maximize2, Mountain, TrendingUp } from 'lucide-react';
 import { formatArea, formatMeter, formatPercent } from '../../utils/format';
-import { ParkStats } from '../common/ParkStats';
+import { ParkStats } from '../park/ParkStats';
 import { PET_STATUS_OPTIONS } from '../../constants/petStatus';
-import { PetStatus } from '../common/PetStatus';
+import { PetStatus } from '../park/PetStatus';
 
 interface Props {
   park: Park;

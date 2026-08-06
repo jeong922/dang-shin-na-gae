@@ -1,7 +1,7 @@
 import { useCallback, useState } from 'react';
 import type { ParkMap as Map } from '../../types/park';
 import { MapView } from './MapView';
-import { BottomSheet } from '../common/BottomSheet';
+import { BottomSheet } from '../ui/BottomSheet';
 import { ParkDetailContent } from './ParkDetailContent';
 
 export const ParkMap = () => {

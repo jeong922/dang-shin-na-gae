@@ -1,5 +1,5 @@
 import { Gauge } from 'lucide-react';
-import { Badge } from './Badge';
+import { Badge } from '../ui/Badge';
 
 interface Props {
   difficulty: {

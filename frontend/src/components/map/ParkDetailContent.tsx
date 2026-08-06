@@ -5,11 +5,11 @@ import { formatArea, formatMeter, formatPercent } from '../../utils/format';
 import { DIFFICULTY_OPTIONS } from '../../constants/difficulty';
 import { PET_STATUS_OPTIONS } from '../../constants/petStatus';
 import { Guide } from '../guide/Guide';
-import { ParkStats } from '../common/ParkStats';
-import { DifficultyBadge } from '../common/DifficultyBadge';
-import { Badge } from '../common/Badge';
-import { PetStatus } from '../common/PetStatus';
-import { Button } from '../common/Button';
+import { ParkStats } from '../park/ParkStats';
+import { DifficultyBadge } from '../park/DifficultyBadge';
+import { Badge } from '../ui/Badge';
+import { PetStatus } from '../park/PetStatus';
+import { Button } from '../ui/Button';
 
 interface Props {
   park: ParkMap;

@@ -1,8 +1,8 @@
 import type { Difficulty, ParkFilter as ParkFilterType, PetStatus } from '../../types/park';
 import { DIFFICULTY_OPTIONS } from '../../constants/difficulty';
 import { PET_STATUS_OPTIONS } from '../../constants/petStatus';
-import { Button } from './Button';
-import { FilterChipGroup } from './FilterChipGroup';
+import { Button } from '../ui/Button';
+import { FilterChipGroup } from '../ui/FilterChipGroup';
 import { DISTRICTS_OPTIONS } from '../../constants/districts';
 import { useState } from 'react';
 

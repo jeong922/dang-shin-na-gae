@@ -1,5 +1,7 @@
+import type { ReactNode } from 'react';
+
 interface Props {
-  icon?: React.ReactNode;
+  icon?: ReactNode;
   title: string;
   value: string;
   variant?: 'card' | 'detail';

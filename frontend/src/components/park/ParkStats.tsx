@@ -1,6 +1,6 @@
 import type { ReactNode } from 'react';
 
-import { InfoCard } from './InfoCard';
+import { InfoCard } from '../ui/InfoCard';
 
 interface ParkStat {
   icon?: ReactNode;

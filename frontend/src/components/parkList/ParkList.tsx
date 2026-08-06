@@ -1,14 +1,14 @@
 import { useEffect, useRef, useState } from 'react';
 import { ParkCard } from './ParkCard';
 import { useParks } from '../../hooks/useParks';
-import { ErrorState } from '../common/error/ErrorState';
+import { ErrorState } from '../ui/error/ErrorState';
 import { ParkListSkeleton } from './ParkListSkeleton';
-import { SearchBar } from '../common/SearchBar';
+import { SearchBar } from '../ui/SearchBar';
 import { useDebounce } from '../../hooks/useDebounce';
 import type { ParkFilter as ParkFilterType } from '../../types/park';
-import { BottomSheet } from '../common/BottomSheet';
-import { ParkFilter } from '../common/ParkFilter';
-import { ActiveFilters } from '../common/ActiveFilters';
+import { BottomSheet } from '../ui/BottomSheet';
+import { ParkFilter } from '../park/ParkFilter';
+import { ActiveFilters } from '../park/ActiveFilters';
 
 export const ParkList = () => {
   const observerTarget = useRef<HTMLDivElement | null>(null);

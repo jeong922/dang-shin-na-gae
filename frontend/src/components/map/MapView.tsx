@@ -2,10 +2,10 @@ import { useCallback, useEffect, useRef, useState } from 'react';
 import { Map as MapLibreMap, NavigationControl, Marker } from 'maplibre-gl';
 import type { ParkMap } from '../../types/park';
 import { useMapParks } from '../../hooks/useMapParks';
-import { LoadingOverlay } from '../common/LoadingOverlay';
+import { LoadingOverlay } from '../ui/loading/LoadingOverlay';
 import { useDebounce } from '../../hooks/useDebounce';
-import { Overlay } from '../common/Overlay';
-import { ErrorState } from '../common/error/ErrorState';
+import { Overlay } from '../ui/Overlay';
+import { ErrorState } from '../ui/error/ErrorState';
 
 interface Props {
   onSelectPark: (park: ParkMap) => void;

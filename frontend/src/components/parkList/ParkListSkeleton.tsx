@@ -1,4 +1,4 @@
-import { ParkCardSkeleton } from './ParkCardSkeleton';
+import { ParkCardSkeleton } from '../park/ParkCardSkeleton';
 
 export const ParkListSkeleton = () => {
   return (

@@ -13,21 +13,21 @@ import {
 } from 'lucide-react';
 import { useNavigate, useParams } from 'react-router';
 import { usePark } from '../../hooks/usePark';
-import { LoadingOverlay } from '../common/LoadingOverlay';
+import { LoadingOverlay } from '../ui/loading/LoadingOverlay';
 import { DIFFICULTY_OPTIONS } from '../../constants/difficulty';
 import { PET_STATUS_OPTIONS } from '../../constants/petStatus';
 import { formatArea, formatMeter, formatPercent } from '../../utils/format';
-import { BackButton } from '../common/BackButton';
-import { ParkStats } from '../common/ParkStats';
-import { CardSection } from '../common/CardSection';
-import { ContentCard } from '../common/ContentCard';
-import { NoData } from '../common/NoData';
-import { ImageWithFallback } from '../common/ImageWithFallback';
-import { DifficultyBadge } from '../common/DifficultyBadge';
-import { Badge } from '../common/Badge';
-import { PetStatus } from '../common/PetStatus';
-import { ErrorState } from '../common/error/ErrorState';
-import { EmptyState } from '../common/empty/EmptyState';
+import { BackButton } from '../ui/BackButton';
+import { ParkStats } from '../park/ParkStats';
+import { CardSection } from '../ui/CardSection';
+import { ContentCard } from '../ui/ContentCard';
+import { NoData } from '../ui/NoData';
+import { ImageWithFallback } from '../ui/ImageWithFallback';
+import { DifficultyBadge } from '../park/DifficultyBadge';
+import { Badge } from '../ui/Badge';
+import { PetStatus } from '../park/PetStatus';
+import { ErrorState } from '../ui/error/ErrorState';
+import { EmptyState } from '../ui/empty/EmptyState';
 import { ApiError } from '../../errors/ApiError';
 
 export const ParkDetail = () => {
