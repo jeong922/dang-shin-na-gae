@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { AnimatePresence, motion } from 'motion/react';
 import { ChevronDown, Info, Lightbulb, Maximize2, Mountain, TrendingUp } from 'lucide-react';
 
-export const Guide = () => {
+export const DifficultyGuide = () => {
   const [showGuide, setShowGuide] = useState(false);
 
   return (

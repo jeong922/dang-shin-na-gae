@@ -4,7 +4,7 @@ import type { ParkMap } from '../../types/park';
 import { formatArea, formatMeter, formatPercent } from '../../utils/format';
 import { DIFFICULTY_OPTIONS } from '../../constants/difficulty';
 import { PET_STATUS_OPTIONS } from '../../constants/petStatus';
-import { Guide } from '../guide/Guide';
+import { DifficultyGuide } from '../guide/DifficultyGuide';
 import { ParkStats } from '../park/ParkStats';
 import { DifficultyBadge } from '../park/DifficultyBadge';
 import { Badge } from '../ui/Badge';
@@ -82,7 +82,7 @@ export const ParkDetailContent = ({ park }: Props) => {
         )}
       </div>
 
-      <Guide />
+      <DifficultyGuide />
 
       <Button variant='primary' className='mt-4 w-full' onClick={() => navigate(`/parks/${park.id}`)}>
         상세보기

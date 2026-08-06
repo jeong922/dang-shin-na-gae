@@ -29,6 +29,7 @@ import { PetStatus } from '../park/PetStatus';
 import { ErrorState } from '../ui/error/ErrorState';
 import { EmptyState } from '../ui/empty/EmptyState';
 import { ApiError } from '../../errors/ApiError';
+import { DifficultyGuide } from '../guide/DifficultyGuide';
 
 export const ParkDetail = () => {
   const navigate = useNavigate();
@@ -112,6 +113,8 @@ export const ParkDetail = () => {
 
           <DifficultyBadge difficulty={difficulty} />
         </div>
+
+        <DifficultyGuide />
       </section>
 
       <section className='overflow-hidden rounded-3xl border border-border'>
