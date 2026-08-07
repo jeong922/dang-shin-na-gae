@@ -104,3 +104,8 @@ export interface ParkParams {
 }
 
 export type ParkMapResponse = ParksResponse<ParkMap>;
+
+export interface ParkSearchResponse {
+  items: ParkMap[];
+  total: number;
+}
