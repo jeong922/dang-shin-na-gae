@@ -5,17 +5,18 @@ import { ErrorState } from '../ui/error/ErrorState';
 import { ParkListSkeleton } from './ParkListSkeleton';
 import { SearchBar } from '../ui/SearchBar';
 import { useDebounce } from '../../hooks/useDebounce';
-import type { ParkFilter as ParkFilterType } from '../../types/park';
 import { BottomSheet } from '../ui/BottomSheet';
 import { ParkFilter } from '../park/ParkFilter';
 import { ActiveFilters } from '../park/ActiveFilters';
 
 export const ParkList = () => {
   const observerTarget = useRef<HTMLDivElement | null>(null);
-  const [keyword, setKeyword] = useState<string>('');
-  const debouncedKeyword = useDebounce(keyword, 300);
-  const [filters, setFilters] = useState<ParkFilterType>({});
+
+  const [keyword, setKeyword] = useState('');
+  const [filters, setFilters] = useState({});
   const [isFilterOpen, setIsFilterOpen] = useState(false);
+
+  const debouncedKeyword = useDebounce(keyword, 300);
 
   const { parks, total, fetchNextPage, hasNextPage, isFetchingNextPage, isLoading, error, refetch } = useParks({
     pageSize: 20,
@@ -46,28 +47,26 @@ export const ParkList = () => {
   }, [fetchNextPage, hasNextPage, isFetchingNextPage]);
 
   return (
-    <section className='relative mx-auto my-6 max-w-5xl space-y-6 px-6'>
+    <section>
       <SearchBar keyword={keyword} onKeywordChange={setKeyword} onFilterClick={() => setIsFilterOpen(true)} />
 
       <ActiveFilters filters={filters} onChange={setFilters} />
 
-      {isFilterOpen && (
-        <BottomSheet open={isFilterOpen} onClose={() => setIsFilterOpen(false)} variant='filter'>
-          <ParkFilter
-            key={JSON.stringify(filters)}
-            filters={filters}
-            onChange={(nextFilters) => {
-              setFilters(nextFilters);
-              setIsFilterOpen(false);
-            }}
-          />
-        </BottomSheet>
-      )}
+      <BottomSheet open={isFilterOpen} onClose={() => setIsFilterOpen(false)} variant='filter'>
+        <ParkFilter
+          key={JSON.stringify(filters)}
+          filters={filters}
+          onChange={(nextFilters) => {
+            setFilters(nextFilters);
+            setIsFilterOpen(false);
+          }}
+        />
+      </BottomSheet>
 
       {error ? (
         <ErrorState
           title='공원 목록을 불러올 수 없습니다.'
-          description='잠시 후 다시 시도해주세요.'
+          description='공원 목록을 불러오는 중 문제가 발생했습니다.'
           onRetry={refetch}
         />
       ) : isLoading && parks.length === 0 ? (

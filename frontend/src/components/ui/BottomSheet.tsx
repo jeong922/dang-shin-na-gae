@@ -12,10 +12,12 @@ interface Props {
 export const BottomSheet = ({ open, onClose, children, variant = 'map' }: Props) => {
   const positionClass =
     variant === 'filter'
-      ? 'fixed bottom-14 left-4 right-4 max-w-[calc(64rem-3rem)] mx-auto'
-      : 'absolute bottom-4 left-4 right-4';
+      ? 'fixed bottom-20 left-4 right-4 z-50 mx-auto w-[calc(100%-2rem)] max-w-[61rem]'
+      : 'absolute bottom-4 left-4 right-4 z-50';
 
-  const handleOverlayClick = (e: MouseEvent<HTMLDivElement>) => {
+  const overlayClass = variant === 'filter' ? 'fixed inset-0 z-40 bg-black/10' : 'absolute inset-0 z-40 bg-black/10';
+
+  const handleOverlayClick = (e: MouseEvent) => {
     if (e.target === e.currentTarget) {
       onClose();
     }
@@ -38,7 +40,7 @@ export const BottomSheet = ({ open, onClose, children, variant = 'map' }: Props)
       {open && (
         <>
           <motion.div
-            className='absolute inset-0 z-10 bg-black/10'
+            className={overlayClass}
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
@@ -47,7 +49,7 @@ export const BottomSheet = ({ open, onClose, children, variant = 'map' }: Props)
           />
 
           <motion.div
-            className={`${positionClass} z-50 rounded-3xl border border-border bg-white/95 p-5 shadow-xl backdrop-blur-md`}
+            className={`${positionClass} rounded-3xl border border-border bg-white/95 p-5 shadow-xl backdrop-blur-md`}
             initial={{ y: '120%', opacity: 0 }}
             animate={{ y: 0, opacity: 1 }}
             exit={{ y: '120%', opacity: 0 }}
@@ -59,7 +61,10 @@ export const BottomSheet = ({ open, onClose, children, variant = 'map' }: Props)
             }}
             drag='y'
             dragDirectionLock
-            dragConstraints={{ top: 0, bottom: 0 }}
+            dragConstraints={{
+              top: 0,
+              bottom: 0,
+            }}
             dragElastic={0.25}
             dragMomentum={false}
             onDragEnd={(_, info) => {
@@ -71,14 +76,19 @@ export const BottomSheet = ({ open, onClose, children, variant = 'map' }: Props)
             <button
               onClick={onClose}
               className='absolute right-4 top-4 rounded-full p-2 text-text-muted transition hover:bg-gray-100'
+              aria-label='닫기'
             >
               <X size={20} />
             </button>
+
             <div className='mb-4 flex justify-center'>
               <motion.div
                 className='h-1.5 w-12 rounded-full bg-gray-300'
                 whileHover={{ scaleX: 1.1 }}
-                whileTap={{ scaleX: 1.2, scaleY: 1.3 }}
+                whileTap={{
+                  scaleX: 1.2,
+                  scaleY: 1.3,
+                }}
                 transition={{ duration: 0.15 }}
               />
             </div>

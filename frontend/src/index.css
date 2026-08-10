@@ -55,6 +55,8 @@ html {
 
   color: var(--color-text-primary);
   background: var(--color-background);
+
+  scrollbar-gutter: stable;
 }
 
 body {
