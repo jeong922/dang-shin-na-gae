@@ -1,6 +1,9 @@
-import { LngLatBounds, Map as MapLibreMap, Marker, NavigationControl } from 'maplibre-gl';
+import { Map as MapLibreMap, NavigationControl, Marker, LngLatBounds, setWorkerUrl } from 'maplibre-gl';
+import maplibreWorker from 'maplibre-gl/dist/maplibre-gl-worker.mjs?worker&url';
 import { useCallback, useEffect, useMemo, useRef } from 'react';
 import type { Bounds, ParkMap } from '../types/park';
+
+setWorkerUrl(maplibreWorker);
 
 interface Props {
   mapContainer: React.RefObject<HTMLDivElement | null>;
