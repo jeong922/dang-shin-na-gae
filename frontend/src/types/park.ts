@@ -109,3 +109,9 @@ export interface ParkSearchResponse {
   items: ParkMap[];
   total: number;
 }
+export interface Bounds {
+  west: number;
+  south: number;
+  east: number;
+  north: number;
+}
