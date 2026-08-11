@@ -47,9 +47,10 @@ export const ParkList = () => {
   }, [fetchNextPage, hasNextPage, isFetchingNextPage]);
 
   return (
-    <section>
-      <SearchBar keyword={keyword} onKeywordChange={setKeyword} onFilterClick={() => setIsFilterOpen(true)} />
-
+    <section className='px-3'>
+      <div className='my-4'>
+        <SearchBar keyword={keyword} onKeywordChange={setKeyword} onFilterClick={() => setIsFilterOpen(true)} />
+      </div>
       <ActiveFilters filters={filters} onChange={setFilters} />
 
       <BottomSheet open={isFilterOpen} onClose={() => setIsFilterOpen(false)} variant='filter'>
@@ -73,7 +74,7 @@ export const ParkList = () => {
         <ParkListSkeleton />
       ) : (
         <>
-          <header>
+          <header className='my-4'>
             <h1 className='text-3xl font-bold'>공원 목록</h1>
 
             <p className='mt-1 text-text-muted'>
