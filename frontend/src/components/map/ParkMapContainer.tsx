@@ -52,6 +52,7 @@ export const ParkMapContainer = () => {
           onSelectPark={handleSelectPark}
           searchResults={searchResults}
           hasSearchCondition={hasSearchCondition}
+          selectedParkId={selectedPark?.id ?? null}
         />
       </Suspense>
 

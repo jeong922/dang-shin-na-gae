@@ -12,10 +12,11 @@ import { ErrorState } from '../ui/error/ErrorState';
 interface Props {
   onSelectPark: (park: ParkMap) => void;
   searchResults: ParkMap[];
+  selectedParkId: number | null;
   hasSearchCondition: boolean;
 }
 
-export const MapView = ({ onSelectPark, searchResults, hasSearchCondition }: Props) => {
+export const MapView = ({ onSelectPark, searchResults, hasSearchCondition, selectedParkId }: Props) => {
   const mapContainer = useRef<HTMLDivElement | null>(null);
 
   const [bounds, setBounds] = useState<Bounds | null>(null);
@@ -36,6 +37,7 @@ export const MapView = ({ onSelectPark, searchResults, hasSearchCondition }: Pro
     searchResults,
     hasSearchCondition,
     onSelectPark,
+    selectedParkId,
     onBoundsChange: handleBoundsChange,
   });
 
