@@ -1,4 +1,4 @@
-import { type ReactNode, type MouseEvent, useEffect } from 'react';
+import { type MouseEvent, type ReactNode, useEffect } from 'react';
 import { AnimatePresence, motion } from 'motion/react';
 import { X } from 'lucide-react';
 
@@ -12,10 +12,10 @@ interface Props {
 export const BottomSheet = ({ open, onClose, children, variant = 'map' }: Props) => {
   const positionClass =
     variant === 'filter'
-      ? 'fixed bottom-20 left-4 right-4 z-50 mx-auto w-[calc(100%-2rem)] max-w-[61rem]'
-      : 'absolute bottom-4 left-4 right-4 z-50';
+      ? 'fixed bottom-20 left-4 right-4 mx-auto w-[calc(100%-2rem)] max-w-[61rem]'
+      : 'absolute bottom-4 left-4 right-4';
 
-  const overlayClass = variant === 'filter' ? 'fixed inset-0 z-40 bg-black/10' : 'absolute inset-0 z-40 bg-black/10';
+  const overlayClass = variant === 'filter' ? 'fixed inset-0 bg-black/10' : 'absolute inset-0 bg-black/10';
 
   const handleOverlayClick = (e: MouseEvent) => {
     if (e.target === e.currentTarget) {
@@ -23,6 +23,7 @@ export const BottomSheet = ({ open, onClose, children, variant = 'map' }: Props)
     }
   };
 
+  // BottomSheet가 열려 있는 동안 배경 스크롤 방지
   useEffect(() => {
     if (!open) return;
 
@@ -39,8 +40,9 @@ export const BottomSheet = ({ open, onClose, children, variant = 'map' }: Props)
     <AnimatePresence>
       {open && (
         <>
+          {/* Overlay */}
           <motion.div
-            className={overlayClass}
+            className={`${overlayClass} z-40`}
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
@@ -48,8 +50,9 @@ export const BottomSheet = ({ open, onClose, children, variant = 'map' }: Props)
             onClick={handleOverlayClick}
           />
 
+          {/* BottomSheet */}
           <motion.div
-            className={`${positionClass} rounded-3xl border border-border bg-white/95 p-5 shadow-xl backdrop-blur-md`}
+            className={`${positionClass} z-50 max-h-[calc(100dvh-5rem)] overflow-hidden rounded-3xl border border-border bg-white/95 p-5 shadow-xl backdrop-blur-md`}
             initial={{ y: '120%', opacity: 0 }}
             animate={{ y: 0, opacity: 1 }}
             exit={{ y: '120%', opacity: 0 }}
@@ -73,6 +76,7 @@ export const BottomSheet = ({ open, onClose, children, variant = 'map' }: Props)
               }
             }}
           >
+            {/* 닫기 버튼 */}
             <button
               onClick={onClose}
               className='absolute right-4 top-4 rounded-full p-2 text-text-muted transition hover:bg-gray-100'
@@ -81,7 +85,8 @@ export const BottomSheet = ({ open, onClose, children, variant = 'map' }: Props)
               <X size={20} />
             </button>
 
-            <div className='mb-4 flex justify-center'>
+            {/* Drag Handle */}
+            <div className='mb-4 flex shrink-0 justify-center'>
               <motion.div
                 className='h-1.5 w-12 rounded-full bg-gray-300'
                 whileHover={{ scaleX: 1.1 }}
@@ -93,7 +98,8 @@ export const BottomSheet = ({ open, onClose, children, variant = 'map' }: Props)
               />
             </div>
 
-            {children}
+            {/* Content */}
+            <div className='max-h-[calc(100dvh-9rem)] overflow-y-auto'>{children}</div>
           </motion.div>
         </>
       )}
