@@ -22,16 +22,55 @@ PARK_MAP_COLUMNS = [
 ]
 
 
-@router.get("/map")
+@router.get(
+    "/map",
+    summary="공원 위치 정보 조회",
+    description="""
+지도에 공원 위치를 표시하기 위한 공원 정보를 조회합니다.
+
+지도 영역을 기준으로 조회할 수 있으며,
+검색어, 난이도, 자치구, 반려동물 출입 여부를 이용해 공원을 필터링할 수 있습니다.
+
+반환 데이터는 지도 마커 표시와 필터링에 필요한 공원 기본 정보를 포함합니다.
+""",
+)
 def read_map_parks(
-    west: float | None = Query(None),
-    south: float | None = Query(None),
-    east: float | None = Query(None),
-    north: float | None = Query(None),
-    keyword: Annotated[str | None, Query()] = None,
-    difficulty: Annotated[list[str] | None, Query()] = None,
-    district: Annotated[list[str] | None, Query()] = None,
-    pet_status: Annotated[list[str] | None, Query()] = None,
+    west: float | None = Query(
+        None,
+        description="지도 영역의 서쪽 경도",
+        examples=[126.8],
+    ),
+    south: float | None = Query(
+        None,
+        description="지도 영역의 남쪽 위도",
+        examples=[37.4],
+    ),
+    east: float | None = Query(
+        None,
+        description="지도 영역의 동쪽 경도",
+        examples=[127.1],
+    ),
+    north: float | None = Query(
+        None,
+        description="지도 영역의 북쪽 위도",
+        examples=[37.7],
+    ),
+    keyword: Annotated[
+        str | None,
+        Query(description="공원 이름 검색"),
+    ] = None,
+    difficulty: Annotated[
+        list[str] | None,
+        Query(description="공원 난이도 필터"),
+    ] = None,
+    district: Annotated[
+        list[str] | None,
+        Query(description="자치구 필터"),
+    ] = None,
+    pet_status: Annotated[
+        list[str] | None,
+        Query(description="반려동물 출입 여부 필터"),
+    ] = None,
 ):
     bbox = None
 
