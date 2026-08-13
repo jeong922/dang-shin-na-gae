@@ -143,8 +143,8 @@ export const ParkDetail = () => {
       <CardSection icon={<Trees size={20} />} title='시설 안내'>
         {park.information.facilities.length > 0 ? (
           <div className='space-y-3'>
-            {park.information.facilities.map((facility) => (
-              <ContentCard key={facility.category} title={facility.category ?? '시설'}>
+            {park.information.facilities.map((facility, index) => (
+              <ContentCard key={`${facility.category}-${index}`} title={facility.category ?? '시설'}>
                 {facility.content}
               </ContentCard>
             ))}
@@ -157,9 +157,9 @@ export const ParkDetail = () => {
       <CardSection icon={<Leaf size={20} />} title='식물 정보'>
         {park.information.plants.length > 0 ? (
           <div className='space-y-3'>
-            {park.information.plants.map((plant) => (
+            {park.information.plants.map((plant, index) => (
               <ContentCard
-                key={plant.category}
+                key={`${plant.category}-${index}`}
                 icon={<Leaf size={16} className='text-brand' />}
                 title={plant.category ?? '식물'}
               >
@@ -179,8 +179,8 @@ export const ParkDetail = () => {
 
         {park.pet.notices.length > 0 && (
           <ul className='mt-4 space-y-2 text-sm leading-6 text-text-secondary'>
-            {park.pet.notices.map((notice) => (
-              <li key={notice}>• {notice}</li>
+            {park.pet.notices.map((notice, index) => (
+              <li key={`${notice}-${index}`}>• {notice}</li>
             ))}
           </ul>
         )}
@@ -190,8 +190,8 @@ export const ParkDetail = () => {
             <p className='text-sm font-semibold'>제한 구역</p>
 
             <div className='mt-2 flex flex-wrap gap-2'>
-              {park.pet.restrictedLocations.map((location) => (
-                <Badge key={location} className='bg-slate-100 text-text-primary shadow-sm'>
+              {park.pet.restrictedLocations.map((location, index) => (
+                <Badge key={`${location}-${index}`} className='bg-slate-100 text-text-primary shadow-sm'>
                   {location}
                 </Badge>
               ))}
@@ -210,8 +210,8 @@ export const ParkDetail = () => {
       <CardSection title='이용 안내'>
         {park.notices.length > 0 ? (
           <ul className='space-y-2 text-sm leading-7 text-text-secondary'>
-            {park.notices.map((notice) => (
-              <li key={notice}>• {notice}</li>
+            {park.notices.map((notice, index) => (
+              <li key={`${notice}-${index}`}>• {notice}</li>
             ))}
           </ul>
         ) : (
@@ -222,9 +222,9 @@ export const ParkDetail = () => {
       <CardSection icon={<Navigation size={20} />} title='찾아오는 길'>
         {park.directions.length > 0 ? (
           <div className='space-y-3'>
-            {park.directions.map((direction) => (
+            {park.directions.map((direction, index) => (
               <ContentCard
-                key={direction.type}
+                key={`${direction.type}-${index}`}
                 icon={<Navigation size={16} className='text-brand' />}
                 title={direction.type ?? '이동 안내'}
               >
