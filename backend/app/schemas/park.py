@@ -110,5 +110,5 @@ class ParkListResponse(BaseModel):
 
 
 class ParkSearchResponse(BaseModel):
-    items: list[ParkMapResponse]
+    items: list[ParkMapItem]
     total: int
