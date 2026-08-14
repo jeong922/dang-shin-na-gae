@@ -53,10 +53,6 @@ def get_search_parks(
 
     total = len(df)
 
-    print(difficulty)
-    print(district)
-    print(pet_status)
-
     # 지도에서는 전체 반환
     return {
         "items": df.to_dict(orient="records"),
