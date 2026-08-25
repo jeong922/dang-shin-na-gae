@@ -1,0 +1,120 @@
+﻿park_id,park_name,geometry_source,match_method,polygon_count,source_ids,source_names,note,geometry_type,area_m2
+1,남산공원,seoul_shapefile,automatic_high,1,생활서비스시설_공원_0012,도시자연공원(남산),자동 매칭 high,MultiPolygon,3120185.59
+2,길동생태공원,seoul_shapefile,automatic_high,1,생활서비스시설_공원_0016,도시자연공원((일자산)<길동생태공원>),자동 매칭 high,Polygon,69041.31
+3,서울대공원,seoul_shapefile,automatic_high,1,생활서비스시설_공원_0041,근린공원(서울대공원),자동 매칭 high,Polygon,6417670.57
+4,서울숲,seoul_shapefile,automatic_high,1,생활서비스시설_공원_0035,근린공원(서울숲),자동 매칭 high,MultiPolygon,247156.01
+5,월드컵공원,seoul_shapefile,automatic_high,1,생활서비스시설_공원_0038,근린공원(월드컵),자동 매칭 high,Polygon,1548948.33
+6,광화문시민열린마당,seoul_shapefile,automatic_high,1,생활서비스시설_공원_0010,광장(광화문열린마당),자동 매칭 high,Polygon,8946.13
+8,중마루근린공원,seoul_shapefile,automatic_high,1,생활서비스시설_공원_0014,근린공원(중마루),자동 매칭 high,Polygon,6014.13
+9,응봉공원 (대현산배수지공원),seoul_shapefile,automatic_high,1,생활서비스시설_공원_0022,근린공원((응봉)),자동 매칭 high,MultiPolygon,160660.58
+10,매화근린공원,seoul_shapefile,automatic_high,1,생활서비스시설_공원_0013,근린공원(매화),자동 매칭 high,Polygon,1940.64
+11,성수근린공원,seoul_shapefile,automatic_high,1,생활서비스시설_공원_0019,근린공원(성수),자동 매칭 high,Polygon,5117.38
+12,샛마을근린공원,seoul_shapefile,automatic_high,1,생활서비스시설_공원_0024,근린공원(샛마을),자동 매칭 high,Polygon,12043.44
+13,여의도근린공원,seoul_shapefile,automatic_high,1,생활서비스시설_공원_0008,근린공원(여의도),자동 매칭 high,Polygon,226223.68
+14,간데메근린공원,seoul_shapefile,automatic_high,1,생활서비스시설_공원_0020,근린공원(간데메),자동 매칭 high,Polygon,15104.42
+15,훈련원근린공원,seoul_shapefile,automatic_high,1,생활서비스시설_공원_0039,근린공원(훈련원),자동 매칭 high,Polygon,16950.26
+16,영등포근린공원,seoul_shapefile,automatic_high,1,생활서비스시설_공원_0017,근린공원(영등포),자동 매칭 high,Polygon,61690.48
+17,보라매공원,seoul_shapefile,manual_single_polygon,1,생활서비스시설_공원_1879,근린공원(보라매),보라매공원 후보 2개가 약 97% 겹쳐 자동 1위 Polygon을 대표로 사용,Polygon,428125.5
+18,어린이대공원,seoul_shapefile,automatic_high,1,생활서비스시설_공원_0044,근린공원(어린이대공원),자동 매칭 high,Polygon,607254.15
+19,천호근린공원,seoul_shapefile,automatic_high,1,생활서비스시설_공원_0021,근린공원(천호),자동 매칭 high,Polygon,26900.51
+20,용산가족공원,seoul_shapefile,automatic_high,1,생활서비스시설_공원_0004,기타공원(용산공원),자동 매칭 high,Polygon,82344.49
+21,독립근린공원,seoul_shapefile,automatic_high,1,생활서비스시설_공원_0026,근린공원(독립),자동 매칭 high,Polygon,108923.87
+22,낙산근린공원,seoul_shapefile,automatic_high,1,생활서비스시설_공원_0011,근린공원(낙산),자동 매칭 high,MultiPolygon,155318.38
+23,매헌시민의숲,seoul_shapefile,automatic_high,1,생활서비스시설_공원_0007,근린공원(시민의숲),자동 매칭 high,MultiPolygon,263368.5
+24,관악산공원,seoul_shapefile,automatic_high,1,생활서비스시설_공원_1414,도시자연공원(관악산<시공원>),자동 매칭 high,MultiPolygon,11816847.48
+25,효창근린공원,seoul_shapefile,automatic_high,1,생활서비스시설_공원_0166,근린공원(효창<시공원>),자동 매칭 high,Polygon,160491.52
+26,감로천생태공원(관악산),seoul_shapefile,automatic_high,1,생활서비스시설_공원_1257,도시자연공원((관악산)<시공원>),자동 매칭 high,Polygon,2535851.09
+27,개운산근린공원,seoul_shapefile,automatic_high,1,생활서비스시설_공원_0486,근린공원(개운산<시공원>),자동 매칭 high,Polygon,268026.37
+29,경희궁,seoul_shapefile,automatic_high,1,생활서비스시설_공원_0068,근린공원(경희궁<시공원>),자동 매칭 high,Polygon,100592.33
+30,국립서울현충원,seoul_shapefile,automatic_high,1,생활서비스시설_공원_1350,묘지공원(현충<시공원>),자동 매칭 high,MultiPolygon,2275484.02
+31,계남근린공원,seoul_shapefile,automatic_high,1,생활서비스시설_공원_1028,근린공원(계남<시공원>),자동 매칭 high,Polygon,474034.17
+32,고척근린공원,seoul_shapefile,automatic_high,1,생활서비스시설_공원_1195,근린공원(고척<시공원>),자동 매칭 high,Polygon,109064.84
+33,파리근린공원,seoul_shapefile,automatic_high,1,생활서비스시설_공원_1029,근린공원(빠리),자동 매칭 high,Polygon,29423.78
+34,허준공원,seoul_shapefile,manual_alias,1,생활서비스시설_공원_1144,근린공원(구암),허준공원은 구암근린공원의 다른 명칭으로 확인하여 Polygon 매칭,Polygon,29955.03
+35,궁동근린공원,seoul_shapefile,automatic_high,1,생활서비스시설_공원_0845,근린공원(궁동<시공원>),자동 매칭 high,Polygon,152770.37
+36,궁산근린공원,seoul_shapefile,automatic_high,1,생활서비스시설_공원_1128,근린공원(궁산<시공원>),자동 매칭 high,Polygon,133385.41
+37,까치산근린공원,seoul_shapefile,automatic_high,1,생활서비스시설_공원_1352,근린공원(까치산<시공원>),자동 매칭 high,Polygon,405060.69
+38,꿩고개근린공원,seoul_shapefile,automatic_high,1,생활서비스시설_공원_1123,근린공원(꿩고개<시공원>),자동 매칭 high,Polygon,247918.52
+39,노량진공원,seoul_shapefile,automatic_high,1,생활서비스시설_공원_1331,근린공원(노량진<시공원>),자동 매칭 high,MultiPolygon,328472.8
+40,답십리근린공원,seoul_shapefile,automatic_high,1,생활서비스시설_공원_0316,근린공원(답십리<시공원>),자동 매칭 high,Polygon,166350.48
+41,대모산도시자연공원,seoul_shapefile,automatic_high,1,생활서비스시설_공원_1667,도시자연공원((대모산)<시공원>),자동 매칭 high,Polygon,3092910.34
+42,탑골근린공원,seoul_shapefile,automatic_high,1,생활서비스시설_공원_0088,근린공원(탑골),자동 매칭 high,Polygon,15134.19
+43,갈산근린공원,seoul_shapefile,automatic_high,1,생활서비스시설_공원_0976,근린공원(칼산<시공원>),자동 매칭 high,Polygon,136706.14
+44,천마근린공원,seoul_shapefile,automatic_high,1,생활서비스시설_공원_1779,근린공원(천마<시공원>),자동 매칭 high,Polygon,185441.39
+46,도산근린공원,seoul_shapefile,automatic_high,1,생활서비스시설_공원_1573,근린공원(도산),자동 매칭 high,Polygon,29816.82
+47,청량공원,seoul_shapefile,automatic_high,1,생활서비스시설_공원_0470,근린공원(청량<시공원>),자동 매칭 high,Polygon,750693.32
+48,초안산근린공원,seoul_shapefile,automatic_high,1,생활서비스시설_공원_0560,근린공원((초안산)<시공원>),자동 매칭 high,Polygon,695896.18
+49,동명근린공원,seoul_shapefile,automatic_high,1,생활서비스시설_공원_1837,근린공원(동명),자동 매칭 high,MultiPolygon,99570.47
+50,마로니에공원,seoul_shapefile,automatic_high,1,생활서비스시설_공원_0073,근린공원(마로니에),자동 매칭 high,Polygon,6417.65
+51,자매근린공원,seoul_shapefile,automatic_high,1,생활서비스시설_공원_1293,근린공원(자매),자동 매칭 high,Polygon,16391.49
+52,장지근린공원,seoul_shapefile,automatic_high,1,생활서비스시설_공원_1726,근린공원(장지<시공원>),자동 매칭 high,MultiPolygon,697902.02
+53,명일근린공원,seoul_shapefile,automatic_high,1,생활서비스시설_공원_1818,근린공원(명일<시공원>),자동 매칭 high,MultiPolygon,651959.15
+54,방화근린공원,seoul_shapefile,automatic_high,1,생활서비스시설_공원_1127,근린공원(방화),자동 매칭 high,Polygon,72176.93
+55,아시아근린공원,seoul_shapefile,automatic_high,1,생활서비스시설_공원_1772,근린공원(아시아),자동 매칭 high,Polygon,66184.72
+56,배봉산근린공원,seoul_shapefile,automatic_high,1,생활서비스시설_공원_0321,근린공원(배봉산<시공원>),자동 매칭 high,Polygon,286061.7
+57,안산도시자연공원,seoul_shapefile,automatic_high,1,생활서비스시설_공원_0822,도시자연공원(안산<시공원>),자동 매칭 high,MultiPolygon,1916809.6
+58,염창근린공원,seoul_shapefile,automatic_high,1,생활서비스시설_공원_1078,근린공원(염창<시공원>),자동 매칭 high,Polygon,113815.58
+59,백련근린공원,seoul_shapefile,automatic_high,1,생활서비스시설_공원_0805,근린공원(백련<시공원>),자동 매칭 high,Polygon,974805.14
+60,오금근린공원,seoul_shapefile,automatic_high,1,생활서비스시설_공원_1723,근린공원(오금<시공원>),자동 매칭 high,Polygon,219369.07
+61,오동근린공원,seoul_shapefile,automatic_high,1,생활서비스시설_공원_0516,근린공원(오동<시공원>),자동 매칭 high,Polygon,1346216.06
+62,봉산도시자연공원,seoul_shapefile,automatic_high,1,생활서비스시설_공원_0746,도시자연공원(봉산<시공원>),자동 매칭 high,Polygon,1570759.03
+64,봉은공원,seoul_shapefile,automatic_high,1,생활서비스시설_공원_1622,근린공원(봉은),자동 매칭 high,Polygon,75635.38
+65,올림픽공원,seoul_shapefile,automatic_high,1,생활서비스시설_공원_1716,기타공원(올림픽공원),자동 매칭 high,Polygon,1612238.07
+66,와룡근린공원,seoul_shapefile,automatic_high,1,생활서비스시설_공원_0078,근린공원(와룡<시공원>),자동 매칭 high,Polygon,173816.7
+67,봉화산근린공원,seoul_shapefile,automatic_high,1,생활서비스시설_공원_0384,근린공원(봉화산<시공원>),자동 매칭 high,Polygon,1035093.55
+68,북악산도시자연공원,seoul_shapefile,automatic_high,1,생활서비스시설_공원_0107,도시자연공원((북악산)<시공원>),자동 매칭 high,Polygon,409820.09
+69,북한산국립공원,seoul_shapefile,manual_likely_match,1,생활서비스시설_공원_0431,도시자연공원((북한산)<시공원>),북한산 이름이 강하게 일치하고 대규모 도시자연공원 Polygon으로 판단,MultiPolygon,2648603.88
+70,외국인묘지공원,seoul_shapefile,automatic_high,1,생활서비스시설_공원_0915,묘지공원(외국인<시공원>),자동 매칭 high,Polygon,13191.2
+71,불광근린공원,seoul_shapefile,automatic_high,1,생활서비스시설_공원_0767,근린공원(불광<시공원>),자동 매칭 high,Polygon,132134.73
+72,불암산도시자연공원,seoul_shapefile,automatic_high,1,생활서비스시설_공원_0703,도시자연공원(불암산<시공원>),자동 매칭 high,Polygon,5362741.45
+73,용마폭포공원,seoul_shapefile,automatic_high,1,생활서비스시설_공원_0378,도시자연공원(용마<시공원>),자동 매칭 high,Polygon,2677353.17
+74,사육신공원,seoul_shapefile,automatic_high,1,생활서비스시설_공원_1356,묘지공원(사육신<시공원>),자동 매칭 high,Polygon,48647.11
+75,용왕산근린공원,seoul_shapefile,automatic_high,1,생활서비스시설_공원_0972,근린공원(용왕산<시공원>),자동 매칭 high,Polygon,223587.66
+76,사직근린공원,seoul_shapefile,automatic_high,1,생활서비스시설_공원_0101,근린공원(사직<시공원>),자동 매칭 high,MultiPolygon,162821.26
+77,우장산근린공원,seoul_shapefile,automatic_high,1,생활서비스시설_공원_1077,근린공원(우장<시공원>),자동 매칭 high,Polygon,362023.72
+78,삼일근린공원,seoul_shapefile,manual_alias,1,생활서비스시설_공원_1341,근린공원(3.1),삼일근린공원과 근린공원(3.1)은 명칭 표기 차이로 판단,Polygon,28785.18
+79,삼청근린공원,seoul_shapefile,automatic_high,1,생활서비스시설_공원_0074,근린공원(삼청<시공원>),자동 매칭 high,Polygon,956183.07
+80,인왕산도시자연공원,seoul_shapefile,automatic_high,1,생활서비스시설_공원_0063,도시자연공원(인왕산<시공원>),자동 매칭 high,Polygon,1138530.74
+81,상도근린공원,seoul_shapefile,automatic_high,1,생활서비스시설_공원_1450,근린공원((상도)<시공원>),자동 매칭 high,MultiPolygon,239230.89
+82,일자산근린공원,seoul_shapefile,automatic_high,1,생활서비스시설_공원_1819,도시자연공원(일자산<시공원>),자동 매칭 high,MultiPolygon,499633.18
+83,쌍문근린공원,seoul_shapefile,automatic_high,1,생활서비스시설_공원_0591,근린공원(쌍문<시공원>),자동 매칭 high,Polygon,379182.45
+84,수락산도시자연공원,seoul_shapefile,manual_likely_match,1,생활서비스시설_공원_0712,도시자연공원(수락산<시공원>),수락산 이름이 강하게 일치하고 대규모 도시자연공원 Polygon으로 판단,Polygon,6917534.76
+85,송파나루근린공원(석촌호수),seoul_shapefile,automatic_high,1,생활서비스시설_공원_1765,근린공원(송파나루<시공원>),자동 매칭 high,MultiPolygon,286335.81
+86,선유도근린공원,seoul_shapefile,automatic_high,1,생활서비스시설_공원_0023,근린공원(선유도공원),자동 매칭 high,Polygon,113922.46
+87,손기정체육공원,seoul_shapefile,automatic_high,1,생활서비스시설_공원_0134,체육공원(손기정),자동 매칭 high,Polygon,29781.88
+88,성북근린공원,seoul_shapefile,automatic_high,1,생활서비스시설_공원_0439,근린공원(성북<시공원>),자동 매칭 high,Polygon,115434.23
+89,봉제산공원,seoul_shapefile,automatic_high,1,생활서비스시설_공원_1149,근린공원(봉제산<시공원>),자동 매칭 high,Polygon,901082.17
+91,북서울꿈의숲,seoul_shapefile,manual_alias,1,생활서비스시설_공원_0516,근린공원(오동<시공원>),북서울꿈의숲은 오동근린공원 영역과 대응하는 것으로 판단,Polygon,1346216.06
+92,서서울호수공원,seoul_shapefile,automatic_high,1,생활서비스시설_공원_1855,문화공원(서서울호수),자동 매칭 high,Polygon,219185.59
+94,솔밭근린공원,seoul_shapefile,automatic_high,1,생활서비스시설_공원_0504,근린공원(솔밭),자동 매칭 high,Polygon,33082.35
+95,금천체육공원(관악산),seoul_shapefile,automatic_high,1,생활서비스시설_공원_1257,도시자연공원((관악산)<시공원>),자동 매칭 high,Polygon,2535851.09
+97,만수천공원(관악산),seoul_shapefile,automatic_high,1,생활서비스시설_공원_1257,도시자연공원((관악산)<시공원>),자동 매칭 high,Polygon,2535851.09
+98,발바닥공원,seoul_shapefile,automatic_high,1,생활서비스시설_공원_0584,소공원(발바닥공원),자동 매칭 high,MultiPolygon,19854.53
+99,월천근린공원,seoul_shapefile,automatic_high,1,생활서비스시설_공원_0564,근린공원(월천),자동 매칭 high,Polygon,10712.03
+101,상암근린공원,seoul_shapefile,automatic_high,1,생활서비스시설_공원_0908,근린공원(상암<시공원>),자동 매칭 high,Polygon,165145.87
+103,금호근린공원,seoul_shapefile,automatic_high,1,생활서비스시설_공원_0188,근린공원(금호),자동 매칭 high,Polygon,13548.67
+105,문정근린공원,seoul_shapefile,automatic_high,1,생활서비스시설_공원_0032,근린공원(문정동근린공원),자동 매칭 high,MultiPolygon,52991.91
+106,문화예술공원,seoul_shapefile,manual_parent_polygon,1,생활서비스시설_공원_0007,근린공원(시민의숲),문화예술공원은 시민의숲 관리구역 일부로 확인되어 시민의숲 상위 Polygon 사용,MultiPolygon,263368.5
+107,세종로공원,seoul_shapefile,automatic_high,1,생활서비스시설_공원_0095,광장(세종로광장),자동 매칭 high,Polygon,8849.64
+108,샘말공원(관악산근린공원 샘말지구),seoul_shapefile,automatic_high,1,생활서비스시설_공원_1414,도시자연공원(관악산<시공원>),자동 매칭 high,MultiPolygon,11816847.48
+109,초안산생태공원,seoul_shapefile,automatic_high,1,생활서비스시설_공원_0560,근린공원((초안산)<시공원>),자동 매칭 high,Polygon,695896.18
+110,푸른수목원,seoul_shapefile,automatic_high,1,생활서비스시설_공원_0025,근린공원(푸른수목원),자동 매칭 high,Polygon,96226.94
+112,청계산도시자연공원,seoul_shapefile,automatic_high,1,생활서비스시설_공원_0003,도시자연공원((청계산)<서울대공원>),자동 매칭 high,Polygon,2358251.01
+114,아차산공원,seoul_shapefile,manual_parent_polygon,1,생활서비스시설_공원_0244,도시자연공원((용마)<시공원>),아차산공원은 용마 도시자연공원 계열 Polygon을 상위 영역으로 사용,Polygon,2363774.87
+115,인능산도시자연공원,seoul_shapefile,manual_multi_polygon,3,생활서비스시설_공원_1497|생활서비스시설_공원_1545|생활서비스시설_공원_1539,도시자연공원(인능산1<시공원>)|도시자연공원(인능산2<시공원>)|도시자연공원(인능산3<시공원>),"인능산도시자연공원은 인능산1, 인능산2, 인능산3 Polygon을 함께 사용",MultiPolygon,2543444.76
+117,우면산도시자연공원,seoul_shapefile,automatic_high,1,생활서비스시설_공원_1556,도시자연공원(우면산<시공원>),자동 매칭 high,Polygon,3792081.33
+119,신사근린공원,seoul_shapefile,automatic_high,1,생활서비스시설_공원_0791,마을마당(신사2동),자동 매칭 high,Polygon,148.34
+121,청담근린공원,seoul_shapefile,automatic_high,1,생활서비스시설_공원_1631,근린공원(청담),자동 매칭 high,Polygon,59348.69
+122,허브천문공원,seoul_shapefile,manual_parent_polygon,1,생활서비스시설_공원_1819,도시자연공원(일자산<시공원>),허브천문공원은 일자산 도시자연공원 내부 시설로 판단,MultiPolygon,499633.18
+123,GTX연신849광장(구 물빛공원),seoul_shapefile,automatic_high,1,생활서비스시설_공원_0784,기타공원(연신내물빛),자동 매칭 high,Polygon,2084.15
+124,숭인근린공원,seoul_shapefile,automatic_high,1,생활서비스시설_공원_0070,근린공원(숭인),자동 매칭 high,Polygon,42658.55
+125,서일대뒷산공원,seoul_shapefile,manual_parent_polygon,1,생활서비스시설_공원_0378,도시자연공원(용마<시공원>),서일대뒷산공원은 용마 도시자연공원 내부 영역으로 판단,Polygon,2677353.17
+126,용마도시자연공원(사가정공원),seoul_shapefile,automatic_high,1,생활서비스시설_공원_0378,도시자연공원(용마<시공원>),자동 매칭 high,Polygon,2677353.17
+45,도곡근린공원,osm,osm_fallback,1,369972508,도곡근린공원,서울시 Shapefile에서 신뢰 가능한 Polygon을 찾지 못해 OSM 1위 후보를 수동 검증 후 사용,Polygon,306009.13
+90,서울창포원,osm,osm_fallback,1,303964376,서울창포원,서울시 Shapefile에서 신뢰 가능한 Polygon을 찾지 못해 OSM 1위 후보를 수동 검증 후 사용,Polygon,61674.15
+93,중랑캠핑숲,osm,osm_fallback,1,544146098,중랑캠핑숲,서울시 Shapefile에서 신뢰 가능한 Polygon을 찾지 못해 OSM 1위 후보를 수동 검증 후 사용,Polygon,189268.73
+96,금천폭포근린공원,osm,osm_fallback,1,479257410,금천폭포공원,서울시 Shapefile에서 신뢰 가능한 Polygon을 찾지 못해 OSM 1위 후보를 수동 검증 후 사용,Polygon,5076.52
+100,용두근린공원,osm,osm_fallback,1,416569028,용두공원,서울시 Shapefile에서 신뢰 가능한 Polygon을 찾지 못해 OSM 1위 후보를 수동 검증 후 사용,Polygon,17151.58
+102,와우근린공원,osm,osm_fallback,1,216906544,와우근린공원,서울시 Shapefile에서 신뢰 가능한 Polygon을 찾지 못해 OSM 1위 후보를 수동 검증 후 사용,Polygon,91578.33
+127,문화비축기지,osm,osm_fallback,1,690412540,문화비축기지,서울시 Shapefile에서 신뢰 가능한 Polygon을 찾지 못해 OSM 1위 후보를 수동 검증 후 사용,Polygon,76393.55
+129,율현공원,osm,osm_fallback,1,611808438,율현공원,서울시 Shapefile에서 신뢰 가능한 Polygon을 찾지 못해 OSM 1위 후보를 수동 검증 후 사용,Polygon,102982.55

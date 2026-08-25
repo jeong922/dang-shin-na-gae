@@ -1,0 +1,131 @@
+﻿park_id,park_name,match_status,match_method,polygon_count,polygon_ids,polygon_labels,note
+1,남산공원,matched,automatic_high,1,생활서비스시설_공원_0012,도시자연공원(남산),자동 매칭 high
+2,길동생태공원,matched,automatic_high,1,생활서비스시설_공원_0016,도시자연공원((일자산)<길동생태공원>),자동 매칭 high
+3,서울대공원,matched,automatic_high,1,생활서비스시설_공원_0041,근린공원(서울대공원),자동 매칭 high
+4,서울숲,matched,automatic_high,1,생활서비스시설_공원_0035,근린공원(서울숲),자동 매칭 high
+5,월드컵공원,matched,automatic_high,1,생활서비스시설_공원_0038,근린공원(월드컵),자동 매칭 high
+6,광화문시민열린마당,matched,automatic_high,1,생활서비스시설_공원_0010,광장(광화문열린마당),자동 매칭 high
+7,진관근린공원(구파발폭포),no_match,automatic_unmatched,0,,,자동 매칭 단계에서 신뢰할 수 있는 Polygon 후보를 찾지 못함
+8,중마루근린공원,matched,automatic_high,1,생활서비스시설_공원_0014,근린공원(중마루),자동 매칭 high
+9,응봉공원 (대현산배수지공원),matched,automatic_high,1,생활서비스시설_공원_0022,근린공원((응봉)),자동 매칭 high
+10,매화근린공원,matched,automatic_high,1,생활서비스시설_공원_0013,근린공원(매화),자동 매칭 high
+11,성수근린공원,matched,automatic_high,1,생활서비스시설_공원_0019,근린공원(성수),자동 매칭 high
+12,샛마을근린공원,matched,automatic_high,1,생활서비스시설_공원_0024,근린공원(샛마을),자동 매칭 high
+13,여의도근린공원,matched,automatic_high,1,생활서비스시설_공원_0008,근린공원(여의도),자동 매칭 high
+14,간데메근린공원,matched,automatic_high,1,생활서비스시설_공원_0020,근린공원(간데메),자동 매칭 high
+15,훈련원근린공원,matched,automatic_high,1,생활서비스시설_공원_0039,근린공원(훈련원),자동 매칭 high
+16,영등포근린공원,matched,automatic_high,1,생활서비스시설_공원_0017,근린공원(영등포),자동 매칭 high
+17,보라매공원,matched,manual_single_polygon,1,생활서비스시설_공원_1879,근린공원(보라매),보라매공원 후보 2개가 약 97% 겹쳐 자동 1위 Polygon을 대표로 사용
+18,어린이대공원,matched,automatic_high,1,생활서비스시설_공원_0044,근린공원(어린이대공원),자동 매칭 high
+19,천호근린공원,matched,automatic_high,1,생활서비스시설_공원_0021,근린공원(천호),자동 매칭 high
+20,용산가족공원,matched,automatic_high,1,생활서비스시설_공원_0004,기타공원(용산공원),자동 매칭 high
+21,독립근린공원,matched,automatic_high,1,생활서비스시설_공원_0026,근린공원(독립),자동 매칭 high
+22,낙산근린공원,matched,automatic_high,1,생활서비스시설_공원_0011,근린공원(낙산),자동 매칭 high
+23,매헌시민의숲,matched,automatic_high,1,생활서비스시설_공원_0007,근린공원(시민의숲),자동 매칭 high
+24,관악산공원,matched,automatic_high,1,생활서비스시설_공원_1414,도시자연공원(관악산<시공원>),자동 매칭 high
+25,효창근린공원,matched,automatic_high,1,생활서비스시설_공원_0166,근린공원(효창<시공원>),자동 매칭 high
+26,감로천생태공원(관악산),matched,automatic_high,1,생활서비스시설_공원_1257,도시자연공원((관악산)<시공원>),자동 매칭 high
+27,개운산근린공원,matched,automatic_high,1,생활서비스시설_공원_0486,근린공원(개운산<시공원>),자동 매칭 high
+28,개웅산근린공원,no_match,manual_no_match,0,,,개웅산근린공원과 어린이공원(개웅)은 규모와 공원 유형이 달라 별개 공원으로 판단
+29,경희궁,matched,automatic_high,1,생활서비스시설_공원_0068,근린공원(경희궁<시공원>),자동 매칭 high
+30,국립서울현충원,matched,automatic_high,1,생활서비스시설_공원_1350,묘지공원(현충<시공원>),자동 매칭 high
+31,계남근린공원,matched,automatic_high,1,생활서비스시설_공원_1028,근린공원(계남<시공원>),자동 매칭 high
+32,고척근린공원,matched,automatic_high,1,생활서비스시설_공원_1195,근린공원(고척<시공원>),자동 매칭 high
+33,파리근린공원,matched,automatic_high,1,생활서비스시설_공원_1029,근린공원(빠리),자동 매칭 high
+34,허준공원,matched,manual_alias,1,생활서비스시설_공원_1144,근린공원(구암),허준공원은 구암근린공원의 다른 명칭으로 확인하여 Polygon 매칭
+35,궁동근린공원,matched,automatic_high,1,생활서비스시설_공원_0845,근린공원(궁동<시공원>),자동 매칭 high
+36,궁산근린공원,matched,automatic_high,1,생활서비스시설_공원_1128,근린공원(궁산<시공원>),자동 매칭 high
+37,까치산근린공원,matched,automatic_high,1,생활서비스시설_공원_1352,근린공원(까치산<시공원>),자동 매칭 high
+38,꿩고개근린공원,matched,automatic_high,1,생활서비스시설_공원_1123,근린공원(꿩고개<시공원>),자동 매칭 high
+39,노량진공원,matched,automatic_high,1,생활서비스시설_공원_1331,근린공원(노량진<시공원>),자동 매칭 high
+40,답십리근린공원,matched,automatic_high,1,생활서비스시설_공원_0316,근린공원(답십리<시공원>),자동 매칭 high
+41,대모산도시자연공원,matched,automatic_high,1,생활서비스시설_공원_1667,도시자연공원((대모산)<시공원>),자동 매칭 high
+42,탑골근린공원,matched,automatic_high,1,생활서비스시설_공원_0088,근린공원(탑골),자동 매칭 high
+43,갈산근린공원,matched,automatic_high,1,생활서비스시설_공원_0976,근린공원(칼산<시공원>),자동 매칭 high
+44,천마근린공원,matched,automatic_high,1,생활서비스시설_공원_1779,근린공원(천마<시공원>),자동 매칭 high
+45,도곡근린공원,no_match,manual_no_match,0,,,도곡목련·도곡까치 어린이공원은 도곡근린공원과 별개의 공원으로 판단
+46,도산근린공원,matched,automatic_high,1,생활서비스시설_공원_1573,근린공원(도산),자동 매칭 high
+47,청량공원,matched,automatic_high,1,생활서비스시설_공원_0470,근린공원(청량<시공원>),자동 매칭 high
+48,초안산근린공원,matched,automatic_high,1,생활서비스시설_공원_0560,근린공원((초안산)<시공원>),자동 매칭 high
+49,동명근린공원,matched,automatic_high,1,생활서비스시설_공원_1837,근린공원(동명),자동 매칭 high
+50,마로니에공원,matched,automatic_high,1,생활서비스시설_공원_0073,근린공원(마로니에),자동 매칭 high
+51,자매근린공원,matched,automatic_high,1,생활서비스시설_공원_1293,근린공원(자매),자동 매칭 high
+52,장지근린공원,matched,automatic_high,1,생활서비스시설_공원_1726,근린공원(장지<시공원>),자동 매칭 high
+53,명일근린공원,matched,automatic_high,1,생활서비스시설_공원_1818,근린공원(명일<시공원>),자동 매칭 high
+54,방화근린공원,matched,automatic_high,1,생활서비스시설_공원_1127,근린공원(방화),자동 매칭 high
+55,아시아근린공원,matched,automatic_high,1,생활서비스시설_공원_1772,근린공원(아시아),자동 매칭 high
+56,배봉산근린공원,matched,automatic_high,1,생활서비스시설_공원_0321,근린공원(배봉산<시공원>),자동 매칭 high
+57,안산도시자연공원,matched,automatic_high,1,생활서비스시설_공원_0822,도시자연공원(안산<시공원>),자동 매칭 high
+58,염창근린공원,matched,automatic_high,1,생활서비스시설_공원_1078,근린공원(염창<시공원>),자동 매칭 high
+59,백련근린공원,matched,automatic_high,1,생활서비스시설_공원_0805,근린공원(백련<시공원>),자동 매칭 high
+60,오금근린공원,matched,automatic_high,1,생활서비스시설_공원_1723,근린공원(오금<시공원>),자동 매칭 high
+61,오동근린공원,matched,automatic_high,1,생활서비스시설_공원_0516,근린공원(오동<시공원>),자동 매칭 high
+62,봉산도시자연공원,matched,automatic_high,1,생활서비스시설_공원_0746,도시자연공원(봉산<시공원>),자동 매칭 high
+63,온수도시자연공원,no_match,manual_no_reliable_match,0,,,이름 일치도와 공간적 근거가 부족하여 신뢰할 수 있는 Polygon 없음
+64,봉은공원,matched,automatic_high,1,생활서비스시설_공원_1622,근린공원(봉은),자동 매칭 high
+65,올림픽공원,matched,automatic_high,1,생활서비스시설_공원_1716,기타공원(올림픽공원),자동 매칭 high
+66,와룡근린공원,matched,automatic_high,1,생활서비스시설_공원_0078,근린공원(와룡<시공원>),자동 매칭 high
+67,봉화산근린공원,matched,automatic_high,1,생활서비스시설_공원_0384,근린공원(봉화산<시공원>),자동 매칭 high
+68,북악산도시자연공원,matched,automatic_high,1,생활서비스시설_공원_0107,도시자연공원((북악산)<시공원>),자동 매칭 high
+69,북한산국립공원,matched,manual_likely_match,1,생활서비스시설_공원_0431,도시자연공원((북한산)<시공원>),북한산 이름이 강하게 일치하고 대규모 도시자연공원 Polygon으로 판단
+70,외국인묘지공원,matched,automatic_high,1,생활서비스시설_공원_0915,묘지공원(외국인<시공원>),자동 매칭 high
+71,불광근린공원,matched,automatic_high,1,생활서비스시설_공원_0767,근린공원(불광<시공원>),자동 매칭 high
+72,불암산도시자연공원,matched,automatic_high,1,생활서비스시설_공원_0703,도시자연공원(불암산<시공원>),자동 매칭 high
+73,용마폭포공원,matched,automatic_high,1,생활서비스시설_공원_0378,도시자연공원(용마<시공원>),자동 매칭 high
+74,사육신공원,matched,automatic_high,1,생활서비스시설_공원_1356,묘지공원(사육신<시공원>),자동 매칭 high
+75,용왕산근린공원,matched,automatic_high,1,생활서비스시설_공원_0972,근린공원(용왕산<시공원>),자동 매칭 high
+76,사직근린공원,matched,automatic_high,1,생활서비스시설_공원_0101,근린공원(사직<시공원>),자동 매칭 high
+77,우장산근린공원,matched,automatic_high,1,생활서비스시설_공원_1077,근린공원(우장<시공원>),자동 매칭 high
+78,삼일근린공원,matched,manual_alias,1,생활서비스시설_공원_1341,근린공원(3.1),삼일근린공원과 근린공원(3.1)은 명칭 표기 차이로 판단
+79,삼청근린공원,matched,automatic_high,1,생활서비스시설_공원_0074,근린공원(삼청<시공원>),자동 매칭 high
+80,인왕산도시자연공원,matched,automatic_high,1,생활서비스시설_공원_0063,도시자연공원(인왕산<시공원>),자동 매칭 high
+81,상도근린공원,matched,automatic_high,1,생활서비스시설_공원_1450,근린공원((상도)<시공원>),자동 매칭 high
+82,일자산근린공원,matched,automatic_high,1,생활서비스시설_공원_1819,도시자연공원(일자산<시공원>),자동 매칭 high
+83,쌍문근린공원,matched,automatic_high,1,생활서비스시설_공원_0591,근린공원(쌍문<시공원>),자동 매칭 high
+84,수락산도시자연공원,matched,manual_likely_match,1,생활서비스시설_공원_0712,도시자연공원(수락산<시공원>),수락산 이름이 강하게 일치하고 대규모 도시자연공원 Polygon으로 판단
+85,송파나루근린공원(석촌호수),matched,automatic_high,1,생활서비스시설_공원_1765,근린공원(송파나루<시공원>),자동 매칭 high
+86,선유도근린공원,matched,automatic_high,1,생활서비스시설_공원_0023,근린공원(선유도공원),자동 매칭 high
+87,손기정체육공원,matched,automatic_high,1,생활서비스시설_공원_0134,체육공원(손기정),자동 매칭 high
+88,성북근린공원,matched,automatic_high,1,생활서비스시설_공원_0439,근린공원(성북<시공원>),자동 매칭 high
+89,봉제산공원,matched,automatic_high,1,생활서비스시설_공원_1149,근린공원(봉제산<시공원>),자동 매칭 high
+90,서울창포원,no_match,manual_no_reliable_match,0,,,서울창포원과 신뢰할 수 있게 대응되는 Polygon을 찾지 못함
+91,북서울꿈의숲,matched,manual_alias,1,생활서비스시설_공원_0516,근린공원(오동<시공원>),북서울꿈의숲은 오동근린공원 영역과 대응하는 것으로 판단
+92,서서울호수공원,matched,automatic_high,1,생활서비스시설_공원_1855,문화공원(서서울호수),자동 매칭 high
+93,중랑캠핑숲,no_match,manual_no_reliable_match,0,,,중랑캠핑숲과 신뢰할 수 있게 대응되는 Polygon을 찾지 못함
+94,솔밭근린공원,matched,automatic_high,1,생활서비스시설_공원_0504,근린공원(솔밭),자동 매칭 high
+95,금천체육공원(관악산),matched,automatic_high,1,생활서비스시설_공원_1257,도시자연공원((관악산)<시공원>),자동 매칭 high
+96,금천폭포근린공원,no_match,manual_no_reliable_match,0,,,금천폭포근린공원과 신뢰할 수 있게 대응되는 Polygon을 찾지 못함
+97,만수천공원(관악산),matched,automatic_high,1,생활서비스시설_공원_1257,도시자연공원((관악산)<시공원>),자동 매칭 high
+98,발바닥공원,matched,automatic_high,1,생활서비스시설_공원_0584,소공원(발바닥공원),자동 매칭 high
+99,월천근린공원,matched,automatic_high,1,생활서비스시설_공원_0564,근린공원(월천),자동 매칭 high
+100,용두근린공원,no_match,manual_no_match,0,,,어린이공원(용두희망)은 약 1.3km 떨어져 있어 동일 공원 근거가 부족함
+101,상암근린공원,matched,automatic_high,1,생활서비스시설_공원_0908,근린공원(상암<시공원>),자동 매칭 high
+102,와우근린공원,no_match,manual_no_match,0,,,와우근린공원과 어린이공원(와우)은 별개의 공원으로 확인
+103,금호근린공원,matched,automatic_high,1,생활서비스시설_공원_0188,근린공원(금호),자동 매칭 high
+104,달맞이근린공원,no_match,manual_no_reliable_match,0,,,달맞이근린공원과 신뢰할 수 있게 대응되는 Polygon을 찾지 못함
+105,문정근린공원,matched,automatic_high,1,생활서비스시설_공원_0032,근린공원(문정동근린공원),자동 매칭 high
+106,문화예술공원,matched,manual_parent_polygon,1,생활서비스시설_공원_0007,근린공원(시민의숲),문화예술공원은 시민의숲 관리구역 일부로 확인되어 시민의숲 상위 Polygon 사용
+107,세종로공원,matched,automatic_high,1,생활서비스시설_공원_0095,광장(세종로광장),자동 매칭 high
+108,샘말공원(관악산근린공원 샘말지구),matched,automatic_high,1,생활서비스시설_공원_1414,도시자연공원(관악산<시공원>),자동 매칭 high
+109,초안산생태공원,matched,automatic_high,1,생활서비스시설_공원_0560,근린공원((초안산)<시공원>),자동 매칭 high
+110,푸른수목원,matched,automatic_high,1,생활서비스시설_공원_0025,근린공원(푸른수목원),자동 매칭 high
+111,서오능도시자연공원,no_match,automatic_unmatched,0,,,자동 매칭 단계에서 신뢰할 수 있는 Polygon 후보를 찾지 못함
+112,청계산도시자연공원,matched,automatic_high,1,생활서비스시설_공원_0003,도시자연공원((청계산)<서울대공원>),자동 매칭 high
+113,개화근린공원,no_match,manual_no_match,0,,,개화근린공원과 어린이공원(개화)은 규모와 공원 유형이 달라 별개 공원으로 판단
+114,아차산공원,matched,manual_parent_polygon,1,생활서비스시설_공원_0244,도시자연공원((용마)<시공원>),아차산공원은 용마 도시자연공원 계열 Polygon을 상위 영역으로 사용
+115,인능산도시자연공원,matched,manual_multi_polygon,3,생활서비스시설_공원_1497|생활서비스시설_공원_1545|생활서비스시설_공원_1539,도시자연공원(인능산1<시공원>)|도시자연공원(인능산2<시공원>)|도시자연공원(인능산3<시공원>),"인능산도시자연공원은 인능산1, 인능산2, 인능산3 Polygon을 함께 사용"
+116,구룡산도시자연공원,no_match,manual_no_reliable_match,0,,,구룡산도시자연공원과 신뢰할 수 있게 대응되는 Polygon을 찾지 못함
+117,우면산도시자연공원,matched,automatic_high,1,생활서비스시설_공원_1556,도시자연공원(우면산<시공원>),자동 매칭 high
+118,향림근린공원,no_match,manual_no_reliable_match,0,,,향림근린공원과 신뢰할 수 있게 대응되는 Polygon을 찾지 못함
+119,신사근린공원,matched,automatic_high,1,생활서비스시설_공원_0791,마을마당(신사2동),자동 매칭 high
+120,광평근린공원,no_match,manual_no_reliable_match,0,,,광평근린공원과 신뢰할 수 있게 대응되는 Polygon을 찾지 못함
+121,청담근린공원,matched,automatic_high,1,생활서비스시설_공원_1631,근린공원(청담),자동 매칭 high
+122,허브천문공원,matched,manual_parent_polygon,1,생활서비스시설_공원_1819,도시자연공원(일자산<시공원>),허브천문공원은 일자산 도시자연공원 내부 시설로 판단
+123,GTX연신849광장(구 물빛공원),matched,automatic_high,1,생활서비스시설_공원_0784,기타공원(연신내물빛),자동 매칭 high
+124,숭인근린공원,matched,automatic_high,1,생활서비스시설_공원_0070,근린공원(숭인),자동 매칭 high
+125,서일대뒷산공원,matched,manual_parent_polygon,1,생활서비스시설_공원_0378,도시자연공원(용마<시공원>),서일대뒷산공원은 용마 도시자연공원 내부 영역으로 판단
+126,용마도시자연공원(사가정공원),matched,automatic_high,1,생활서비스시설_공원_0378,도시자연공원(용마<시공원>),자동 매칭 high
+127,문화비축기지,no_match,manual_no_reliable_match,0,,,문화비축기지와 신뢰할 수 있게 대응되는 Polygon을 찾지 못함
+128,경춘선숲길,no_match,manual_no_reliable_match,0,,,경춘선숲길과 신뢰할 수 있게 대응되는 Polygon을 찾지 못함
+129,율현공원,no_match,manual_no_match,0,,,마을마당(율현동)은 약 910m 떨어져 있어 동일 공원 근거가 부족함
+131,서울식물원,no_match,manual_no_reliable_match,0,,,서울식물원과 신뢰할 수 있게 대응되는 Polygon을 찾지 못함
