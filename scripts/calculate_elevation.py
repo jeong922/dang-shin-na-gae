@@ -11,7 +11,7 @@ from dotenv import load_dotenv
 
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-INPUT_PATH = BASE_DIR / "data" / "processed" / "parks.csv"
+INPUT_PATH = BASE_DIR / "data" / "processed" / "parks_with_final_area.csv"
 
 OUTPUT_PATH = BASE_DIR / "data" / "features" / "parks_features.csv"
 
@@ -159,7 +159,7 @@ for idx, row in parks.iterrows():
 
     try:
 
-        sample_distance = get_sample_distance(row["area"])
+        sample_distance = get_sample_distance(row["final_area_m2"])
 
         points, distances = create_sample_points(
             row["lat"],

@@ -28,11 +28,10 @@ parks = pd.read_csv(
 
 # 난이도 계산에 사용할 Feature
 feature_columns = [
-    "area",
+    "final_area_m2",
     "elevation_diff",
     "avg_slope",
 ]
-
 
 # 결측 데이터 제거
 parks = parks.dropna(subset=feature_columns).reset_index(drop=True)
@@ -45,7 +44,7 @@ scaled_features = parks[feature_columns].copy()
 
 
 # 면적과 고도차는 값의 범위가 크기 때문에 로그 변환
-scaled_features["area"] = np.log1p(scaled_features["area"])
+scaled_features["final_area_m2"] = np.log1p(scaled_features["final_area_m2"])
 
 
 scaled_features["elevation_diff"] = np.log1p(scaled_features["elevation_diff"])
