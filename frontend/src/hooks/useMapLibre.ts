@@ -1,4 +1,5 @@
 import { GeoJSONSource, LngLatBounds, Map as MapLibreMap, NavigationControl, setWorkerUrl } from 'maplibre-gl';
+import type { FilterSpecification } from 'maplibre-gl';
 import maplibreWorker from 'maplibre-gl/dist/maplibre-gl-worker.mjs?worker&url';
 import { useCallback, useEffect, useMemo, useRef } from 'react';
 import type { Bounds, ParkMap } from '../types/park';
@@ -154,6 +155,39 @@ export const useMapLibre = ({
 
     // 지도 로드 완료
     map.on('load', () => {
+      // 공원 Polygon Source
+      map.addSource('park-polygons-source', {
+        type: 'geojson',
+        data: '/data/final_park_polygons.geojson',
+      });
+
+      map.addLayer({
+        id: 'park-polygons-fill',
+        type: 'fill',
+        source: 'park-polygons-source',
+
+        filter: ['==', ['get', 'park_id'], -1],
+
+        paint: {
+          'fill-color': '#22C55E',
+          'fill-opacity': 0.18,
+        },
+      });
+
+      map.addLayer({
+        id: 'park-polygons-outline',
+        type: 'line',
+        source: 'park-polygons-source',
+
+        filter: ['==', ['get', 'park_id'], -1],
+
+        paint: {
+          'line-color': '#16A34A',
+          'line-width': 3,
+          'line-opacity': 0.9,
+        },
+      });
+
       //GeoJSON Source
       map.addSource('parks-source', {
         type: 'geojson',
@@ -436,6 +470,18 @@ export const useMapLibre = ({
           selected: false,
         },
       );
+    }
+
+    // 선택된 공원의 Polygon만 표시
+    const polygonFilter: FilterSpecification =
+      selectedParkId !== null ? ['==', ['get', 'park_id'], selectedParkId] : ['==', ['get', 'park_id'], -1];
+
+    if (map.getLayer('park-polygons-fill')) {
+      map.setFilter('park-polygons-fill', polygonFilter);
+    }
+
+    if (map.getLayer('park-polygons-outline')) {
+      map.setFilter('park-polygons-outline', polygonFilter);
     }
 
     // 새로운 공원 선택
