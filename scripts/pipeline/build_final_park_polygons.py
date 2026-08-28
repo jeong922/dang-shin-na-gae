@@ -26,33 +26,28 @@ OUTPUT_CSV = BASE_DIR / "data" / "processed" / "final_park_polygon_summary.csv"
 
 
 # ============================================================
-# 설정
-# ============================================================
-
-EXPECTED_PARK_COUNT = 130
-
-EXPECTED_SHAPEFILE_MATCHED = 111
-
-
-# ============================================================
 # 기존 no_match → OSM fallback
 # ============================================================
 #
-# 서울시 Shapefile에서 적절한 Polygon을 찾지 못했지만,
-# OSM 후보를 직접 검증한 뒤 사용하기로 결정한 공원.
+# 중요:
+# park_id가 아니라 park_name 기준으로 관리한다.
 #
-# 이 공원들은 기존 matched 111개와 별도로 추가된다.
+# 서울시 원본의 연번(id)은 공원이 추가/삭제되면 바뀔 수 있지만
+# 공원명은 수동 검증 결과를 연결하는 기준으로 상대적으로 안정적이다.
+#
+# 아래 공원들은 서울시 Shapefile에서는 신뢰할 Polygon을 확정하지
+# 못했지만, OSM 1위 후보를 사람이 직접 검증한 뒤 사용하기로 한 공원이다.
 # ============================================================
 
-OSM_FALLBACK_PARK_IDS = {
-    45,  # 도곡근린공원
-    90,  # 서울창포원
-    93,  # 중랑캠핑숲
-    96,  # 금천폭포근린공원
-    100,  # 용두근린공원
-    102,  # 와우근린공원
-    127,  # 문화비축기지
-    129,  # 율현공원
+OSM_FALLBACK_PARK_NAMES = {
+    "도곡근린공원",
+    "서울창포원",
+    "중랑캠핑숲",
+    "금천폭포근린공원",
+    "용두근린공원",
+    "와우근린공원",
+    "문화비축기지",
+    "율현공원",
 }
 
 
@@ -60,16 +55,15 @@ OSM_FALLBACK_PARK_IDS = {
 # 서울시 Polygon → OSM Polygon 교체
 # ============================================================
 #
-# 서울시 Shapefile에는 Polygon이 매칭되어 있었지만,
-# 면적/이름/위치 검증 결과 더 신뢰할 수 있는
-# OSM Polygon으로 교체하기로 결정한 공원.
+# 서울시 Shapefile에 매칭은 되어 있었지만
+# 위치/이름/면적 검증 결과 OSM Polygon이 더 신뢰할 수 있었던 공원.
 #
-# replacement는 기존 matched 공원을 교체하는 것이므로
-# 최종 Polygon 개수를 증가시키지는 않는다.
+# key는 park_name.
+# osm_id는 이미 수동 검증한 OSM 객체 ID.
 # ============================================================
 
 OSM_REPLACEMENTS = {
-    9: {
+    "응봉공원 (대현산배수지공원)": {
         "osm_id": "381793811",
         "osm_name": "대현산 배수지공원",
         "note": (
@@ -77,7 +71,7 @@ OSM_REPLACEMENTS = {
             "OSM 대현산 배수지공원은 공식 면적과 거의 일치하여 교체"
         ),
     },
-    95: {
+    "금천체육공원(관악산)": {
         "osm_id": "385989548",
         "osm_name": "금천체육공원",
         "note": (
@@ -85,7 +79,7 @@ OSM_REPLACEMENTS = {
             "OSM 금천체육공원은 이름, 위치, 면적이 모두 일치하여 교체"
         ),
     },
-    108: {
+    "샘말공원(관악산근린공원 샘말지구)": {
         "osm_id": "471343618",
         "osm_name": "샘말공원",
         "note": (
@@ -93,7 +87,7 @@ OSM_REPLACEMENTS = {
             "OSM 샘말공원 Polygon으로 교체"
         ),
     },
-    119: {
+    "신사근린공원": {
         "osm_id": "223356722",
         "osm_name": "신사근린공원",
         "note": (
@@ -101,7 +95,7 @@ OSM_REPLACEMENTS = {
             "OSM 신사근린공원 Polygon으로 교체"
         ),
     },
-    122: {
+    "허브천문공원": {
         "osm_id": "672784474",
         "osm_name": "일자산허브천문공원",
         "note": (
@@ -112,7 +106,7 @@ OSM_REPLACEMENTS = {
             "경계 정의 차이 가능성이 있음."
         ),
     },
-    106: {
+    "문화예술공원": {
         "osm_id": "370130119",
         "osm_name": "서초문화예술공원",
         "note": (
@@ -130,117 +124,121 @@ OSM_REPLACEMENTS = {
 # 신뢰할 수 있는 Polygon이 없는 공원
 # ============================================================
 #
-# 서울시 Shapefile에서는 matched였지만,
-#
-# - 과도하게 큰 parent Polygon이 매칭되었거나
-# - 실제 공원과 다른 Polygon이 매칭되었거나
-# - OSM에서도 신뢰할 수 있는 대체 Polygon을 찾지 못한 경우
+# 서울시 Shapefile에서는 matched였지만
+# 실제 대상보다 과도하게 큰 parent Polygon이거나 잘못 매칭됐고,
+# OSM에서도 신뢰할 수 있는 대체 Polygon을 찾지 못한 경우.
 #
 # 최종 GeoJSON에서 제외한다.
-#
-# 앞으로 제외 대상이 생기면 이 딕셔너리에만 추가한다.
-# NO_RELIABLE_POLYGON_PARK_IDS는 아래에서 자동 생성한다.
 # ============================================================
 
 EXCLUDED_PARKS = {
-    26: (
+    "감로천생태공원(관악산)": (
         "관악산 전체 영역으로 과대 매칭되었으며 "
         "신뢰할 수 있는 개별 Polygon을 찾지 못함"
     ),
-    97: (
+    "만수천공원(관악산)": (
         "관악산 전체 영역으로 과대 매칭되었으며 "
         "신뢰할 수 있는 개별 Polygon을 찾지 못함"
     ),
-    109: (
+    "초안산생태공원": (
         "현재 서울시 Polygon은 초안산 전체에 가까우며, "
         "OSM 초안산생태공원은 이름은 일치하지만 "
         "대표 좌표 및 공식 면적과 차이가 커 "
         "정확한 Polygon으로 확정하기 어려움"
     ),
-    114: (
+    "아차산공원": (
         "현재 매칭된 용마 도시자연공원 Polygon은 "
         "공식 면적보다 약 100배 크며, "
         "OSM의 아차산생태공원은 별개의 공원이므로 "
         "대체 Polygon으로 사용할 수 없음"
     ),
-    126: (
+    "용마도시자연공원(사가정공원)": (
         "현재 Polygon이 대상 공원보다 지나치게 큰 parent Polygon이며, "
         "사가정공원에 해당하는 신뢰할 수 있는 개별 Polygon을 찾지 못함"
     ),
-    125: (
-        "서일대뒷산공원: 현재 매칭된 Polygon은 실제 공원보다 지나치게 큰 "
+    "서일대뒷산공원": (
+        "현재 매칭된 Polygon은 실제 공원보다 지나치게 큰 "
         "상위 산지 영역이며, 지도에서 확인되는 실제 공원 범위와 일치하지 않음"
     ),
 }
 
 
 # ============================================================
-# 파생 설정
-# ============================================================
-#
-# 위의 설정값에서 자동으로 생성한다.
-#
-# 같은 park_id를 여러 곳에서 중복 관리하지 않도록 한다.
+# 파생 설정 / 충돌 검사
 # ============================================================
 
-OSM_REPLACEMENT_PARK_IDS = set(OSM_REPLACEMENTS.keys())
+OSM_REPLACEMENT_PARK_NAMES = set(OSM_REPLACEMENTS.keys())
+NO_RELIABLE_POLYGON_PARK_NAMES = set(EXCLUDED_PARKS.keys())
 
-NO_RELIABLE_POLYGON_PARK_IDS = set(EXCLUDED_PARKS.keys())
-
-
-# ============================================================
-# 설정 충돌 검사
-# ============================================================
-#
-# 하나의 공원이
-#
-# - OSM replacement
-# - Polygon 제외
-#
-# 두 상태를 동시에 가지면 안 된다.
-# ============================================================
-
-replacement_excluded_overlap = OSM_REPLACEMENT_PARK_IDS & NO_RELIABLE_POLYGON_PARK_IDS
+replacement_excluded_overlap = (
+    OSM_REPLACEMENT_PARK_NAMES & NO_RELIABLE_POLYGON_PARK_NAMES
+)
 
 if replacement_excluded_overlap:
     raise ValueError(
-        "OSM replacement와 Polygon 제외 대상이 "
-        "중복됩니다: "
+        "OSM replacement와 Polygon 제외 대상이 중복됩니다: "
         f"{sorted(replacement_excluded_overlap)}"
     )
 
-
-fallback_excluded_overlap = OSM_FALLBACK_PARK_IDS & NO_RELIABLE_POLYGON_PARK_IDS
+fallback_excluded_overlap = OSM_FALLBACK_PARK_NAMES & NO_RELIABLE_POLYGON_PARK_NAMES
 
 if fallback_excluded_overlap:
     raise ValueError(
-        "OSM fallback과 Polygon 제외 대상이 "
-        "중복됩니다: "
+        "OSM fallback과 Polygon 제외 대상이 중복됩니다: "
         f"{sorted(fallback_excluded_overlap)}"
+    )
+
+fallback_replacement_overlap = OSM_FALLBACK_PARK_NAMES & OSM_REPLACEMENT_PARK_NAMES
+
+if fallback_replacement_overlap:
+    raise ValueError(
+        "OSM fallback과 replacement 대상이 중복됩니다: "
+        f"{sorted(fallback_replacement_overlap)}"
     )
 
 
 # ============================================================
-# 예상 개수
+# 공통 함수
 # ============================================================
 
-EXPECTED_OSM_FALLBACK = len(OSM_FALLBACK_PARK_IDS)
 
-EXPECTED_OSM_REPLACEMENT = len(OSM_REPLACEMENTS)
+def to_wgs84_geometry(geometry, source_crs):
+    """
+    Geometry 하나를 EPSG:4326으로 변환한다.
 
-EXPECTED_NO_RELIABLE = len(NO_RELIABLE_POLYGON_PARK_IDS)
+    기존 코드처럼 결과 리스트의 앞/뒤 개수를 이용해
+    Shapefile/OSM Geometry를 나눠 변환하지 않고,
+    Geometry를 추가하는 시점에 바로 CRS를 통일한다.
+    """
+
+    return (
+        gpd.GeoSeries(
+            [geometry],
+            crs=source_crs,
+        )
+        .to_crs("EPSG:4326")
+        .iloc[0]
+    )
 
 
-# replacement는 기존 matched를 교체하므로 개수 변화 없음.
-#
-# 최종 =
-# 기존 Shapefile matched
-# - 신뢰 불가 Polygon
-# + 기존 no_match 중 OSM fallback
-#
-EXPECTED_FINAL_POLYGONS = (
-    EXPECTED_SHAPEFILE_MATCHED - EXPECTED_NO_RELIABLE + EXPECTED_OSM_FALLBACK
-)
+def calculate_area_m2(geometry, source_crs):
+    """
+    Geometry 면적을 EPSG:5186 기준 m²로 계산한다.
+    """
+
+    geometry_metric = (
+        gpd.GeoSeries(
+            [geometry],
+            crs=source_crs,
+        )
+        .to_crs("EPSG:5186")
+        .iloc[0]
+    )
+
+    return round(
+        geometry_metric.area,
+        2,
+    )
 
 
 # ============================================================
@@ -254,9 +252,7 @@ required_files = [
     OSM_CANDIDATES_CSV,
 ]
 
-
 for path in required_files:
-
     if not path.exists():
         raise FileNotFoundError(f"필요한 파일을 찾을 수 없습니다:\n{path}")
 
@@ -274,69 +270,149 @@ osm = gpd.read_file(OSM_GEOJSON)
 osm_candidates = pd.read_csv(OSM_CANDIDATES_CSV)
 
 
-# ============================================================
-# 데이터 정보
-# ============================================================
-
 print("=" * 70)
 print("데이터 정보")
 print("=" * 70)
 
-print(
-    "전체 공원:",
-    len(matches),
-)
-
-print(
-    "서울시 Polygon:",
-    len(polygons),
-)
-
-print(
-    "OSM 후보:",
-    len(osm),
-)
-
-print(
-    "OSM 매칭 후보 행:",
-    len(osm_candidates),
-)
+print("전체 공원:", len(matches))
+print("서울시 Polygon:", len(polygons))
+print("OSM 후보:", len(osm))
+print("OSM 매칭 후보 행:", len(osm_candidates))
 
 
 # ============================================================
-# 기본 검증
+# 필수 컬럼 검증
 # ============================================================
 
-if len(matches) != EXPECTED_PARK_COUNT:
+required_match_columns = {
+    "park_id",
+    "park_name",
+    "match_status",
+    "match_method",
+    "polygon_count",
+    "polygon_ids",
+    "polygon_labels",
+    "note",
+}
 
+missing_match_columns = required_match_columns - set(matches.columns)
+
+if missing_match_columns:
     raise ValueError(
-        f"전체 공원이 " f"{EXPECTED_PARK_COUNT}개가 아닙니다: " f"{len(matches)}"
+        "park_polygon_matches_final.csv에 필요한 컬럼이 없습니다: "
+        f"{sorted(missing_match_columns)}"
+    )
+
+
+required_candidate_columns = {
+    "park_name",
+    "rank",
+    "osm_id",
+    "osm_name",
+    "fclass",
+}
+
+missing_candidate_columns = required_candidate_columns - set(osm_candidates.columns)
+
+if missing_candidate_columns:
+    raise ValueError(
+        "osm_unmatched_candidates.csv에 필요한 컬럼이 없습니다: "
+        f"{sorted(missing_candidate_columns)}"
     )
 
 
 # ============================================================
-# 설정 대상 park_id 존재 여부 확인
+# 공원명 중복 검사
+# ============================================================
+#
+# 이 파일의 수동 설정은 park_name 기준이므로
+# 동일한 이름이 여러 공원에 존재하면 안전하게 중단한다.
 # ============================================================
 
-match_park_ids = set(matches["park_id"].astype(int).tolist())
+duplicated_names = matches[matches["park_name"].duplicated(keep=False)]
 
+if not duplicated_names.empty:
+    print()
+    print("=" * 70)
+    print("중복 공원명")
+    print("=" * 70)
 
-configured_ids = (
-    OSM_FALLBACK_PARK_IDS | OSM_REPLACEMENT_PARK_IDS | NO_RELIABLE_POLYGON_PARK_IDS
-)
-
-
-missing_configured_ids = configured_ids - match_park_ids
-
-
-if missing_configured_ids:
+    print(
+        duplicated_names[
+            [
+                "park_id",
+                "park_name",
+            ]
+        ].to_string(index=False)
+    )
 
     raise ValueError(
-        "설정된 park_id 중 "
-        "park_polygon_matches_final.csv에 "
-        "존재하지 않는 ID가 있습니다: "
-        f"{sorted(missing_configured_ids)}"
+        "동일한 park_name이 여러 개 존재하여 "
+        "이름 기반 설정을 안전하게 적용할 수 없습니다."
     )
+
+
+# ============================================================
+# 설정 대상 공원 존재 여부 확인
+# ============================================================
+
+match_park_names = set(matches["park_name"].astype(str).tolist())
+
+configured_names = (
+    OSM_FALLBACK_PARK_NAMES
+    | OSM_REPLACEMENT_PARK_NAMES
+    | NO_RELIABLE_POLYGON_PARK_NAMES
+)
+
+missing_configured_names = configured_names - match_park_names
+
+if missing_configured_names:
+    raise ValueError(
+        "설정된 공원 중 park_polygon_matches_final.csv에 "
+        "존재하지 않는 공원이 있습니다: "
+        f"{sorted(missing_configured_names)}"
+    )
+
+
+# ============================================================
+# 설정 상태 검증
+# ============================================================
+
+match_by_name = matches.set_index("park_name")
+
+
+for park_name in OSM_FALLBACK_PARK_NAMES:
+    status = match_by_name.loc[
+        park_name,
+        "match_status",
+    ]
+
+    if status != "no_match":
+        raise ValueError(
+            f"{park_name}: OSM fallback 대상인데 " f"match_status={status} 입니다."
+        )
+
+
+for park_name in OSM_REPLACEMENT_PARK_NAMES | NO_RELIABLE_POLYGON_PARK_NAMES:
+    status = match_by_name.loc[
+        park_name,
+        "match_status",
+    ]
+
+    if status != "matched":
+        raise ValueError(
+            f"{park_name}: replacement/excluded 대상인데 "
+            f"match_status={status} 입니다."
+        )
+
+
+# ============================================================
+# OSM ID 문자열 정리
+# ============================================================
+
+osm["_osm_id_str"] = osm["osm_id"].astype(str)
+
+osm_candidates["_osm_id_str"] = osm_candidates["osm_id"].astype(str)
 
 
 # ============================================================
@@ -366,39 +442,26 @@ print(
 )
 
 
-if len(matched) != EXPECTED_SHAPEFILE_MATCHED:
-
-    raise ValueError(
-        f"기존 Shapefile matched가 "
-        f"{EXPECTED_SHAPEFILE_MATCHED}개가 아닙니다: "
-        f"{len(matched)}"
-    )
-
-
 for _, row in matched.iterrows():
 
     park_id = int(row["park_id"])
 
-    park_name = row["park_name"]
+    park_name = str(row["park_name"])
 
     # --------------------------------------------------------
     # OSM으로 교체할 공원
     # --------------------------------------------------------
-    #
-    # Shapefile Geometry는 넣지 않고,
-    # 아래 OSM replacement 단계에서 추가한다.
-    # --------------------------------------------------------
 
-    if park_id in OSM_REPLACEMENT_PARK_IDS:
+    if park_name in OSM_REPLACEMENT_PARK_NAMES:
         continue
 
     # --------------------------------------------------------
     # 신뢰할 수 없는 Polygon 제외
     # --------------------------------------------------------
 
-    if park_id in NO_RELIABLE_POLYGON_PARK_IDS:
+    if park_name in NO_RELIABLE_POLYGON_PARK_NAMES:
 
-        print(f"[제외] " f"[{park_id}] " f"{park_name}: " f"{EXCLUDED_PARKS[park_id]}")
+        print(f"[제외] [{park_id}] {park_name}: " f"{EXCLUDED_PARKS[park_name]}")
 
         continue
 
@@ -411,7 +474,6 @@ for _, row in matched.iterrows():
     # --------------------------------------------------------
 
     if pd.isna(polygon_ids_raw):
-
         raise ValueError(
             f"[{park_id}] {park_name}: " "matched인데 polygon_ids가 없습니다."
         )
@@ -423,7 +485,6 @@ for _, row in matched.iterrows():
     ]
 
     if len(polygon_ids) != polygon_count:
-
         raise ValueError(
             f"[{park_id}] {park_name}: "
             f"polygon_count={polygon_count}, "
@@ -455,24 +516,23 @@ for _, row in matched.iterrows():
     # --------------------------------------------------------
 
     if polygon_count == 1:
-
         geometry = selected.iloc[0].geometry
-
     else:
-
         geometry = unary_union(selected.geometry.tolist())
 
-    # --------------------------------------------------------
-    # 미터 CRS에서 면적 계산
-    # --------------------------------------------------------
-
-    geometry_metric = (
-        gpd.GeoSeries(
-            [geometry],
-            crs=polygons.crs,
+    if geometry is None or geometry.is_empty:
+        raise ValueError(
+            f"[{park_id}] {park_name}: " "Shapefile Geometry가 비어 있습니다."
         )
-        .to_crs("EPSG:5186")
-        .iloc[0]
+
+    area_m2 = calculate_area_m2(
+        geometry,
+        polygons.crs,
+    )
+
+    geometry_4326 = to_wgs84_geometry(
+        geometry,
+        polygons.crs,
     )
 
     # --------------------------------------------------------
@@ -489,15 +549,12 @@ for _, row in matched.iterrows():
             "source_ids": "|".join(polygon_ids),
             "source_names": row["polygon_labels"],
             "note": row["note"],
-            "geometry_type": (geometry.geom_type),
-            "area_m2": round(
-                geometry_metric.area,
-                2,
-            ),
+            "geometry_type": geometry_4326.geom_type,
+            "area_m2": area_m2,
         }
     )
 
-    result_geometries.append(geometry)
+    result_geometries.append(geometry_4326)
 
 
 # ============================================================
@@ -510,50 +567,47 @@ print("OSM fallback Geometry 생성")
 print("=" * 70)
 
 
-osm_best = osm_candidates[
-    (osm_candidates["rank"] == 1)
-    & (osm_candidates["park_id"].isin(OSM_FALLBACK_PARK_IDS))
-].copy()
+for park_name in sorted(OSM_FALLBACK_PARK_NAMES):
 
+    park_match = match_by_name.loc[park_name]
 
-if len(osm_best) != EXPECTED_OSM_FALLBACK:
+    park_id = int(park_match["park_id"])
 
-    found_ids = set(osm_best["park_id"].astype(int).tolist())
+    # --------------------------------------------------------
+    # 기존 OSM 후보 파일에서도 park_name 기준으로 조회
+    #
+    # 과거 park_id가 변경되어도 후보를 재사용할 수 있게 한다.
+    # --------------------------------------------------------
 
-    missing_ids = OSM_FALLBACK_PARK_IDS - found_ids
+    candidate_rows = osm_candidates[
+        (osm_candidates["park_name"].astype(str) == park_name)
+        & (osm_candidates["rank"] == 1)
+    ].copy()
 
-    raise ValueError(
-        "OSM fallback 1위 후보가 "
-        "모두 존재하지 않습니다.\n"
-        f"누락 park_id: "
-        f"{sorted(missing_ids)}"
-    )
+    if candidate_rows.empty:
+        raise ValueError(
+            f"[{park_id}] {park_name}: " "OSM fallback 1위 후보가 없습니다."
+        )
 
+    if len(candidate_rows) > 1:
+        raise ValueError(
+            f"[{park_id}] {park_name}: "
+            "OSM fallback rank=1 후보가 "
+            f"{len(candidate_rows)}개 존재합니다."
+        )
 
-osm["_osm_id_str"] = osm["osm_id"].astype(str)
+    candidate = candidate_rows.iloc[0]
 
-
-osm_best["_osm_id_str"] = osm_best["osm_id"].astype(str)
-
-
-for _, candidate in osm_best.iterrows():
-
-    park_id = int(candidate["park_id"])
-
-    park_name = candidate["park_name"]
-
-    osm_id = candidate["_osm_id_str"]
+    osm_id = str(candidate["_osm_id_str"])
 
     osm_name = candidate["osm_name"]
 
     selected = osm[osm["_osm_id_str"] == osm_id].copy()
 
     if len(selected) > 1:
-
         selected = selected[selected["fclass"] == candidate["fclass"]].copy()
 
     if selected.empty:
-
         raise ValueError(
             f"[{park_id}] {park_name}: "
             f"OSM ID={osm_id} Geometry를 "
@@ -561,7 +615,6 @@ for _, candidate in osm_best.iterrows():
         )
 
     if len(selected) > 1:
-
         raise ValueError(
             f"[{park_id}] {park_name}: "
             f"OSM ID={osm_id}가 "
@@ -571,16 +624,16 @@ for _, candidate in osm_best.iterrows():
     geometry = selected.iloc[0].geometry
 
     if geometry is None or geometry.is_empty:
-
         raise ValueError(f"[{park_id}] {park_name}: " "OSM Geometry가 비어 있습니다.")
 
-    geometry_metric = (
-        gpd.GeoSeries(
-            [geometry],
-            crs=osm.crs,
-        )
-        .to_crs("EPSG:5186")
-        .iloc[0]
+    area_m2 = calculate_area_m2(
+        geometry,
+        osm.crs,
+    )
+
+    geometry_4326 = to_wgs84_geometry(
+        geometry,
+        osm.crs,
     )
 
     result_rows.append(
@@ -596,15 +649,12 @@ for _, candidate in osm_best.iterrows():
                 "서울시 Shapefile에서 신뢰 가능한 Polygon을 "
                 "찾지 못해 OSM 후보를 수동 검증 후 사용"
             ),
-            "geometry_type": (geometry.geom_type),
-            "area_m2": round(
-                geometry_metric.area,
-                2,
-            ),
+            "geometry_type": geometry_4326.geom_type,
+            "area_m2": area_m2,
         }
     )
 
-    result_geometries.append(geometry)
+    result_geometries.append(geometry_4326)
 
     print(f"[{park_id}] " f"{park_name} " f"-> {osm_name}")
 
@@ -620,36 +670,24 @@ print("=" * 70)
 
 
 for (
-    park_id,
+    park_name,
     replacement,
 ) in OSM_REPLACEMENTS.items():
 
-    park_match = matches[matches["park_id"] == park_id]
+    park_match = match_by_name.loc[park_name]
 
-    if park_match.empty:
-
-        raise ValueError(
-            f"park_id={park_id}를 "
-            "park_polygon_matches_final.csv에서 "
-            "찾을 수 없습니다."
-        )
-
-    park_match = park_match.iloc[0]
-
-    park_name = park_match["park_name"]
+    park_id = int(park_match["park_id"])
 
     osm_id = str(replacement["osm_id"])
 
     selected = osm[osm["_osm_id_str"] == osm_id].copy()
 
     if selected.empty:
-
         raise ValueError(
-            f"[{park_id}] {park_name}: " f"OSM ID={osm_id}를 " "찾을 수 없습니다."
+            f"[{park_id}] {park_name}: " f"OSM ID={osm_id}를 찾을 수 없습니다."
         )
 
     if len(selected) > 1:
-
         raise ValueError(
             f"[{park_id}] {park_name}: "
             f"OSM ID={osm_id}가 "
@@ -659,16 +697,16 @@ for (
     geometry = selected.iloc[0].geometry
 
     if geometry is None or geometry.is_empty:
-
         raise ValueError(f"[{park_id}] {park_name}: " "OSM Geometry가 비어 있습니다.")
 
-    geometry_metric = (
-        gpd.GeoSeries(
-            [geometry],
-            crs=osm.crs,
-        )
-        .to_crs("EPSG:5186")
-        .iloc[0]
+    area_m2 = calculate_area_m2(
+        geometry,
+        osm.crs,
+    )
+
+    geometry_4326 = to_wgs84_geometry(
+        geometry,
+        osm.crs,
     )
 
     result_rows.append(
@@ -681,70 +719,19 @@ for (
             "source_ids": osm_id,
             "source_names": replacement["osm_name"],
             "note": replacement["note"],
-            "geometry_type": (geometry.geom_type),
-            "area_m2": round(
-                geometry_metric.area,
-                2,
-            ),
+            "geometry_type": geometry_4326.geom_type,
+            "area_m2": area_m2,
         }
     )
 
-    result_geometries.append(geometry)
+    result_geometries.append(geometry_4326)
 
     print(
         f"[{park_id}] "
         f"{park_name} "
         f"-> {replacement['osm_name']} "
-        f"({geometry_metric.area:,.2f}㎡)"
+        f"({area_m2:,.2f}㎡)"
     )
-
-
-# ============================================================
-# CRS 통일
-# ============================================================
-#
-# result_geometries에는
-#
-# 1. 서울시 Shapefile Geometry
-# 2. OSM fallback Geometry
-# 3. OSM replacement Geometry
-#
-# 순서로 들어 있다.
-# ============================================================
-
-shapefile_count = (
-    EXPECTED_SHAPEFILE_MATCHED
-    - len(OSM_REPLACEMENT_PARK_IDS)
-    - len(NO_RELIABLE_POLYGON_PARK_IDS)
-)
-
-
-shapefile_geometries = result_geometries[:shapefile_count]
-
-osm_geometries = result_geometries[shapefile_count:]
-
-
-shapefile_geometries_4326 = (
-    gpd.GeoSeries(
-        shapefile_geometries,
-        crs=polygons.crs,
-    )
-    .to_crs("EPSG:4326")
-    .tolist()
-)
-
-
-osm_geometries_4326 = (
-    gpd.GeoSeries(
-        osm_geometries,
-        crs=osm.crs,
-    )
-    .to_crs("EPSG:4326")
-    .tolist()
-)
-
-
-final_geometries = shapefile_geometries_4326 + osm_geometries_4326
 
 
 # ============================================================
@@ -753,9 +740,11 @@ final_geometries = shapefile_geometries_4326 + osm_geometries_4326
 
 final_gdf = gpd.GeoDataFrame(
     result_rows,
-    geometry=final_geometries,
+    geometry=result_geometries,
     crs="EPSG:4326",
 )
+
+final_gdf = final_gdf.sort_values("park_id").reset_index(drop=True)
 
 
 # ============================================================
@@ -768,22 +757,41 @@ print("최종 Geometry 검증")
 print("=" * 70)
 
 
-if len(final_gdf) != EXPECTED_FINAL_POLYGONS:
+# ------------------------------------------------------------
+# 예상 Polygon 공원 수를 현재 입력 데이터로 동적 계산
+#
+# final =
+# matched
+# - excluded
+# + no_match 중 OSM fallback
+#
+# replacement는 기존 matched 하나를 OSM 하나로 교체하므로
+# 총 개수 변화 없음.
+# ------------------------------------------------------------
 
+expected_final_count = (
+    len(matched) - len(NO_RELIABLE_POLYGON_PARK_NAMES) + len(OSM_FALLBACK_PARK_NAMES)
+)
+
+
+if len(final_gdf) != expected_final_count:
     raise ValueError(
-        f"최종 Polygon이 "
-        f"{EXPECTED_FINAL_POLYGONS}개가 아닙니다: "
-        f"{len(final_gdf)}"
+        f"최종 Polygon 개수가 예상과 다릅니다. "
+        f"예상={expected_final_count}, "
+        f"실제={len(final_gdf)}"
     )
 
 
-duplicated = final_gdf[final_gdf["park_id"].duplicated(keep=False)]
+# ------------------------------------------------------------
+# park_id 중복
+# ------------------------------------------------------------
 
+duplicated_ids = final_gdf[final_gdf["park_id"].duplicated(keep=False)]
 
-if not duplicated.empty:
+if not duplicated_ids.empty:
 
     print(
-        duplicated[
+        duplicated_ids[
             [
                 "park_id",
                 "park_name",
@@ -796,15 +804,42 @@ if not duplicated.empty:
     raise ValueError("동일 park_id가 여러 번 존재합니다.")
 
 
-if final_gdf.geometry.isna().any():
+# ------------------------------------------------------------
+# park_name 중복
+# ------------------------------------------------------------
 
+duplicated_names = final_gdf[final_gdf["park_name"].duplicated(keep=False)]
+
+if not duplicated_names.empty:
+
+    print(
+        duplicated_names[
+            [
+                "park_id",
+                "park_name",
+                "geometry_source",
+                "match_method",
+            ]
+        ].to_string(index=False)
+    )
+
+    raise ValueError("동일 park_name이 여러 번 존재합니다.")
+
+
+# ------------------------------------------------------------
+# Geometry null / empty
+# ------------------------------------------------------------
+
+if final_gdf.geometry.isna().any():
     raise ValueError("null Geometry가 존재합니다.")
 
-
 if final_gdf.geometry.is_empty.any():
-
     raise ValueError("빈 Geometry가 존재합니다.")
 
+
+# ------------------------------------------------------------
+# Geometry validity
+# ------------------------------------------------------------
 
 invalid = final_gdf[~final_gdf.geometry.is_valid]
 
@@ -819,20 +854,19 @@ if not invalid.empty:
 
     print("유효하지 않은 Geometry를 " "buffer(0)으로 보정합니다.")
 
+    invalid_mask = ~final_gdf.geometry.is_valid
+
     final_gdf.loc[
-        ~final_gdf.geometry.is_valid,
+        invalid_mask,
         "geometry",
     ] = final_gdf.loc[
-        ~final_gdf.geometry.is_valid
+        invalid_mask
     ].geometry.buffer(0)
 
 
-# 보정 후 다시 검증
 still_invalid = final_gdf[~final_gdf.geometry.is_valid]
 
-
 if not still_invalid.empty:
-
     raise ValueError(
         "buffer(0) 보정 후에도 "
         f"유효하지 않은 Geometry가 "
@@ -844,7 +878,33 @@ final_gdf["geometry_type"] = final_gdf.geometry.geom_type
 
 
 # ============================================================
-# 최종 결과
+# 모든 결과가 원본 park 목록에 존재하는지 확인
+# ============================================================
+
+match_names = set(matches["park_name"].astype(str).tolist())
+
+final_names = set(final_gdf["park_name"].astype(str).tolist())
+
+unexpected_names = final_names - match_names
+
+if unexpected_names:
+    raise ValueError(
+        "최종 Polygon에 입력 공원 목록에 없는 "
+        f"공원이 있습니다: {sorted(unexpected_names)}"
+    )
+
+
+# ============================================================
+# Polygon 없는 공원
+# ============================================================
+
+parks_without_polygon = matches[
+    ~matches["park_name"].astype(str).isin(final_names)
+].copy()
+
+
+# ============================================================
+# 최종 결과 출력
 # ============================================================
 
 print()
@@ -852,10 +912,14 @@ print("=" * 70)
 print("최종 결과")
 print("=" * 70)
 
-
 print(
     "전체 공원:",
-    EXPECTED_PARK_COUNT,
+    len(matches),
+)
+
+print(
+    "입력 Shapefile matched:",
+    len(matched),
 )
 
 print(
@@ -880,7 +944,7 @@ print(
 
 print(
     "신뢰 불가 Polygon 제거:",
-    EXPECTED_NO_RELIABLE,
+    len(NO_RELIABLE_POLYGON_PARK_NAMES),
 )
 
 print(
@@ -890,7 +954,7 @@ print(
 
 print(
     "Polygon 없음:",
-    (EXPECTED_PARK_COUNT - len(final_gdf)),
+    len(parks_without_polygon),
 )
 
 
@@ -945,7 +1009,9 @@ print("신뢰 불가 Polygon 제외")
 print("=" * 70)
 
 
-removed_matches = matches[matches["park_id"].isin(NO_RELIABLE_POLYGON_PARK_IDS)].copy()
+removed_matches = matches[
+    matches["park_name"].astype(str).isin(NO_RELIABLE_POLYGON_PARK_NAMES)
+].copy()
 
 
 if removed_matches.empty:
@@ -958,9 +1024,41 @@ else:
 
         park_id = int(row["park_id"])
 
-        print(f"[{park_id}] " f"{row['park_name']}")
+        park_name = str(row["park_name"])
 
-        print(f"  사유: " f"{EXCLUDED_PARKS[park_id]}")
+        print(f"[{park_id}] " f"{park_name}")
+
+        print("  사유: " f"{EXCLUDED_PARKS[park_name]}")
+
+
+# ============================================================
+# Polygon 없는 공원 출력
+# ============================================================
+
+print()
+print("=" * 70)
+print("최종 Polygon 없음")
+print("=" * 70)
+
+
+if parks_without_polygon.empty:
+
+    print("없음")
+
+else:
+
+    print(
+        parks_without_polygon[
+            [
+                "park_id",
+                "park_name",
+                "match_status",
+                "match_method",
+            ]
+        ]
+        .sort_values("park_id")
+        .to_string(index=False)
+    )
 
 
 # ============================================================

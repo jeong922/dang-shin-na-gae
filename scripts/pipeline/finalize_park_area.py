@@ -30,24 +30,28 @@ UNRESOLVED_CSV = BASE_DIR / "data" / "analysis" / "unresolved_park_area.csv"
 # ============================================================
 
 MANUAL_AREA_OVERRIDES = {
-    7: {
+    "진관근린공원(구파발폭포)": {
         "area_m2": 983_791.0,
         "note": (
-            "진관근린공원(구파발폭포): "
             "원본 area 컬럼이 시설 설명으로 구성되어 있어 "
             "직접 확인한 공원 면적 983,791㎡로 보정"
         ),
     },
-    132: {
+    "서소문역사공원": {
         "area_m2": 21_363.0,
         "note": (
-            "서소문역사공원: 전체 연면적 약 46,000㎡가 아니라 "
+            "전체 연면적 약 46,000㎡가 아니라 "
             "지상 역사공원 부지 면적 21,363㎡를 공원 면적으로 사용"
         ),
     },
-    133: {
+    "순화문화공원": {
         "area_m2": 2_103.0,
-        "note": ("순화문화공원: 확인한 공원 면적 2,103㎡를 사용"),
+        "note": "확인한 공원 면적 2,103㎡를 사용",
+    },
+    "경의선숲길": {
+        "area_m2": 101_668.0,
+        "source": "manual_reference",
+        "note": "공식/참고 자료 기준 약 101,668㎡",
     },
 }
 
@@ -259,9 +263,9 @@ for index, row in result.iterrows():
     # 1. 수동 보정
     # --------------------------------------------------------
 
-    if park_id in MANUAL_AREA_OVERRIDES:
+    if park_name in MANUAL_AREA_OVERRIDES:
 
-        override = MANUAL_AREA_OVERRIDES[park_id]
+        override = MANUAL_AREA_OVERRIDES[park_name]
 
         result.at[
             index,

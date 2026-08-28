@@ -9,7 +9,7 @@ import pandas as pd
 
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-RAW_PATH = BASE_DIR / "data" / "raw" / "서울시 주요 공원현황.csv"
+RAW_PATH = BASE_DIR / "data" / "raw" / "서울시 주요 공원현황(2026 상반기).csv"
 
 OUTPUT_PATH = BASE_DIR / "data" / "processed" / "parks.csv"
 
