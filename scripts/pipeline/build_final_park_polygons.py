@@ -18,6 +18,14 @@ SHP_PATH = (
 
 OSM_GEOJSON = BASE_DIR / "data" / "processed" / "seoul_parks_osm.geojson"
 
+OSM_PROTECTED_SHP = (
+    BASE_DIR
+    / "data"
+    / "osm"
+    / "south-korea-latest-free.shp"
+    / "gis_osm_protected_areas_a_free_1.shp"
+)
+
 OSM_CANDIDATES_CSV = BASE_DIR / "data" / "analysis" / "osm_unmatched_candidates.csv"
 
 OUTPUT_GEOJSON = BASE_DIR / "data" / "processed" / "final_park_polygons.geojson"
@@ -115,6 +123,18 @@ OSM_REPLACEMENTS = {
             "OSM의 서초문화예술공원은 이름과 위치가 일치하고 대표 좌표를 포함하며, "
             "면적 71,941.94㎡로 공식 면적 74,385㎡와 약 3.3% 차이이므로 "
             "대상 공원의 개별 Polygon으로 판단하여 교체."
+        ),
+    },
+    "북한산국립공원": {
+        "osm_id": "17336247",
+        "osm_name": "북한산국립공원",
+        "source": "protected_area",
+        "fclass": "national_park",
+        "note": (
+            "기존 서울시 Shapefile의 도시자연공원((북한산)<시공원>) Polygon은 "
+            "북한산국립공원 전체 경계가 아닌 일부 영역으로 확인됨. "
+            "OSM protected areas 데이터의 national_park 경계를 직접 검증한 결과 "
+            "실제 북한산국립공원 범위와 일치하여 교체."
         ),
     },
 }
@@ -249,6 +269,7 @@ required_files = [
     MATCHES_CSV,
     SHP_PATH,
     OSM_GEOJSON,
+    OSM_PROTECTED_SHP,
     OSM_CANDIDATES_CSV,
 ]
 
@@ -267,6 +288,8 @@ polygons = gpd.read_file(SHP_PATH)
 
 osm = gpd.read_file(OSM_GEOJSON)
 
+osm_protected = gpd.read_file(OSM_PROTECTED_SHP)
+
 osm_candidates = pd.read_csv(OSM_CANDIDATES_CSV)
 
 
@@ -277,6 +300,7 @@ print("=" * 70)
 print("전체 공원:", len(matches))
 print("서울시 Polygon:", len(polygons))
 print("OSM 후보:", len(osm))
+print("OSM 보호구역:", len(osm_protected))
 print("OSM 매칭 후보 행:", len(osm_candidates))
 
 
@@ -411,6 +435,8 @@ for park_name in OSM_REPLACEMENT_PARK_NAMES | NO_RELIABLE_POLYGON_PARK_NAMES:
 # ============================================================
 
 osm["_osm_id_str"] = osm["osm_id"].astype(str)
+
+osm_protected["_osm_id_str"] = osm_protected["osm_id"].astype(str)
 
 osm_candidates["_osm_id_str"] = osm_candidates["osm_id"].astype(str)
 
@@ -680,7 +706,25 @@ for (
 
     osm_id = str(replacement["osm_id"])
 
-    selected = osm[osm["_osm_id_str"] == osm_id].copy()
+    source = replacement.get("source", "parks")
+
+    if source == "protected_area":
+        source_gdf = osm_protected
+
+        selected = source_gdf[source_gdf["_osm_id_str"] == osm_id].copy()
+
+        if "fclass" in replacement:
+            selected = selected[selected["fclass"] == replacement["fclass"]].copy()
+
+    elif source == "parks":
+        source_gdf = osm
+
+        selected = source_gdf[source_gdf["_osm_id_str"] == osm_id].copy()
+
+    else:
+        raise ValueError(
+            f"[{park_id}] {park_name}: " f"지원하지 않는 OSM source={source}"
+        )
 
     if selected.empty:
         raise ValueError(
@@ -701,12 +745,12 @@ for (
 
     area_m2 = calculate_area_m2(
         geometry,
-        osm.crs,
+        source_gdf.crs,
     )
 
     geometry_4326 = to_wgs84_geometry(
         geometry,
-        osm.crs,
+        source_gdf.crs,
     )
 
     result_rows.append(
