@@ -53,6 +53,15 @@ MANUAL_AREA_OVERRIDES = {
         "source": "manual_reference",
         "note": "공식/참고 자료 기준 약 101,668㎡",
     },
+    "북한산국립공원": {
+        "area_m2": 76_922_000.0,
+        "source": "knps_official",
+        "note": (
+            "서울시 원본 면적 77,334,000,000㎡가 "
+            "국립공원공단 공식 면적과 크게 불일치하여, "
+            "공식 면적 76.922㎢(76,922,000㎡)로 보정"
+        ),
+    },
 }
 
 
@@ -610,4 +619,18 @@ print(
 print(
     "면적 미확정 데이터:",
     UNRESOLVED_CSV,
+)
+
+
+print(
+    result.loc[
+        result["name"] == "북한산국립공원",
+        [
+            "name",
+            "official_area_m2",
+            "polygon_area_m2",
+            "final_area_m2",
+            "area_source",
+        ],
+    ].to_string(index=False)
 )

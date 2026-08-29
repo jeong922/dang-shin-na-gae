@@ -61,7 +61,7 @@
 65,와룡근린공원,seoul_shapefile,automatic_high,1,생활서비스시설_공원_0078,근린공원(와룡<시공원>),자동 매칭 high,Polygon,173813.84
 66,봉화산근린공원,seoul_shapefile,automatic_high,1,생활서비스시설_공원_0384,근린공원(봉화산<시공원>),자동 매칭 high,Polygon,1035076.6
 67,북악산도시자연공원,seoul_shapefile,automatic_high,1,생활서비스시설_공원_0107,도시자연공원((북악산)<시공원>),자동 매칭 high,Polygon,409813.34
-68,북한산국립공원,seoul_shapefile,manual_likely_match,1,생활서비스시설_공원_0431,도시자연공원((북한산)<시공원>),북한산 이름이 강하게 일치하고 대규모 도시자연공원 Polygon으로 판단,MultiPolygon,2648560.23
+68,북한산국립공원,osm,osm_replacement,1,17336247,북한산국립공원,기존 서울시 Shapefile의 도시자연공원((북한산)<시공원>) Polygon은 북한산국립공원 전체 경계가 아닌 일부 영역으로 확인됨. OSM protected areas 데이터의 national_park 경계를 직접 검증한 결과 실제 북한산국립공원 범위와 일치하여 교체.,Polygon,76757613.22
 69,외국인묘지공원,seoul_shapefile,automatic_high,1,생활서비스시설_공원_0915,묘지공원(외국인<시공원>),자동 매칭 high,Polygon,13190.98
 70,불광근린공원,seoul_shapefile,automatic_high,1,생활서비스시설_공원_0767,근린공원(불광<시공원>),자동 매칭 high,Polygon,132132.54
 71,불암산도시자연공원,seoul_shapefile,automatic_high,1,생활서비스시설_공원_0703,도시자연공원(불암산<시공원>),자동 매칭 high,Polygon,5362653.19
