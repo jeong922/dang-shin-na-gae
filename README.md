@@ -4,6 +4,10 @@
 
 ## 🚀 배포
 
+### [Frontend - Vercel](https://dang-shin-na-gae.vercel.app)
+
+### [Backend - Render](https://dang-shin-na-gae-api.onrender.com)
+
 ## ▶️ 실행 방법
 
 ### Frontend
@@ -51,6 +55,9 @@ fastapi dev
 
 ### Deployment
 
+![Vercel](https://img.shields.io/badge/Vercel-000000?logo=vercel&logoColor=white)
+![Render](https://img.shields.io/badge/Render-000000?logo=render&logoColor=white)
+
 ## 💡 기획 배경
 
 공공데이터를 직접 수집·가공하고 지도 위에 시각화하는 과정을 경험하기 위해 시작한 프로젝트이다. 서울시 공원 데이터와 공간 데이터를 전처리하고, 지도에 공원 위치와 정보를 표시하며 데이터 분석이 필요한 과정은 Python 기반의 백엔드와 데이터 처리 파이프라인으로 구현했다.
@@ -89,6 +96,10 @@ dang-shin-na-gae/
 ### 🏗️ 시스템 구조
 
 ### 📃 API 문서
+
+FastAPI에서 제공하는 Swagger UI를 통해 API 명세를 확인하고 직접 요청을 테스트할 수 있다.
+
+### [Swagger UI](https://dang-shin-na-gae-api.onrender.com/docs)
 
 ## 🗺️ 데이터 구축
 
