@@ -1,10 +1,10 @@
-import { GeoJSONSource, LngLatBounds, Map as MapLibreMap, NavigationControl, setWorkerUrl } from 'maplibre-gl';
+import { GeoJSONSource, LngLatBounds, Map as MapLibreMap, NavigationControl } from 'maplibre-gl';
 import type { FilterSpecification } from 'maplibre-gl';
-import maplibreWorker from 'maplibre-gl/dist/maplibre-gl-worker.mjs?worker&url';
+import { setupMapLibre } from '@/lib/maplibre';
 import { useCallback, useEffect, useMemo, useRef } from 'react';
 import type { Bounds, ParkMap } from '../types/park';
 
-setWorkerUrl(maplibreWorker);
+setupMapLibre();
 
 interface Props {
   mapContainer: React.RefObject<HTMLDivElement | null>;
