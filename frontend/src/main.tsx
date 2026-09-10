@@ -3,6 +3,7 @@ import { StrictMode, Suspense } from 'react';
 import { createRoot } from 'react-dom/client';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { createBrowserRouter, RouterProvider } from 'react-router';
+
 import { RootLayout } from './layouts/RootLayout.tsx';
 import { LoadingOverlay } from './components/ui/loading/LoadingOverlay.tsx';
 
@@ -26,6 +27,7 @@ const router = createBrowserRouter([
         index: true,
         lazy: async () => {
           const { default: HomePage } = await import('./pages/HomePage');
+
           return {
             Component: HomePage,
           };
@@ -35,6 +37,7 @@ const router = createBrowserRouter([
         path: 'parks',
         lazy: async () => {
           const { default: ParksPage } = await import('./pages/ParksPage');
+
           return {
             Component: ParksPage,
           };
@@ -44,11 +47,27 @@ const router = createBrowserRouter([
         path: 'parks/:parkId',
         lazy: async () => {
           const { default: ParkDetailPage } = await import('./pages/ParkDetailPage');
+
           return {
             Component: ParkDetailPage,
           };
         },
       },
+
+      ...(import.meta.env.DEV
+        ? [
+            {
+              path: 'performance',
+              lazy: async () => {
+                const { default: MapPerformancePage } = await import('./pages/MapPerformancePage');
+
+                return {
+                  Component: MapPerformancePage,
+                };
+              },
+            },
+          ]
+        : []),
     ],
   },
 ]);
