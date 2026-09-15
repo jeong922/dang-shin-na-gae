@@ -32,6 +32,7 @@ def get_search_parks(
                 keyword,
                 case=False,
                 na=False,
+                regex=False,
             )
         ]
 

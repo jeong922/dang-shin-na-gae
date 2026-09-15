@@ -192,10 +192,7 @@ export const useMapLibre = ({
       map.addSource('parks-source', {
         type: 'geojson',
 
-        data: {
-          type: 'FeatureCollection',
-          features: [],
-        },
+        data: createParkGeoJSON(markerParksRef.current),
       });
 
       //  1. 선택 / hover Glow Layer
