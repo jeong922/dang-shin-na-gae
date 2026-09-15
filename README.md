@@ -255,32 +255,31 @@ Polygon 데이터는 면적 계산이 가능한 좌표계로 변환한 뒤 실�
 - 서울시 공원 위치를 MapLibre 기반 지도에서 확인할 수 있으며, 공원별 산책 난이도를 `Easy`, `Medium`, `Hard`, `Expert`로 구분하고 난이도에 따라 마커 색상을 다르게 표시했다.
 - 지도를 이동하면 현재 화면 영역을 기준으로 공원 데이터를 다시 조회해 해당 범위의 공원을 표시한다.
 - 공원을 선택하면 해당 공원의 위치와 기본 정보를 확인할 수 있으며, 검색 및 필터 조건에 따라 지도에 표시되는 공원을 변경할 수 있다.
-<img width="550" alt="첫 시작" src="https://github.com/user-attachments/assets/0a152a89-344b-4482-964e-920726a8b478" />
+  <img width="550" alt="첫 시작" src="https://github.com/user-attachments/assets/0a152a89-344b-4482-964e-920726a8b478" />
 
 ### 지도 공원 검색
 
 - 공원명을 기준으로 원하는 공원을 검색할 수 있으며, 검색 결과가 존재하면 해당 공원들을 확인할 수 있도록 지도 영역을 자동으로 조정한다.
 - 검색 결과가 하나인 경우 해당 공원으로 이동하고, 여러 개인 경우 검색된 공원들을 한 화면에서 확인할 수 있도록 지도 범위를 조정한다.
-<img width="550" alt="지도 검색" src="https://github.com/user-attachments/assets/dd9df43c-c19f-4d80-9ba2-f05d37954183" />
+  <img width="550" alt="지도 검색" src="https://github.com/user-attachments/assets/dd9df43c-c19f-4d80-9ba2-f05d37954183" />
 
 ### 지도 공원 필터
 
 - 산책 난이도, 지역, 반려동물 출입 여부를 기준으로 원하는 공원을 필터링할 수 있다.
 - 선택한 조건은 지도와 공원 목록의 조회 조건에 각각 반영되며, 현재 적용 중인 필터를 확인하고 개별적으로 해제할 수 있다.
-<img width="550" alt="지도 필터링" src="https://github.com/user-attachments/assets/42cf6872-46d6-4207-b8d8-91f979087e47" />
+  <img width="550" alt="지도 필터링" src="https://github.com/user-attachments/assets/42cf6872-46d6-4207-b8d8-91f979087e47" />
 
 ### 공원 목록
 
 - 서울시 공원을 목록 형태로 탐색할 수 있으며, 한 번에 전체 데이터를 불러오지 않고 페이지 단위로 조회하며, 사용자가 목록 하단에 도달하면 다음 데이터를 요청하는 무한 스크롤 방식을 적용했다.
 - 공원명 검색과 난이도, 지역, 반려동물 출입 여부 필터를 함께 사용할 수 있으며 조건이 변경되면 해당 조건을 기준으로 목록을 다시 조회한다.
-<img width="550" alt="목록 필터링" src="https://github.com/user-attachments/assets/ffdc5ac3-8f58-44fa-9a18-7f8b54d30cf2" />
-
+  <img width="550" alt="목록 필터링" src="https://github.com/user-attachments/assets/ffdc5ac3-8f58-44fa-9a18-7f8b54d30cf2" />
 
 ### 공원 상세
 
 - 선택한 공원의 위치와 기본 정보뿐만 아니라 데이터 분석을 통해 생성한 면적, 평균 경사도, 고도차, 산책 난이도를 확인할 수 있다.
-<img width="550" alt="지도 상세페이지 클릭" src="https://github.com/user-attachments/assets/393f1043-e81c-43cd-8c5a-0b3388f05fc5" />
-<img width="550" alt="목록 상세페이지" src="https://github.com/user-attachments/assets/6e6166bc-7841-421d-8a3d-27f8a579ec94" />
+  <img width="550" alt="지도 상세페이지 클릭" src="https://github.com/user-attachments/assets/393f1043-e81c-43cd-8c5a-0b3388f05fc5" />
+  <img width="550" alt="목록 상세페이지" src="https://github.com/user-attachments/assets/6e6166bc-7841-421d-8a3d-27f8a579ec94" />
 
 ## 🛠️ 성능 최적화 및 문제 해결
 
@@ -431,6 +430,97 @@ Polygon은 면적 계산이 가능한 좌표계로 변환한 뒤 면적을 계�
 **결과**
 
 초기 entry bundle 크기를 1,429KB에서 315KB로 약 78% 감소시켜 초기 번들에 포함되는 코드를 줄였다.
+
+### 6. AI 코드 분석 및 재현 테스트를 통한 지도 렌더링 Race Condition 개선
+
+**문제**
+
+프로젝트를 사용하면서 간헐적으로 지도 자체는 정상적으로 로드되지만, 공원 위치 데이터가 표시되지 않는 현상을 경험했다.
+
+항상 발생하는 문제가 아니어서 명확한 재현 조건을 찾지 못한 상태였고, 프로젝트 개선 과정에서 AI Agent를 활용해 전체 코드베이스의 구조와 잠재적인 문제 지점을 분석했다.
+
+분석 결과, MapLibre의 Source 생성 시점과 공원 API 데이터 도착 시점에 따라 지도 데이터 반영이 누락될 가능성이 있다는 가설을 확인했다.
+
+**원인 분석**
+
+기존 지도 렌더링 로직은 다음과 같은 실행 순서에서는 정상적으로 동작했다.
+
+`MapLibre 로드 → parks-source 생성 → API 데이터 도착 → setData()`
+
+Source가 먼저 생성된 경우에는 API 응답 이후 `setData()`가 실행되어 공원 위치가 정상적으로 표시됐다.
+
+하지만 MapLibre 초기화와 API 요청은 각각 비동기로 동작하기 때문에 완료 순서가 보장되지 않았다.
+
+API 데이터가 Source보다 먼저 도착하면 데이터 변경을 감지한 로직이 실행되지만, 아직 `parks-source`가 존재하지 않아 업데이트를 건너뛰게 된다.
+
+```ts
+const source = map.getSource('parks-source');
+
+if (!source) return;
+```
+
+이후 MapLibre의 `load` 이벤트가 발생해 Source가 생성되더라도 기존 구현에서는 항상 빈 GeoJSON으로 초기화하고 있었다.
+
+```ts
+map.addSource('parks-source', {
+  type: 'geojson',
+  data: {
+    type: 'FeatureCollection',
+    features: [],
+  },
+});
+```
+
+이미 API 데이터는 React에 반영된 이후이므로 데이터 변경을 감지하는 Effect가 다시 실행되지 않을 수 있었고, 결과적으로 지도는 정상적으로 표시되지만 공원 Source는 비어 있는 Race Condition이 발생할 수 있었다.
+
+**검증**
+
+AI가 제시한 원인 가설을 바로 수정에 반영하지 않고, 실제 React Hook을 실행하는 테스트에서 Source 생성과 API 데이터 도착 순서를 의도적으로 변경해 문제를 검증했다.
+
+| 실행 순서                         | 수정 전 결과                |
+| --------------------------------- | --------------------------- |
+| Source 생성 → API 데이터 도착     | 정상 반영                   |
+| API 데이터 도착 → Source 생성     | Source가 빈 상태로 유지     |
+| 데이터 A → 데이터 B → Source 생성 | 최신 데이터가 반영되지 않음 |
+
+이를 통해 특정 실행 순서에서 실제로 데이터 반영이 누락되는 것을 재현하고, 코드 분석에서 제시된 Race Condition이 실제 결함임을 확인했다.
+
+**해결**
+
+API 요청이나 MapLibre 초기화 순서를 강제로 제어하는 대신, 어느 작업이 먼저 완료되더라도 정상적으로 동작하도록 수정했다.
+
+Source 생성 시 빈 GeoJSON으로 초기화하는 대신 `markerParksRef.current`에 저장된 최신 공원 데이터를 초기 데이터로 사용하도록 변경했다.
+
+```ts
+// Before
+data: {
+  type: 'FeatureCollection',
+  features: [],
+}
+
+// After
+data: createParkGeoJSON(markerParksRef.current)
+```
+
+API 데이터가 아직 도착하지 않았다면 빈 데이터로 Source가 생성되고, 이후 기존 `setData()` 로직을 통해 데이터가 반영된다.
+
+반대로 API 데이터가 먼저 도착했다면 Source가 생성되는 시점에 `markerParksRef.current`의 최신 데이터를 바로 반영한다.
+
+이를 통해 MapLibre Source 생성과 API 응답의 완료 순서에 의존하지 않고 두 경우 모두 공원 위치가 정상적으로 반영되도록 개선했다.
+
+**회귀 방지**
+
+문제 재현과 수정 검증을 위해 AI Agent를 활용해 실제 React Hook을 실행하는 회귀 테스트를 구성했다.
+
+MapLibre의 Source와 `load` 이벤트를 모의 처리해 비동기 실행 순서를 제어하고, 다음 시나리오를 검증했다.
+
+- Source가 먼저 생성되고 API 데이터가 나중에 도착하는 기존 정상 경로
+- API 데이터가 먼저 도착하고 Source가 나중에 생성되는 문제 경로
+- Source 생성 전에 데이터가 여러 번 변경될 경우 가장 최신 데이터가 반영되는지 확인
+
+수정 전에는 데이터가 Source보다 먼저 도착하는 시나리오에서 테스트가 실패했으며, Source 생성 시 최신 데이터를 반영하도록 수정한 후 모든 시나리오가 통과하는 것을 확인했다.
+
+추가한 회귀 테스트는 GitHub Actions CI에 연결해 Pull Request 및 `main` 브랜치 변경 시 ESLint, Vitest, Production Build와 함께 자동으로 검증하도록 구성했다.
 
 ## 📚 데이터 출처
 
