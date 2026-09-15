@@ -63,7 +63,7 @@ export const DifficultyGuide = () => {
               <div>
                 <div className='flex items-center gap-2'>
                   <TrendingUp size={16} className='text-brand' />
-                  <p className='font-semibold text-text-primary'>평균 경사도 (30%)</p>
+                  <p className='font-semibold text-text-primary'>평균 경사도 (40%)</p>
                 </div>
                 <p className='mt-1'>
                   공원 주변 여러 지점의 고도 데이터를 활용해 산책 시 느껴지는 경사도를 추정했습니다.
@@ -73,7 +73,7 @@ export const DifficultyGuide = () => {
               <div>
                 <div className='flex items-center gap-2'>
                   <Mountain size={16} className='text-brand' />
-                  <p className='font-semibold text-text-primary'>고도 차이 (40%)</p>
+                  <p className='font-semibold text-text-primary'>고도 차이 (30%)</p>
                 </div>
                 <p className='mt-1'>주변 샘플 지점 간 고도 차이를 반영해 오르내림 정도를 계산했습니다.</p>
               </div>
@@ -83,7 +83,10 @@ export const DifficultyGuide = () => {
                   <Lightbulb size={16} className='text-brand' />
                   <p className='font-semibold text-text-primary'>최종 난이도</p>
                 </div>
-                <p className='mt-1'>세 가지 요소를 정규화한 뒤 가중치를 적용하여 난이도를 계산했습니다.</p>
+                <p className='mt-1'>
+                  세 가지 요소를 정규화한 뒤, 산책 활동 강도에 미치는 영향을 고려해 설정한 가중치를 적용하여 난이도를
+                  산정했습니다.
+                </p>
               </div>
             </div>
           </motion.div>
