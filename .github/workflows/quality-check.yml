@@ -1,0 +1,45 @@
+name: CI
+
+on:
+  pull_request:
+  push:
+    branches:
+      - main
+
+jobs:
+  frontend:
+    name: Frontend CI
+    runs-on: ubuntu-latest
+
+    defaults:
+      run:
+        working-directory: frontend
+
+    steps:
+      # 1. GitHub 저장소의 코드를 runner로 가져온다.
+      - name: Checkout repository
+        uses: actions/checkout@v7
+
+      # 2. 프로젝트에서 사용하는 Node.js 환경을 준비한다.
+      - name: Setup Node.js
+        uses: actions/setup-node@v7
+        with:
+          node-version: '24'
+          cache: 'npm'
+          cache-dependency-path: frontend/package-lock.json
+
+      # 3. package-lock.json을 기준으로 의존성을 설치한다.
+      - name: Install dependencies
+        run: npm ci
+
+      # 4. ESLint 검사를 실행한다.
+      - name: Lint
+        run: npm run lint
+
+      # 5. Vitest 테스트를 실행한다.
+      - name: Test
+        run: npm run test
+
+      # 6. TypeScript 검사 및 production build를 실행한다.
+      - name: Build
+        run: npm run build
