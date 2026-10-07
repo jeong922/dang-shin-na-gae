@@ -15,6 +15,7 @@ export const useMapParks = (params: ParkParams) => {
     ],
 
     queryFn: () => getMapParks(params),
+    retry: false,
 
     enabled:
       params.west !== undefined &&
@@ -28,6 +29,7 @@ export const useMapParks = (params: ParkParams) => {
 
   return {
     parks: query.data?.items ?? [],
+    hasData: query.data !== undefined,
     total: query.data?.total ?? 0,
     isLoading: query.isLoading,
     isFetching: query.isFetching,

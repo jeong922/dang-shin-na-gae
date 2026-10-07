@@ -18,11 +18,14 @@ export const useSearchParks = ({ keyword = '', filters }: Props) => {
         filters,
       }),
     enabled: hasSearchCondition,
+    retry: false,
     staleTime: 1000 * 60,
   });
 
   return {
     parks: query.data?.items ?? [],
+    hasData: query.data !== undefined,
+    isFetching: query.isFetching,
     total: query.data?.total ?? 0,
     isLoading: query.isLoading,
     error: query.error,

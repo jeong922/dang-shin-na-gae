@@ -8,6 +8,6 @@ export default defineConfig({
   },
   test: {
     environment: 'jsdom',
-    include: ['src/hooks/useMapLibre.test.tsx'],
+    include: ['src/**/*.test.{ts,tsx}'],
   },
 });

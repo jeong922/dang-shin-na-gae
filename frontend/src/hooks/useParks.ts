@@ -9,7 +9,7 @@ interface Props {
 }
 
 export const useParks = ({ pageSize = 20, keyword = '', filters }: Props) => {
-  const { data, isLoading, error, refetch, isRefetching, fetchNextPage, hasNextPage, isFetchingNextPage } =
+  const { data, isLoading, isFetching, error, refetch, isRefetching, fetchNextPage, hasNextPage, isFetchingNextPage, isFetchNextPageError } =
     useInfiniteQuery<ParkListResponse, Error>({
       queryKey: ['parks', { pageSize, keyword, filters }],
 
@@ -22,6 +22,7 @@ export const useParks = ({ pageSize = 20, keyword = '', filters }: Props) => {
         }),
 
       initialPageParam: 1,
+      retry: false,
 
       getNextPageParam: (lastPage) => {
         if (lastPage.page >= lastPage.totalPages) {
@@ -36,6 +37,9 @@ export const useParks = ({ pageSize = 20, keyword = '', filters }: Props) => {
 
   return {
     parks,
+    hasData: data !== undefined,
+    isFetching,
+    isFetchNextPageError,
     total: data?.pages[0]?.total ?? 0,
     fetchNextPage,
     hasNextPage,

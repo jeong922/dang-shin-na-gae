@@ -1,7 +1,11 @@
 import type { ParkMapResponse, ParkParams } from '../types/park';
 import { apiClient } from './client';
 
-export const getMapParks = async ({ filters, keyword, ...bounds }: ParkParams): Promise<ParkMapResponse> => {
+export const getMapParks = async ({
+  filters,
+  keyword,
+  ...bounds
+}: ParkParams): Promise<ParkMapResponse> => {
   const params = new URLSearchParams();
 
   if (bounds.west !== undefined) params.set('west', String(bounds.west));
@@ -25,5 +29,7 @@ export const getMapParks = async ({ filters, keyword, ...bounds }: ParkParams): 
     params.append('pet_status', value);
   });
 
-  return apiClient<ParkMapResponse>(`/parks/map?${params}`);
+  return apiClient<ParkMapResponse>(`/parks/map?${params}`, {
+    timeoutMs: 30_000,
+  });
 };
