@@ -1,15 +1,22 @@
 import { useEffect, useState } from 'react';
 import { LoaderCircle, TriangleAlert } from 'lucide-react';
-import { Button } from '../ui/Button';
+import { Button } from './Button';
 
-export interface MapRequestState {
+export interface RequestState {
   isFetching: boolean;
   hasData: boolean;
   error: Error | null;
   refetch: () => unknown;
 }
 
-export const MapRequestStatus = ({ isFetching, hasData, error, refetch }: MapRequestState) => {
+export const RequestStatus = ({
+  isFetching,
+  hasData,
+  error,
+  refetch,
+  loadingMessage,
+  className = 'my-4 rounded-2xl bg-white p-4 text-sm shadow-md',
+}: RequestState & { className?: string; loadingMessage?: string }) => {
   const [isDelayed, setIsDelayed] = useState(false);
 
   useEffect(() => {
@@ -18,15 +25,20 @@ export const MapRequestStatus = ({ isFetching, hasData, error, refetch }: MapReq
     return () => clearTimeout(timer);
   }, [isFetching]);
 
-  if (isFetching && !isDelayed) return null;
+  if (isFetching && !isDelayed && !loadingMessage) return null;
   if (!isFetching && !error) return null;
 
   return (
     <div
       role={isFetching ? 'status' : 'alert'}
-      className='absolute bottom-6 left-1/2 z-10 w-[calc(100%-2rem)] max-w-sm -translate-x-1/2 rounded-2xl bg-white p-4 text-sm shadow-md'
+      className={className}
     >
-      {isFetching ? (
+      {isFetching && !isDelayed ? (
+        <p className='flex items-center justify-center gap-2 text-text-muted'>
+          <LoaderCircle size={16} className='shrink-0 animate-spin' />
+          {loadingMessage}
+        </p>
+      ) : isFetching ? (
         <div className='flex items-start gap-3'>
           <LoaderCircle size={20} className='shrink-0 animate-spin text-brand' />
           <div>

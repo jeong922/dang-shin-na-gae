@@ -1,18 +1,18 @@
 import { act } from 'react';
 import { createRoot, type Root } from 'react-dom/client';
 import { afterEach, beforeEach, expect, it, vi } from 'vitest';
-import { MapRequestStatus, type MapRequestState } from './MapRequestStatus';
+import { RequestStatus, type RequestState } from './RequestStatus';
 
 let container: HTMLDivElement;
 let root: Root;
 const refetch = vi.fn();
-const render = (state: Partial<MapRequestState> = {}, key = 'request') => act(() => {
-  root.render(<MapRequestStatus key={key} isFetching hasData={false} error={null} refetch={refetch} {...state} />);
+const render = (state: Partial<RequestState> = {}, key = 'request') => act(() => {
+  root.render(<RequestStatus key={key} isFetching hasData={false} error={null} refetch={refetch} {...state} />);
 });
 
 beforeEach(() => {
   vi.useFakeTimers();
-  Object.assign(globalThis, { IS_REACT_ACT_ENVIRONMENT: true });
+  vi.stubGlobal('IS_REACT_ACT_ENVIRONMENT', true);
   container = document.createElement('div');
   root = createRoot(container);
   refetch.mockClear();
@@ -20,6 +20,7 @@ beforeEach(() => {
 afterEach(() => {
   act(() => root.unmount());
   vi.useRealTimers();
+  vi.unstubAllGlobals();
 });
 
 it('shows nothing before five seconds and shows the delayed notice at five seconds', () => {

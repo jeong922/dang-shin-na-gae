@@ -4,14 +4,14 @@ import type { Bounds, ParkMap } from '../../types/park';
 import { useMapParks } from '../../hooks/useMapParks';
 import { useMapLibre } from '../../hooks/useMapLibre';
 import { useDebounce } from '../../hooks/useDebounce';
-import { MapRequestStatus, type MapRequestState } from './MapRequestStatus';
+import { RequestStatus, type RequestState } from '../ui/RequestStatus';
 
 interface Props {
   onSelectPark: (park: ParkMap) => void;
   searchResults: ParkMap[];
   selectedParkId: number | null;
   hasSearchCondition: boolean;
-  searchStatus: MapRequestState;
+  searchStatus: RequestState;
   searchRequestKey: string;
 }
 
@@ -48,14 +48,19 @@ export const MapView = ({
   });
 
   const activeStatus = hasSearchCondition ? searchStatus : mapQuery;
-  const activeRequestKey = hasSearchCondition ? `search:${searchRequestKey}` : `map:${JSON.stringify(debouncedBounds)}`;
+  const activeRequestKey = hasSearchCondition
+    ? `search:${searchRequestKey}`
+    : `map:${JSON.stringify(debouncedBounds)}`;
 
   return (
-    <div ref={mapContainer} className='relative h-[calc(100dvh-8rem)] rounded-2xl'>
-      <MapRequestStatus
-        // 조건 변경 및 재시도마다 지연 안내 타이머를 새로 시작합니다.
+    <div
+      ref={mapContainer}
+      className='relative h-[calc(100dvh-8rem)] rounded-2xl'
+    >
+      <RequestStatus
         key={`${activeRequestKey}:${activeStatus.isFetching}`}
         {...activeStatus}
+        className='absolute bottom-6 left-1/2 z-10 w-[calc(100%-2rem)] max-w-sm -translate-x-1/2 rounded-2xl bg-white p-4 text-sm shadow-md'
       />
     </div>
   );

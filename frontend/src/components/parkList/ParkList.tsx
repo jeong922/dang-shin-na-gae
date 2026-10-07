@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from 'react';
 import { ParkCard } from './ParkCard';
 import { useParks } from '../../hooks/useParks';
-import { ErrorState } from '../ui/error/ErrorState';
+import { RequestStatus } from '../ui/RequestStatus';
 import { ParkListSkeleton } from './ParkListSkeleton';
 import { SearchBar } from '../ui/SearchBar';
 import { useDebounce } from '../../hooks/useDebounce';
@@ -18,7 +18,7 @@ export const ParkList = () => {
 
   const debouncedKeyword = useDebounce(keyword, 300);
 
-  const { parks, total, fetchNextPage, hasNextPage, isFetchingNextPage, isLoading, error, refetch } = useParks({
+  const { parks, total, fetchNextPage, hasNextPage, isFetching, isFetchingNextPage, isLoading, hasData, isFetchNextPageError, error, refetch } = useParks({
     pageSize: 20,
     keyword: debouncedKeyword,
     filters,
@@ -27,10 +27,11 @@ export const ParkList = () => {
   useEffect(() => {
     if (!observerTarget.current) return;
     if (!hasNextPage) return;
+    if (error || isFetching) return;
 
     const observer = new IntersectionObserver(
       ([entry]) => {
-        if (entry.isIntersecting && !isFetchingNextPage) {
+        if (entry.isIntersecting) {
           fetchNextPage();
         }
       },
@@ -44,7 +45,21 @@ export const ParkList = () => {
     return () => {
       observer.disconnect();
     };
-  }, [fetchNextPage, hasNextPage, isFetchingNextPage]);
+  }, [fetchNextPage, hasNextPage, isFetching, error]);
+
+  const requestStatus = (
+    <RequestStatus
+      key={`${JSON.stringify([debouncedKeyword, filters])}:${isFetching}`}
+      isFetching={isFetching}
+      hasData={hasData}
+      error={error}
+      refetch={isFetchNextPageError ? fetchNextPage : refetch}
+      loadingMessage={isFetchingNextPage ? '공원을 더 불러오는 중...' : undefined}
+      className={!hasData && isLoading
+        ? 'fixed bottom-24 left-1/2 z-10 w-[calc(100%-2rem)] max-w-sm -translate-x-1/2 rounded-2xl bg-white p-4 text-sm shadow-md'
+        : 'my-4 rounded-2xl bg-white p-4 text-sm shadow-md'}
+    />
+  );
 
   return (
     <section className='px-3'>
@@ -64,14 +79,11 @@ export const ParkList = () => {
         />
       </BottomSheet>
 
-      {error ? (
-        <ErrorState
-          title='공원 목록을 불러올 수 없습니다.'
-          description='공원 목록을 불러오는 중 문제가 발생했습니다.'
-          onRetry={refetch}
-        />
-      ) : isLoading && parks.length === 0 ? (
-        <ParkListSkeleton />
+      {!hasData ? (
+        <>
+          {isLoading && <ParkListSkeleton />}
+          {requestStatus}
+        </>
       ) : (
         <>
           <header className='my-4'>
@@ -89,10 +101,9 @@ export const ParkList = () => {
             ))}
           </div>
 
+          {requestStatus}
           <div ref={observerTarget} className='flex h-20 items-center justify-center'>
-            {isFetchingNextPage && <p className='text-sm text-text-muted'>공원을 더 불러오는 중...</p>}
-
-            {!hasNextPage && <p className='text-sm text-text-muted'>모든 공원을 불러왔습니다.</p>}
+            {!hasNextPage && !error && <p className='text-sm text-text-muted'>모든 공원을 불러왔습니다.</p>}
           </div>
         </>
       )}
