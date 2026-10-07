@@ -26,5 +26,5 @@ export const searchParks = async ({
     params.append('pet_status', value);
   });
 
-  return apiClient<ParkSearchResponse>(`/parks/search?${params}`);
+  return apiClient<ParkSearchResponse>(`/parks/search?${params}`, { timeoutMs: 30_000 });
 };

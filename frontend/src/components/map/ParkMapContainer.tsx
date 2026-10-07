@@ -22,7 +22,7 @@ export const ParkMapContainer = () => {
 
   const debouncedKeyword = useDebounce(keyword, 300);
 
-  const { parks: searchResults } = useSearchParks({
+  const searchQuery = useSearchParks({
     keyword: debouncedKeyword,
     filters,
   });
@@ -50,7 +50,9 @@ export const ParkMapContainer = () => {
       <Suspense fallback={<div className='h-[calc(100dvh-8rem)] animate-pulse rounded-2xl bg-slate-100' />}>
         <MapView
           onSelectPark={handleSelectPark}
-          searchResults={searchResults}
+          searchResults={searchQuery.parks}
+          searchStatus={searchQuery}
+          searchRequestKey={JSON.stringify([debouncedKeyword, filters])}
           hasSearchCondition={hasSearchCondition}
           selectedParkId={selectedPark?.id ?? null}
         />
