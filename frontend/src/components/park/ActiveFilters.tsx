@@ -49,7 +49,7 @@ export const ActiveFilters = ({ filters, onChange }: Props) => {
             key={`${key}-${value}`}
             type='button'
             onClick={() => removeFilter(key as keyof ParkFilter, value)}
-            className='flex items-center gap-1 cursor-pointer rounded-full bg-slate-100 px-3 py-1.5 text-sm text-text-primary transition hover:bg-slate-200'
+            className='flex items-center gap-1 cursor-pointer rounded-button bg-slate-100 px-3 py-1.5 text-sm text-text-primary transition hover:bg-slate-200'
           >
             {getFilterLabel(key as keyof ParkFilter, value)}
 

@@ -1,6 +1,6 @@
 export const ParkCardSkeleton = () => {
   return (
-    <article className='rounded-card bg-surface p-5 shadow-card'>
+    <article className='rounded-card border border-border bg-surface p-4 sm:p-5'>
       {/* 제목 */}
       <div className='h-6 w-2/3 animate-pulse rounded-md bg-border' />
 

@@ -23,8 +23,9 @@ export const FilterChipGroup = <T,>({ title, items, selectedValues, onToggle }: 
             <button
               key={String(item.value)}
               type='button'
+              aria-pressed={selected}
               onClick={() => onToggle(item.value)}
-              className={`rounded-full border px-4 py-2 text-sm transition cursor-pointer ${
+              className={`rounded-button border px-4 py-2 text-sm transition cursor-pointer ${
                 selected ? 'border-brand bg-brand text-white' : 'border-border bg-white hover:bg-slate-50'
               }`}
             >

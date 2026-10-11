@@ -52,15 +52,13 @@ export const BottomSheet = ({ open, onClose, children, variant = 'map' }: Props)
 
           {/* BottomSheet */}
           <motion.div
-            className={`${positionClass} z-50 max-h-[calc(100dvh-5rem)] overflow-hidden rounded-3xl border border-border bg-white/95 p-5 shadow-xl backdrop-blur-md`}
+            className={`${positionClass} z-50 max-h-[calc(100dvh-5rem)] overflow-hidden rounded-card border border-border bg-surface p-5 shadow-card`}
             initial={{ y: '120%', opacity: 0 }}
             animate={{ y: 0, opacity: 1 }}
             exit={{ y: '120%', opacity: 0 }}
             transition={{
-              type: 'spring',
-              stiffness: 380,
-              damping: 34,
-              mass: 0.8,
+              type: 'tween',
+              duration: 0.2,
             }}
             drag='y'
             dragDirectionLock
@@ -87,15 +85,7 @@ export const BottomSheet = ({ open, onClose, children, variant = 'map' }: Props)
 
             {/* Drag Handle */}
             <div className='mb-4 flex shrink-0 justify-center'>
-              <motion.div
-                className='h-1.5 w-12 rounded-full bg-gray-300'
-                whileHover={{ scaleX: 1.1 }}
-                whileTap={{
-                  scaleX: 1.2,
-                  scaleY: 1.3,
-                }}
-                transition={{ duration: 0.15 }}
-              />
+              <div className='h-1 w-10 rounded-full bg-border' />
             </div>
 
             {/* Content */}

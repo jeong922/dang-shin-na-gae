@@ -9,11 +9,11 @@ interface Props {
 
 export const CardSection = ({ title, icon, children, className = '' }: Props) => {
   return (
-    <section className={`rounded-3xl border border-border bg-white p-6 ${className}`}>
+    <section className={`border-t border-border pt-6 ${className}`}>
       <div className='mb-5 flex items-center gap-2'>
         {icon}
 
-        <h2 className='text-xl font-bold'>{title}</h2>
+        <h2 className='text-heading font-semibold tracking-tight'>{title}</h2>
       </div>
 
       {children}

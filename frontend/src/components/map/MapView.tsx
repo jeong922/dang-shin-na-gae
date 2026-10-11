@@ -55,12 +55,12 @@ export const MapView = ({
   return (
     <div
       ref={mapContainer}
-      className='relative h-[calc(100dvh-8rem)] rounded-2xl'
+      className='relative h-[calc(100dvh-8rem)] rounded-card'
     >
       <RequestStatus
         key={`${activeRequestKey}:${activeStatus.isFetching}`}
         {...activeStatus}
-        className='absolute bottom-6 left-1/2 z-10 w-[calc(100%-2rem)] max-w-sm -translate-x-1/2 rounded-2xl bg-white p-4 text-sm shadow-md'
+        className='absolute bottom-6 left-1/2 z-10 w-[calc(100%-2rem)] max-w-sm -translate-x-1/2 rounded-card bg-white p-4 text-sm shadow-card'
       />
     </div>
   );

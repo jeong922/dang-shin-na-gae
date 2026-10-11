@@ -21,7 +21,7 @@ export const ErrorState = ({
           <TriangleAlert size={32} className='text-red-500' />
         </div>
 
-        <h2 className='mt-5 text-xl font-bold text-text-primary'>{title}</h2>
+        <h2 className='mt-5 text-heading font-semibold tracking-tight text-text-primary'>{title}</h2>
 
         <p className='mt-2 text-sm text-text-muted'>{description}</p>
 

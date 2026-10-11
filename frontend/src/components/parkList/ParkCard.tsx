@@ -35,12 +35,14 @@ export const ParkCard = ({ park }: Props) => {
 
   return (
     <article
+      role='link' tabIndex={0}
+      onKeyDown={(event) => { if (event.key === 'Enter') navigate(`/parks/${park.id}`); }}
       onClick={() => navigate(`/parks/${park.id}`)}
-      className='group cursor-pointer rounded-3xl border border-border bg-white p-6 transition hover:-translate-y-1 hover:border-brand hover:shadow-lg'
+      className='group cursor-pointer rounded-card border border-border bg-surface p-4 sm:p-5 transition-colors hover:border-slate-400 hover:bg-slate-50/50'
     >
-      <div className='flex items-start justify-between'>
+      <div className='flex flex-wrap items-start justify-between gap-3'>
         <div>
-          <h2 className='text-xl font-bold'>{park.name}</h2>
+          <h2 className='text-title font-semibold tracking-tight'>{park.name}</h2>
 
           <div className='mt-2 flex items-center gap-1 text-sm text-text-muted'>
             <MapPin size={16} />
@@ -49,22 +51,22 @@ export const ParkCard = ({ park }: Props) => {
         </div>
 
         <span
-          className={`inline-flex items-center rounded-full px-3 py-1 text-sm font-semibold ${difficulty.className}`}
+          className={`inline-flex items-center rounded-button px-2 py-1 text-caption font-medium ${difficulty.className}`}
         >
           <Gauge size={15} className='mr-1' />
           {difficulty.label}
         </span>
       </div>
 
-      <ParkStats stats={stats} className='grid-cols-2 mt-6 gap-3' />
+      <ParkStats stats={stats} className='grid-cols-2 sm:grid-cols-3 mt-4 gap-x-4 gap-y-2' />
 
-      <div className='mt-4 rounded-2xl bg-slate-50 p-4'>
+      <div className='mt-4 border-t border-border pt-4'>
         <PetStatus status={PET_STATUS_OPTIONS[park.petStatus]} />
       </div>
 
-      <div className='mt-6 flex items-center justify-end text-brand font-medium'>
+      <div className='mt-4 flex items-center justify-end text-brand font-medium'>
         상세 보기
-        <ChevronRight size={18} className='ml-1 transition group-hover:translate-x-1' />
+        <ChevronRight size={18} className='ml-1 ' />
       </div>
     </article>
   );

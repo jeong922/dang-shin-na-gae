@@ -16,7 +16,7 @@ const menus = [
 
 export const Navbar = () => {
   return (
-    <nav className='sticky bottom-0 z-50 border-t border-border bg-surface/80 backdrop-blur-md'>
+    <nav className='sticky bottom-0 z-50 border-t border-border bg-surface'>
       <div className='mx-auto flex h-16 max-w-5xl items-center justify-around px-4'>
         {menus.map(({ label, icon: Icon, path }) => (
           <NavLink
@@ -34,7 +34,7 @@ export const Navbar = () => {
                 <Icon
                   size={22}
                   strokeWidth={isActive ? 2.5 : 2}
-                  className={`transition-transform duration-200 ${isActive ? 'scale-110' : 'group-hover:scale-110'}`}
+
                 />
 
                 <span className='text-caption font-medium'>{label}</span>

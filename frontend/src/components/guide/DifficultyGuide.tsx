@@ -6,7 +6,7 @@ export const DifficultyGuide = () => {
   const [showGuide, setShowGuide] = useState(false);
 
   return (
-    <div className='mt-5 overflow-hidden rounded-2xl border border-border'>
+    <div className='mt-5 overflow-hidden rounded-card border border-border'>
       <button
         onClick={() => setShowGuide((prev) => !prev)}
         className='flex w-full items-center justify-between bg-slate-50 px-4 py-3'
@@ -78,7 +78,7 @@ export const DifficultyGuide = () => {
                 <p className='mt-1'>주변 샘플 지점 간 고도 차이를 반영해 오르내림 정도를 계산했습니다.</p>
               </div>
 
-              <div className='rounded-xl bg-white p-3'>
+              <div className='rounded-button bg-white p-3'>
                 <div className='flex items-center gap-2'>
                   <Lightbulb size={16} className='text-brand' />
                   <p className='font-semibold text-text-primary'>최종 난이도</p>

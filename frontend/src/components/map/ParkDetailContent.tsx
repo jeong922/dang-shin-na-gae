@@ -40,7 +40,7 @@ export const ParkDetailContent = ({ park }: Props) => {
     <>
       <div className='relative flex min-h-20 items-start justify-between'>
         <div className='pr-20'>
-          <h2 className='text-xl font-bold text-text-primary'>{park.name}</h2>
+          <h2 className='text-heading font-semibold tracking-tight text-text-primary'>{park.name}</h2>
 
           <div className='mt-2 flex items-center gap-1.5 text-sm text-text-muted'>
             <MapPin size={15} className='shrink-0' />
@@ -54,10 +54,10 @@ export const ParkDetailContent = ({ park }: Props) => {
       </div>
 
       <div className='mt-4'>
-        <ParkStats stats={stats} className='grid-cols-2 gap-3' />
+        <ParkStats stats={stats} className='grid-cols-2 sm:grid-cols-3 gap-3' />
       </div>
 
-      <div className='mt-4 rounded-2xl bg-slate-50 p-4'>
+      <div className='mt-4 border-t border-border pt-4'>
         <PetStatus status={PET_STATUS_OPTIONS[park.petStatus]} />
 
         {park.petRestrictedLocations.length > 0 && (
@@ -66,7 +66,7 @@ export const ParkDetailContent = ({ park }: Props) => {
 
             <div className='mt-2 flex flex-wrap gap-2'>
               {park.petRestrictedLocations.map((location) => (
-                <Badge key={location} className='text-text-primary shadow-sm'>
+                <Badge key={location} className='text-text-primary '>
                   {location}
                 </Badge>
               ))}
@@ -75,7 +75,7 @@ export const ParkDetailContent = ({ park }: Props) => {
         )}
 
         {park.serviceAnimalAllowed && (
-          <div className='mt-3 flex items-center gap-2 rounded-xl bg-white px-3 py-2 text-sm text-text-muted'>
+          <div className='mt-3 flex items-center gap-2 rounded-button bg-white px-3 py-2 text-sm text-text-muted'>
             <Dog size={16} className='shrink-0 text-brand' />
             <span>안내견은 제한 구역에서도 출입 가능합니다.</span>
           </div>

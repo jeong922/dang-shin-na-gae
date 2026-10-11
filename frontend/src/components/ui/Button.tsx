@@ -7,13 +7,13 @@ interface Props extends ButtonHTMLAttributes<HTMLButtonElement> {
 
 export const Button = ({ children, variant = 'primary', className = '', ...props }: Props) => {
   const variantClass = {
-    primary: 'bg-brand text-white hover:opacity-90',
+    primary: 'bg-brand text-white hover:bg-brand-hover',
     secondary: 'border border-border bg-white hover:bg-slate-50',
   };
 
   return (
     <button
-      className={`rounded-xl py-3 font-semibold transition cursor-pointer ${variantClass[variant]} ${className}`}
+      className={`rounded-button min-h-11 px-4 py-2.5 text-sm font-medium transition-colors disabled:cursor-not-allowed disabled:opacity-50 ${variantClass[variant]} ${className}`}
       {...props}
     >
       {children}

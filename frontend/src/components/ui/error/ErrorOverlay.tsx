@@ -14,8 +14,8 @@ export const ErrorOverlay = ({
   onRetry,
 }: Props) => {
   return (
-    <div className='absolute inset-0 flex items-center justify-center rounded-2xl bg-white/80 backdrop-blur-sm'>
-      <div className='mx-6 max-w-sm rounded-3xl border border-border bg-white p-8 text-center shadow-sm'>
+    <div className='absolute inset-0 flex items-center justify-center rounded-card bg-white/80 backdrop-blur-sm'>
+      <div className='mx-6 max-w-sm rounded-card border border-border bg-white p-8 text-center '>
         <div className='mx-auto flex h-14 w-14 items-center justify-center rounded-full bg-red-50'>
           <TriangleAlert className='text-red-500' size={28} />
         </div>
@@ -27,7 +27,7 @@ export const ErrorOverlay = ({
         {onRetry && (
           <button
             onClick={onRetry}
-            className='mt-6 w-full rounded-xl bg-brand px-4 py-3 text-sm font-semibold text-white transition hover:opacity-90 active:scale-[0.98]'
+            className='mt-6 w-full rounded-button bg-brand px-4 py-3 text-sm font-semibold text-white transition hover:opacity-90 active:scale-[0.98]'
           >
             {buttonText}
           </button>

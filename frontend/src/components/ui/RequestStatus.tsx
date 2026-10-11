@@ -15,7 +15,7 @@ export const RequestStatus = ({
   error,
   refetch,
   loadingMessage,
-  className = 'my-4 rounded-2xl bg-white p-4 text-sm shadow-md',
+  className = 'my-4 rounded-card bg-white p-4 text-sm shadow-card',
 }: RequestState & { className?: string; loadingMessage?: string }) => {
   const [isDelayed, setIsDelayed] = useState(false);
 

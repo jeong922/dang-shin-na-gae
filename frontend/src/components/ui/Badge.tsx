@@ -4,5 +4,5 @@ interface Props {
 }
 
 export const Badge = ({ children, className = '' }: Props) => {
-  return <span className={`rounded-full px-3 py-1 text-sm font-semibold ${className}`}>{children}</span>;
+  return <span className={`rounded-button px-2 py-1 text-caption font-medium ${className}`}>{children}</span>;
 };
