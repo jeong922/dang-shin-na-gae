@@ -97,13 +97,13 @@ export const ParkDetail = () => {
   ];
 
   return (
-    <main className='mx-auto max-w-5xl space-y-8 px-6 py-8'>
+    <main className='mx-auto max-w-5xl space-y-section px-page py-6 sm:py-8'>
       <BackButton label='목록으로' />
 
       <section>
-        <div className='flex items-start justify-between'>
+        <div className='flex flex-wrap items-start justify-between gap-3'>
           <div>
-            <h1 className='text-4xl font-bold'>{park.name}</h1>
+            <h1 className='text-display font-semibold tracking-tight'>{park.name}</h1>
 
             <div className='mt-3 flex items-center gap-2 text-sm text-text-muted'>
               <MapPin size={17} />
@@ -117,11 +117,11 @@ export const ParkDetail = () => {
         <DifficultyGuide />
       </section>
 
-      <section className='overflow-hidden rounded-3xl border border-border'>
-        <ImageWithFallback src={park.images.image} alt={park.name} className='h-96 w-full object-cover' />
+      <section className='overflow-hidden rounded-card border border-border'>
+        <ImageWithFallback src={park.images.image} alt={park.name} className='h-56 sm:h-80 lg:h-96 w-full object-cover' />
       </section>
 
-      <ParkStats stats={parkStats} className='md:grid-cols-4' variant='detail' />
+      <ParkStats stats={parkStats} className='grid-cols-2 md:grid-cols-4 border-y border-border py-3' variant='detail' />
 
       <CardSection title='공원 소개'>
         <p className='whitespace-pre-line leading-8 text-text-secondary'>{park.description}</p>
@@ -129,7 +129,7 @@ export const ParkDetail = () => {
 
       {park.images.map && (
         <CardSection icon={<MapPin size={20} />} title='공원 안내도'>
-          <div className='overflow-hidden rounded-2xl border border-border bg-slate-50'>
+          <div className='overflow-hidden rounded-card border border-border bg-slate-50'>
             <ImageWithFallback
               src={park.images.map}
               alt={`${park.name} 안내도`}
@@ -173,7 +173,7 @@ export const ParkDetail = () => {
       </CardSection>
 
       <CardSection icon={<PawPrint size={20} />} title='반려견 이용 안내'>
-        <div className='mt-4 rounded-2xl bg-slate-50 p-4'>
+        <div className='mt-4 border-b border-border pb-4'>
           <PetStatus status={petStatus} />
         </div>
 
@@ -191,7 +191,7 @@ export const ParkDetail = () => {
 
             <div className='mt-2 flex flex-wrap gap-2'>
               {park.pet.restrictedLocations.map((location, index) => (
-                <Badge key={`${location}-${index}`} className='bg-slate-100 text-text-primary shadow-sm'>
+                <Badge key={`${location}-${index}`} className='bg-slate-100 text-text-primary '>
                   {location}
                 </Badge>
               ))}

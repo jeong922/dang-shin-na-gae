@@ -8,7 +8,7 @@ interface Props {
 
 export const ContentCard = ({ icon, title, children }: Props) => {
   return (
-    <div className='rounded-2xl bg-slate-50 p-4'>
+    <div className='border-l-2 border-border pl-4 py-1'>
       <div className='flex items-center gap-2'>
         {icon}
 

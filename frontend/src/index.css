@@ -16,32 +16,34 @@
   /* Text */
   --color-text-primary: #0f172a;
   --color-text-secondary: #64748b;
-  --color-text-muted: #94a3b8;
+  --color-text-muted: #64748b;
 
   /* Border */
   --color-border: #e2e8f0;
 
   /* Level Colors */
-  --color-level-easy: #22c55e; /* green */
-  --color-level-medium: #f59e0b; /* amber */
-  --color-level-hard: #ef4444; /* red */
-  --color-level-expert: #7c3aed; /* purple */
+  --color-level-easy: #15803d; /* green */
+  --color-level-medium: #a16207; /* amber */
+  --color-level-hard: #b91c1c; /* red */
+  --color-level-expert: #6d28d9; /* purple */
 
   /* Typography */
-  --text-display: 2rem;
-  --text-heading: 1.5rem;
-  --text-title: 1.25rem;
+  --text-display: clamp(1.5rem, 1.15rem + 1.4vw, 2rem);
+  --text-display--line-height: 1.25;
+  --text-heading: clamp(1.125rem, 1rem + 0.5vw, 1.375rem);
+  --text-heading--line-height: 1.4;
+  --text-title: clamp(1.0625rem, 1rem + 0.25vw, 1.1875rem);
   --text-body: 1rem;
-  --text-caption: 0.75rem;
+  --text-caption: 0.8125rem;
 
   /* Spacing */
 
-  --spacing-page: 1.5rem;
+  --spacing-page: clamp(1rem, 3vw, 2rem);
   --spacing-section: 2rem;
 
   /* Radius */
-  --radius-card: 1rem;
-  --radius-button: 0.75rem;
+  --radius-card: 0.75rem;
+  --radius-button: 0.5rem;
   --radius-logo: 1rem;
 
   /* Shadow */
@@ -66,4 +68,9 @@ body {
 
 button {
   cursor: pointer;
+}
+
+:where(button, a, input, [role="link"]):focus-visible { outline: 2px solid var(--color-brand); outline-offset: 3px; }
+@media (prefers-reduced-motion: reduce) {
+ *, *::before, *::after { animation-duration: 0.01ms !important; transition-duration: 0.01ms !important; }
 }

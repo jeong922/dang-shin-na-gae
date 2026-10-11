@@ -76,7 +76,7 @@ export const ParkFilter = ({ filters, onChange }: Props) => {
 
   return (
     <div>
-      <h2 className='text-xl font-bold'>필터</h2>
+      <h2 className='text-heading font-semibold tracking-tight'>필터</h2>
 
       <FilterChipGroup
         title='난이도'

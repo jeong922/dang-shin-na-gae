@@ -56,17 +56,23 @@ export const ParkList = () => {
       refetch={isFetchNextPageError ? fetchNextPage : refetch}
       loadingMessage={isFetchingNextPage ? '공원을 더 불러오는 중...' : undefined}
       className={!hasData && isLoading
-        ? 'fixed bottom-24 left-1/2 z-10 w-[calc(100%-2rem)] max-w-sm -translate-x-1/2 rounded-2xl bg-white p-4 text-sm shadow-md'
-        : 'my-4 rounded-2xl bg-white p-4 text-sm shadow-md'}
+        ? 'fixed bottom-24 left-1/2 z-10 w-[calc(100%-2rem)] max-w-sm -translate-x-1/2 rounded-card bg-white p-4 text-sm shadow-card'
+        : 'my-4 rounded-card bg-white p-4 text-sm shadow-card'}
     />
   );
 
   return (
-    <section className='px-3'>
+    <section className='px-page py-6 sm:py-8'>
+      <header className='mb-5'>
+        <h1 className='text-display font-semibold tracking-tight'>공원 목록</h1>
+        <p className='mt-2 text-sm text-text-secondary'>{total != null ? `총 ${total}개의 공원` : '함께 산책할 공원을 찾아보세요'}</p>
+      </header>
       <div className='my-4'>
         <SearchBar keyword={keyword} onKeywordChange={setKeyword} onFilterClick={() => setIsFilterOpen(true)} />
       </div>
-      <ActiveFilters filters={filters} onChange={setFilters} />
+      <div className='mb-6 empty:hidden'>
+        <ActiveFilters filters={filters} onChange={setFilters} />
+      </div>
 
       <BottomSheet open={isFilterOpen} onClose={() => setIsFilterOpen(false)} variant='filter'>
         <ParkFilter
@@ -86,14 +92,7 @@ export const ParkList = () => {
         </>
       ) : (
         <>
-          <header className='my-4'>
-            <h1 className='text-3xl font-bold'>공원 목록</h1>
 
-            <p className='mt-1 text-text-muted'>
-              총 <span className='font-semibold text-brand'>{total}</span>
-              개의 공원
-            </p>
-          </header>
 
           <div className='grid gap-5 md:grid-cols-2'>
             {parks.map((park) => (

@@ -9,14 +9,14 @@ interface Props {
 
 export const InfoCard = ({ icon, title, value, variant = 'detail' }: Props) => {
   return (
-    <div className={variant === 'card' ? 'p-4 rounded-2xl bg-slate-50' : 'p-5'}>
+    <div className={variant === 'card' ? 'min-w-0 py-2' : 'min-w-0 py-3'}>
       <div className='flex items-center gap-2 text-sm text-text-muted'>
         {icon}
 
         <span>{title}</span>
       </div>
 
-      <p className='mt-2 text-lg font-semibold'>{value}</p>
+      <p className='mt-2 text-base font-semibold tabular-nums'>{value}</p>
     </div>
   );
 };

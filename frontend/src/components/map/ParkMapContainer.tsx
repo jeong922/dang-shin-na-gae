@@ -47,7 +47,7 @@ export const ParkMapContainer = () => {
         </div>
       </div>
 
-      <Suspense fallback={<div className='h-[calc(100dvh-8rem)] animate-pulse rounded-2xl bg-slate-100' />}>
+      <Suspense fallback={<div className='h-[calc(100dvh-8rem)] animate-pulse rounded-card bg-slate-100' />}>
         <MapView
           onSelectPark={handleSelectPark}
           searchResults={searchQuery.parks}
