@@ -24,6 +24,12 @@ const router = createBrowserRouter([
     Component: RootLayout,
     children: [
       {
+        path: 'compare',
+        lazy: async () => ({
+          Component: (await import('./pages/ParkComparePage')).default,
+        }),
+      },
+      {
         index: true,
         lazy: async () => {
           const { default: HomePage } = await import('./pages/HomePage');
@@ -46,7 +52,8 @@ const router = createBrowserRouter([
       {
         path: 'parks/:parkId',
         lazy: async () => {
-          const { default: ParkDetailPage } = await import('./pages/ParkDetailPage');
+          const { default: ParkDetailPage } =
+            await import('./pages/ParkDetailPage');
 
           return {
             Component: ParkDetailPage,
@@ -59,7 +66,8 @@ const router = createBrowserRouter([
             {
               path: 'performance',
               lazy: async () => {
-                const { default: MapPerformancePage } = await import('./pages/MapPerformancePage');
+                const { default: MapPerformancePage } =
+                  await import('./pages/MapPerformancePage');
 
                 return {
                   Component: MapPerformancePage,
@@ -75,7 +83,14 @@ const router = createBrowserRouter([
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
     <QueryClientProvider client={queryClient}>
-      <Suspense fallback={<LoadingOverlay title='페이지를 불러오는 중' description='잠시만 기다려주세요.' />}>
+      <Suspense
+        fallback={
+          <LoadingOverlay
+            title='페이지를 불러오는 중'
+            description='잠시만 기다려주세요.'
+          />
+        }
+      >
         <RouterProvider router={router} />
       </Suspense>
     </QueryClientProvider>

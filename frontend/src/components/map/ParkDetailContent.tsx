@@ -10,6 +10,7 @@ import { DifficultyBadge } from '../park/DifficultyBadge';
 import { Badge } from '../ui/Badge';
 import { PetStatus } from '../park/PetStatus';
 import { Button } from '../ui/Button';
+import { CompareButton } from '../park/CompareButton';
 
 interface Props {
   park: ParkMap;
@@ -40,7 +41,9 @@ export const ParkDetailContent = ({ park }: Props) => {
     <>
       <div className='relative flex min-h-20 items-start justify-between'>
         <div className='pr-20'>
-          <h2 className='text-heading font-semibold tracking-tight text-text-primary'>{park.name}</h2>
+          <h2 className='text-heading font-semibold tracking-tight text-text-primary'>
+            {park.name}
+          </h2>
 
           <div className='mt-2 flex items-center gap-1.5 text-sm text-text-muted'>
             <MapPin size={15} className='shrink-0' />
@@ -83,10 +86,20 @@ export const ParkDetailContent = ({ park }: Props) => {
       </div>
 
       <DifficultyGuide />
-
-      <Button variant='primary' className='mt-4 w-full' onClick={() => navigate(`/parks/${park.id}`)}>
-        상세보기
-      </Button>
+      <div className='mt-4 grid grid-cols-2 gap-3'>
+        <CompareButton
+          id={park.id}
+          name={park.name}
+          className='min-h-12 px-2'
+        />
+        <Button
+          variant='primary'
+          className='min-h-12'
+          onClick={() => navigate(`/parks/${park.id}`)}
+        >
+          상세보기
+        </Button>
+      </div>
     </>
   );
 };
