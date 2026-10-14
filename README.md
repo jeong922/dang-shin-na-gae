@@ -121,55 +121,124 @@ dang-shin-na-gae/
 
 ```mermaid
 sequenceDiagram
-    participant User as 사용자
+    actor User as 사용자
     participant FE as Frontend (React + Vite)
-    participant API as Backend (FastAPI)
-    participant Data as Park Data
     participant Map as MapLibre GL
+    participant Static as 지도 타일 / 정적 GeoJSON
+    participant API as Backend (FastAPI)
+    participant Data as 공원 DataFrame (CSV 캐시)
+
+    Note over FE,API: TanStack Query 캐시 상태에 따라 데이터 재사용 또는 재조회
+    Note over API,Data: 최초 조회 시 parks_difficulty.csv 로드·전처리 후 메모리 캐시
 
     User->>FE: 지도 페이지 접속
-
-    FE->>API: 현재 지도 범위의 공원 데이터 요청
-    API->>Data: 공원 데이터 조회
+    FE->>Map: 지도 초기화
+    Map->>Static: OpenFreeMap 스타일·타일 요청
+    Static-->>Map: 배경 지도 데이터
+    Map->>Static: /data/final_park_polygons.geojson 요청
+    Static-->>Map: 공원 경계 데이터
+    Map-->>FE: 지도 로드 및 현재 범위 전달
+    FE->>FE: 범위 변경 500ms 디바운스
+    FE->>API: GET /parks/map (west, south, east, north)
+    API->>Data: 현재 범위의 공원 조회
     Data-->>API: 조회 결과
-    API-->>FE: 공원 데이터 반환
+    API-->>FE: items, total
+    FE->>Map: 공원 GeoJSON Source 갱신
+    Map-->>User: 난이도별 색상의 공원 포인트 표시
 
-    FE->>Map: 공원 데이터 렌더링
-    Map-->>User: 공원 위치 및 난이도 표시
+    loop 검색·필터 조건 없이 지도 이동 / 확대·축소
+        User->>Map: 지도 조작
+        Map-->>FE: moveend 후 현재 범위 전달
+        FE->>FE: 범위 변경 500ms 디바운스
+        FE->>API: GET /parks/map (지도 범위)
+        API->>Data: 현재 범위의 공원 조회
+        Data-->>API: 조회 결과
+        API-->>FE: items, total
+        FE->>Map: 공원 GeoJSON Source 갱신
+    end
 
-    User->>FE: 지도 이동 / 검색 / 필터
-    FE->>API: 지도 범위 및 검색·필터 조건 전달
-    API->>Data: 조건에 맞는 공원 조회
-    Data-->>API: 조회 결과
-    API-->>FE: 조회 결과 반환
+    opt 검색어 또는 필터 적용
+        User->>FE: 공원명 검색 / 난이도·자치구·반려동물 출입 필터
+        FE->>FE: 검색어 변경 300ms 디바운스
+        FE->>API: GET /parks/search (keyword, difficulty, district, pet_status)
+        API->>Data: 지도 범위 제한 없이 검색·필터 조회
+        Data-->>API: 조건에 맞는 전체 공원
+        API-->>FE: items, total
+        FE->>Map: 검색 결과로 공원 GeoJSON Source 갱신
+        alt 결과 1개
+            FE->>Map: flyTo로 해당 공원 이동
+        else 결과 여러 개
+            FE->>Map: fitBounds로 결과 전체가 보이도록 이동
+        else 결과 없음
+            FE-->>User: 검색 결과 없음 표시
+        end
+        Note over FE,Map: 검색 조건 유지 중에는 moveend로 범위 갱신·조회하지 않음
+        User->>FE: 검색어와 필터 모두 해제
+        FE->>Map: 현재 지도 범위 확인
+        Map-->>FE: 현재 범위 전달
+        FE->>FE: 500ms 디바운스 후 범위 조회 흐름 재개
+    end
 
-    FE->>Map: 조회 결과 반영
-    FE->>Map: 검색 결과에 맞춰 지도 이동
-    Map-->>User: 조건에 맞는 공원 표시
+    opt 지도에서 공원 선택
+        User->>Map: 공원 포인트 클릭
+        Map-->>FE: 선택한 공원 데이터 전달
+        FE->>Map: 선택 포인트 강조 및 해당 공원 경계 필터 적용
+        FE-->>User: 기존 지도 데이터로 요약 바텀시트 표시
+        Note over FE,API: 요약 표시는 추가 상세 API 요청 없이 처리
+    end
 
     User->>FE: 공원 목록 페이지 이동
-
-    FE->>API: 공원 목록 요청
-    API->>Data: 공원 목록 조회
-    Data-->>API: 목록 데이터
-    API-->>FE: 공원 목록 반환
-
+    FE->>API: GET /parks (page=1, page_size=20)
+    API->>Data: 첫 페이지 공원 조회
+    Data-->>API: 목록 및 전체 개수
+    API-->>FE: items, page, pageSize, total, totalPages
     FE-->>User: 공원 목록 표시
 
-    User->>FE: 검색 / 필터 / 추가 스크롤
-    FE->>API: 검색·필터 및 페이지 조건 전달
-    API->>Data: 조건에 맞는 공원 조회
+    opt 목록 검색 / 필터 변경
+        User->>FE: 검색어 또는 필터 변경
+        FE->>FE: 검색어 변경 300ms 디바운스 및 조회 키 변경
+        FE->>API: GET /parks (page=1, page_size=20, 검색·필터 조건)
+        API->>Data: 조건에 맞는 첫 페이지 조회
+        Data-->>API: 조회 결과
+        API-->>FE: 목록 및 페이지 정보
+        FE-->>User: 해당 조건의 목록 표시
+    end
+
+    loop 다음 페이지가 있고 조회 중·오류 상태가 아닐 때
+        User->>FE: 목록 하단까지 스크롤
+        FE->>FE: IntersectionObserver로 하단 감지
+        FE->>API: GET /parks (다음 page, page_size=20, 현재 검색·필터 조건)
+        API->>Data: 조건에 맞는 다음 페이지 조회
+        Data-->>API: 조회 결과
+        API-->>FE: 목록 및 페이지 정보
+        FE-->>User: 기존 목록에 다음 페이지 추가
+    end
+
+    User->>FE: 목록의 공원 선택 / 지도 요약의 상세보기 클릭
+    FE->>API: GET /parks/{id}
+    API->>Data: ID로 공원 조회
     Data-->>API: 조회 결과
-    API-->>FE: 공원 목록 반환
+    alt 공원 존재
+        API-->>FE: 공원 상세 정보
+        FE-->>User: 위치·시설·난이도·반려동물 안내 등 표시
+    else 공원 없음
+        API-->>FE: 404 오류
+        FE-->>User: 오류 안내 표시
+    end
 
-    FE-->>User: 공원 목록 업데이트
-
-    User->>FE: 공원 선택
-    FE->>API: 공원 상세 정보 요청
-    API->>Data: 선택한 공원 조회
-    Data-->>API: 공원 상세 데이터
-    API-->>FE: 공원 상세 정보 반환
-    FE-->>User: 공원 상세 정보 표시
+    opt 공원 비교
+        User->>FE: 지도·목록·상세에서 비교할 공원 담기
+        FE->>FE: 비교 ID를 Context에 보관 (최대 3개)
+        FE->>API: 담은 공원의 GET /parks/{id}로 상세 데이터 준비
+        API->>Data: ID로 공원 조회
+        Data-->>API: 공원 데이터
+        API-->>FE: 공원 상세 정보
+        User->>FE: 비교 페이지 이동
+        FE->>FE: 공원별 상세 쿼리 연결 (상세 화면과 캐시 공유)
+        Note over FE,API: 캐시 상태에 따라 상세 정보 재조회 가능
+        User->>FE: 2~3개 선택 상태에서 비교하기 클릭
+        FE-->>User: 면적·경사도·고도차·난이도·반려동물 안내 비교 표시
+    end
 ```
 
 ### 📃 API 문서
