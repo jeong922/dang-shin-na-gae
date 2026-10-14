@@ -84,7 +84,7 @@ const ParkComparePage = () => {
     ));
 
   return (
-    <section className='min-w-0 space-y-5 px-page py-6 sm:py-8 [overflow-wrap:anywhere]'>
+    <section className='min-w-0 space-y-5 px-page py-6 sm:py-8 wrap-anywhere'>
       <header>
         <h1 className='text-display font-semibold'>공원 비교하기</h1>
         <p className='mt-2 text-sm text-text-secondary'>
