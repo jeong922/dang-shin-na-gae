@@ -35,7 +35,7 @@ export const useMarkerPerformanceTest = ({ mapContainer, parks }: Props) => {
       style: 'https://tiles.openfreemap.org/styles/bright',
 
       center: [126.978, 37.5665],
-      zoom: 13,
+      zoom: 12,
 
       minZoom: 10,
       maxZoom: 18,
