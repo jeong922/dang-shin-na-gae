@@ -1,11 +1,11 @@
 import { useCallback, useEffect, useRef, useState } from 'react';
-import { Map as MapLibreMap, Marker, NavigationControl, setWorkerUrl } from 'maplibre-gl';
-import maplibreWorker from 'maplibre-gl/dist/maplibre-gl-worker.mjs?worker&url';
+import { Map as MapLibreMap, Marker, NavigationControl } from 'maplibre-gl';
+import { setupMapLibre } from '@/lib/maplibre';
 import 'maplibre-gl/dist/maplibre-gl.css';
 import type { ParkMap } from '@/types/park';
 import { runMapPerformanceTest, type PerformanceTestSummary } from './runMapPerformanceTest';
 
-setWorkerUrl(maplibreWorker);
+setupMapLibre();
 
 interface Props {
   mapContainer: React.RefObject<HTMLDivElement | null>;
