@@ -63,8 +63,7 @@ let root: Root;
 let client: QueryClient;
 const click = async (label: string) => {
   const button = Array.from(container.querySelectorAll('button')).find(
-    (node) =>
-      node.getAttribute('aria-label') === label || node.textContent === label,
+    (node) => node.getAttribute('aria-label') === label || node.textContent === label,
   );
   expect(button, label).toBeDefined();
   await act(async () => {
@@ -124,11 +123,7 @@ it('limits selection to three IDs and keeps comparison actions separate from car
   expect(container.querySelector('output')?.textContent).toBe('1,2,3');
   expect(container.textContent).toContain('최대 3개');
   expect(container.textContent).not.toContain('상세 페이지로 이동됨');
-  expect(
-    container
-      .querySelector('[aria-label="공원 1 비교에서 빼기"]')
-      ?.getAttribute('aria-pressed'),
-  ).toBe('true');
+  expect(container.querySelector('[aria-label="공원 1 비교에서 빼기"]')?.getAttribute('aria-pressed')).toBe('true');
   await click('공원 2 비교에서 빼기');
   await click('공원 4 비교에 담기');
   expect(container.querySelector('output')?.textContent).toBe('1,3,4');
@@ -137,9 +132,7 @@ it('limits selection to three IDs and keeps comparison actions separate from car
 it('shares selection between list and map sheet and survives navigation', async () => {
   await click('공원 1 비교에 담기');
   await click('시트로');
-  expect(
-    container.querySelectorAll('[aria-label="공원 1 비교에서 빼기"]'),
-  ).toHaveLength(2);
+  expect(container.querySelectorAll('[aria-label="공원 1 비교에서 빼기"]')).toHaveLength(2);
   await click('공원 1 비교에서 빼기');
   expect(container.querySelector('output')?.textContent).toBe('');
   await click('공원 2 비교에 담기');
@@ -190,11 +183,10 @@ it('renders a common-scale comparison and returns to the one-park state after re
   expect(container.textContent).toContain('온실');
   expect(container.textContent).toContain('실제 산책 코스 측정값이 아닙니다');
   expect(container.querySelector('[style="width: 50%;"]')).not.toBeNull();
-  const cards = container.querySelector('[aria-label="공원별 비교 카드"]')!;
-  expect(cards.querySelectorAll('article')).toHaveLength(2);
-  expect(cards.querySelectorAll('dl')).toHaveLength(2);
-  expect(cards.querySelector('div[aria-hidden="true"]')).toBeNull();
-  expect(cards.textContent).toContain('온실');
+  expect(container.querySelector('[aria-label="공원별 비교 카드"]')).toBeNull();
+  expect(container.querySelectorAll('table')).toHaveLength(1);
+  expect(container.querySelector('[role="region"]')?.getAttribute('tabindex')).toBe('0');
+  expect(container.textContent).toContain('좌우로 밀어 공원을 비교하세요');
   const summary = container.querySelector('[aria-label="비교 요약"]')!;
   expect(summary.textContent).toContain('공원 1 · 1%');
   expect(summary.textContent).toContain('공원 1 · 10m');
@@ -217,9 +209,7 @@ it('preserves a failed selection, displays other data, and retries the failed pa
   expect(container.textContent).toContain('100㎡');
   expect(container.textContent).toContain('정보를 불러오지 못했습니다');
   expect(container.querySelectorAll('thead th')).toHaveLength(3);
-  expect(
-    container.querySelector('[aria-label="비교 요약"]')?.textContent,
-  ).toContain('모든 공원 정보를 불러오면');
+  expect(container.querySelector('[aria-label="비교 요약"]')?.textContent).toContain('모든 공원 정보를 불러오면');
   vi.mocked(getPark).mockImplementation(async ({ id }) => detail(id));
   await click('다시 시도');
   await settle();
@@ -237,7 +227,5 @@ it('includes all tied parks in the summary', async () => {
   await click('비교 목록으로');
   await settle();
   await click('비교하기');
-  expect(
-    container.querySelector('[aria-label="비교 요약"]')?.textContent,
-  ).toContain('공원 1, 공원 2 · 1% (공동 최저)');
+  expect(container.querySelector('[aria-label="비교 요약"]')?.textContent).toContain('공원 1, 공원 2 · 1% (공동 최저)');
 });

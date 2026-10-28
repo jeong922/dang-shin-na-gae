@@ -1,6 +1,7 @@
 import { useState, type ReactNode } from 'react';
 import { useQueries } from '@tanstack/react-query';
 import { Link } from 'react-router';
+import { X } from 'lucide-react';
 import { getPark } from '../api/park';
 import { useParkCompare } from '../hooks/useParkCompare';
 import type { ParkDetail } from '../types/park';
@@ -15,8 +16,7 @@ const metrics = [
   {
     label: '면적',
     value: (park: ParkDetail) => park.information.area,
-    format: (value: number) =>
-      `${new Intl.NumberFormat('ko-KR', { maximumFractionDigits: 2 }).format(value)}㎡`,
+    format: (value: number) => `${new Intl.NumberFormat('ko-KR', { maximumFractionDigits: 2 }).format(value)}㎡`,
   },
   {
     label: '평균 경사도 (추정)',
@@ -32,9 +32,7 @@ const metrics = [
 
 const PetNotices = ({ park }: { park: ParkDetail }) => (
   <div className='space-y-3 leading-6'>
-    {park.pet.restrictedLocations.length > 0 && (
-      <p>제한 장소: {park.pet.restrictedLocations.join(', ')}</p>
-    )}
+    {park.pet.restrictedLocations.length > 0 && <p>제한 장소: {park.pet.restrictedLocations.join(', ')}</p>}
     {park.pet.notices.length > 0 && (
       <ul className='list-disc pl-4'>
         {park.pet.notices.map((notice, index) => (
@@ -42,13 +40,10 @@ const PetNotices = ({ park }: { park: ParkDetail }) => (
         ))}
       </ul>
     )}
-    {park.pet.serviceAnimalAllowed && (
-      <p>안내견은 제한 구역에서도 출입 가능합니다.</p>
+    {park.pet.serviceAnimalAllowed && <p>안내견은 제한 구역에서도 출입 가능합니다.</p>}
+    {park.pet.restrictedLocations.length === 0 && park.pet.notices.length === 0 && (
+      <p className='text-text-muted'>추가 안내 정보가 없습니다.</p>
     )}
-    {park.pet.restrictedLocations.length === 0 &&
-      park.pet.notices.length === 0 && (
-        <p className='text-text-muted'>추가 안내 정보가 없습니다.</p>
-      )}
   </div>
 );
 
@@ -66,20 +61,12 @@ const ParkComparePage = () => {
   const summaryReady =
     parks.length === ids.length &&
     queries.every((query) => !query.isError && !query.isFetching) &&
-    parks.every(
-      (park) =>
-        Number.isFinite(park.difficulty.avgSlope) &&
-        Number.isFinite(park.difficulty.elevationDiff),
-    );
+    parks.every((park) => Number.isFinite(park.difficulty.avgSlope) && Number.isFinite(park.difficulty.elevationDiff));
 
   const cells = (render: (park: ParkDetail) => ReactNode) =>
     queries.map((query, index) => (
-      <td key={ids[index]} className='border-b border-border p-4 align-top'>
-        {query.data ? (
-          render(query.data)
-        ) : (
-          <span className='text-text-muted'>—</span>
-        )}
+      <td key={ids[index]} className='border-b border-border p-3 align-top md:p-4'>
+        {query.data ? render(query.data) : <span className='text-text-muted'>—</span>}
       </td>
     ));
 
@@ -100,10 +87,7 @@ const ParkComparePage = () => {
         </Link>
       </div>
       {ids.length < 2 && (
-        <p
-          className='rounded-card border border-border bg-surface p-4'
-          role='status'
-        >
+        <p className='rounded-card border border-border bg-surface p-4' role='status'>
           {ids.length === 0
             ? '아직 담은 공원이 없어요. 지도나 목록에서 비교할 공원을 담아주세요.'
             : '공원을 1개 더 담으면 비교할 수 있어요.'}
@@ -116,15 +100,11 @@ const ParkComparePage = () => {
               key={id}
               className='flex flex-wrap items-center justify-between gap-3 rounded-card border border-border bg-surface p-4'
             >
-              <span className='min-w-0 flex-1'>
-                {queries[index].data?.name ?? `공원 #${id}`}
-              </span>
+              <span className='min-w-0 flex-1'>{queries[index].data?.name ?? `공원 #${id}`}</span>
               <Button
                 variant='secondary'
                 aria-label={`${queries[index].data?.name ?? `공원 #${id}`} 비교에서 빼기`}
-                onClick={() =>
-                  toggle(id, queries[index].data?.name ?? `공원 #${id}`)
-                }
+                onClick={() => toggle(id, queries[index].data?.name ?? `공원 #${id}`)}
               >
                 제거
               </Button>
@@ -133,10 +113,7 @@ const ParkComparePage = () => {
         </ul>
       )}
       {!comparing && (
-        <Button
-          disabled={ids.length < 2}
-          onClick={() => setShowComparison(true)}
-        >
+        <Button disabled={ids.length < 2} onClick={() => setShowComparison(true)}>
           비교하기
         </Button>
       )}
@@ -170,17 +147,13 @@ const ParkComparePage = () => {
       {comparing && (
         <>
           <p className='text-sm leading-6 text-text-secondary md:hidden'>
-            경사·고도 차이는 주변 표본 기반 추정치입니다. 방문 전 반려견 출입
-            안내를 확인하세요.
+            경사·고도 차이는 주변 표본 기반 추정치입니다. 방문 전 반려견 출입 안내를 확인하세요. 막대는 상대 크기이며
+            우열을 뜻하지 않습니다.
           </p>
-          <p
-            id='compare-note'
-            className='hidden text-sm leading-6 text-text-secondary md:block'
-          >
-            평균 경사도와 고도 차이는 공원 주변 표본의 고도로 계산한 추정치이며
-            실제 산책 코스 측정값이 아닙니다. 막대는 현재 선택한 공원 사이의
-            항목별 상대 크기이며, 길이가 좋고 나쁨을 뜻하지 않습니다. 출입
-            안내는 방문 전 공식 홈페이지에서 확인해주세요.
+          <p id='compare-note' className='hidden text-sm leading-6 text-text-secondary md:block'>
+            평균 경사도와 고도 차이는 공원 주변 표본의 고도로 계산한 추정치이며 실제 산책 코스 측정값이 아닙니다. 막대는
+            현재 선택한 공원 사이의 항목별 상대 크기이며, 길이가 좋고 나쁨을 뜻하지 않습니다. 출입 안내는 방문 전 공식
+            홈페이지에서 확인해주세요.
           </p>
           <section
             aria-label='비교 요약'
@@ -190,151 +163,62 @@ const ParkComparePage = () => {
             {summaryReady ? (
               metrics.slice(1).map((metric) => {
                 const minimum = Math.min(...parks.map(metric.value));
-                const names = parks
-                  .filter((park) => metric.value(park) === minimum)
-                  .map((park) => park.name);
+                const names = parks.filter((park) => metric.value(park) === minimum).map((park) => park.name);
                 return (
                   <p key={metric.label}>
-                    {metric.label}:{' '}
-                    <span className='font-medium'>{names.join(', ')}</span> ·{' '}
-                    {metric.format(minimum)}
+                    {metric.label}: <span className='font-medium'>{names.join(', ')}</span> · {metric.format(minimum)}
                     {names.length > 1 ? ' (공동 최저)' : ' (가장 낮음)'}
                   </p>
                 );
               })
             ) : (
               <p className='text-text-muted'>
-                모든 공원 정보를 불러오면 요약을 표시합니다. 조회 오류가 있으면
-                다시 시도해주세요.
+                모든 공원 정보를 불러오면 요약을 표시합니다. 조회 오류가 있으면 다시 시도해주세요.
               </p>
             )}
-            <p className='text-text-muted'>
-              선택한 공원 간 수치 비교이며 종합적인 우열을 뜻하지 않습니다.
-            </p>
+            <p className='text-text-muted'>선택한 공원 간 수치 비교이며 종합적인 우열을 뜻하지 않습니다.</p>
           </section>
-          <div className='space-y-4 md:hidden' aria-label='공원별 비교 카드'>
-            {ids.map((id, index) => {
-              const park = queries[index].data;
-              const name = park?.name ?? `공원 #${id}`;
-              return (
-                <article
-                  key={id}
-                  className='min-w-0 space-y-4 rounded-card border border-border bg-surface p-4'
-                  aria-labelledby={`compare-park-${id}`}
-                >
-                  <header className='flex items-start justify-between gap-3'>
-                    <h2
-                      id={`compare-park-${id}`}
-                      className='min-w-0 flex-1 text-title font-semibold'
-                    >
-                      <Link to={`/parks/${id}`} className='underline'>
-                        {name}
-                      </Link>
-                    </h2>
-                    <Button
-                      variant='secondary'
-                      className='shrink-0'
-                      aria-label={`${name} 비교에서 빼기`}
-                      onClick={() => toggle(id, name)}
-                    >
-                      제거
-                    </Button>
-                  </header>
-                  {park ? (
-                    <>
-                      <dl className='grid grid-cols-2 gap-3'>
-                        {metrics.map((metric) => (
-                          <div
-                            key={metric.label}
-                            className='min-w-0 rounded-button bg-slate-50 p-3'
-                          >
-                            <dt className='text-caption text-text-muted'>
-                              {metric.label}
-                            </dt>
-                            <dd className='mt-1 font-medium tabular-nums'>
-                              {metric.format(metric.value(park))}
-                            </dd>
-                          </div>
-                        ))}
-                        <div className='min-w-0 rounded-button bg-slate-50 p-3'>
-                          <dt className='text-caption text-text-muted'>
-                            난이도
-                          </dt>
-                          <dd className='mt-1'>
-                            <DifficultyBadge
-                              difficulty={
-                                DIFFICULTY_OPTIONS[park.difficulty.level]
-                              }
-                            />
-                          </dd>
-                        </div>
-                      </dl>
-                      <div className='space-y-3 border-t border-border pt-4 text-sm'>
-                        <h3 className='font-medium'>반려견 이용</h3>
-                        <div className='flex'>
-                          <PetStatusBadge
-                            status={PET_STATUS_OPTIONS[park.pet.status]}
-                          />
-                        </div>
-                        <PetNotices park={park} />
-                      </div>
-                    </>
-                  ) : (
-                    <p className='text-sm text-text-muted'>
-                      공원 정보는 상단 조회 상태를 확인해주세요.
-                    </p>
-                  )}
-                </article>
-              );
-            })}
-          </div>
+          <p id='compare-scroll-hint' className='text-sm text-text-muted md:hidden'>
+            ← 좌우로 밀어 공원을 비교하세요. 비교 항목은 왼쪽에 고정됩니다. →
+          </p>
           <div
             role='region'
             aria-label='공원 비교 표, 좁은 화면에서 좌우로 스크롤할 수 있습니다'
+            aria-describedby='compare-scroll-hint'
             tabIndex={0}
-            className='hidden overflow-x-auto rounded-card border border-border bg-surface md:block'
+            className='max-w-full overflow-x-auto overscroll-x-contain rounded-card border border-border bg-surface'
           >
             <table
               aria-describedby='compare-note'
-              className='w-full table-fixed text-sm'
-              style={{ minWidth: 120 + ids.length * 200 }}
+              className={`w-full table-fixed text-sm ${ids.length === 2 ? 'min-w-110 md:min-w-130' : 'min-w-154 md:min-w-180'}`}
             >
-              <caption className='sr-only'>
-                선택한 공원의 면적, 지형 추정치, 난이도 및 반려견 이용 안내 비교
-              </caption>
+              <caption className='sr-only'>선택한 공원의 면적, 지형 추정치, 난이도 및 반려견 이용 안내 비교</caption>
               <thead>
                 <tr>
                   <th
                     scope='col'
-                    className='sticky left-0 z-10 w-30 border-b border-border bg-slate-50 p-4 text-left'
+                    className='sticky left-0 z-10 w-22 border-b border-border bg-slate-50 p-3 text-left md:w-30 md:p-4'
                   >
                     비교 항목
                   </th>
                   {ids.map((id, index) => (
-                    <th
-                      scope='col'
-                      key={id}
-                      className='border-b border-border p-4 text-left align-top'
-                    >
-                      <Link
-                        to={`/parks/${id}`}
-                        className='text-title font-semibold underline'
-                      >
-                        {queries[index].data?.name ?? `공원 #${id}`}
-                      </Link>
-                      <div className='mt-3'>
-                        <Button
-                          variant='secondary'
-                          aria-label={`${queries[index].data?.name ?? `공원 #${id}`} 비교에서 빼기`}
-                          onClick={() =>
-                            toggle(
-                              id,
-                              queries[index].data?.name ?? `공원 #${id}`,
-                            )
-                          }
+                    <th scope='col' key={id} className='border-b border-border p-3 text-left align-top md:p-4'>
+                      <div className='flex items-start gap-2'>
+                        <Link
+                          to={`/parks/${id}`}
+                          className='min-w-0 flex-1 pt-2 text-base font-semibold underline md:text-title'
                         >
-                          제거
-                        </Button>
+                          {queries[index].data?.name ?? `공원 #${id}`}
+                        </Link>
+                        <button
+                          type='button'
+                          className='inline-flex size-11 shrink-0 items-center justify-center rounded-full text-text-muted transition-colors hover:bg-slate-50 hover:text-text-primary'
+                          aria-label={`${queries[index].data?.name ?? `공원 #${id}`} 비교에서 빼기`}
+                          title='비교에서 빼기'
+                          onClick={() => toggle(id, queries[index].data?.name ?? `공원 #${id}`)}
+                        >
+                          <X size={18} aria-hidden='true' />
+                        </button>
                       </div>
                     </th>
                   ))}
@@ -344,27 +228,20 @@ const ParkComparePage = () => {
                 {metrics.map((metric) => {
                   const maximum = Math.max(
                     0,
-                    ...queries.flatMap((query) =>
-                      query.data ? [metric.value(query.data)] : [],
-                    ),
+                    ...queries.flatMap((query) => (query.data ? [metric.value(query.data)] : [])),
                   );
                   return (
                     <tr key={metric.label}>
                       <th
                         scope='row'
-                        className='sticky left-0 z-10 border-b border-border bg-slate-50 p-4 text-left'
+                        className='sticky left-0 z-10 border-b border-border bg-slate-50 p-3 text-left md:p-4'
                       >
                         {metric.label}
                       </th>
                       {cells((park) => (
                         <>
-                          <span className='tabular-nums'>
-                            {metric.format(metric.value(park))}
-                          </span>
-                          <div
-                            aria-hidden='true'
-                            className='mt-3 h-2 rounded-full bg-slate-100'
-                          >
+                          <span className='tabular-nums'>{metric.format(metric.value(park))}</span>
+                          <div aria-hidden='true' className='mt-3 h-2 rounded-full bg-slate-100'>
                             <div
                               className='h-full rounded-full bg-slate-500'
                               style={{
@@ -380,33 +257,29 @@ const ParkComparePage = () => {
                 <tr>
                   <th
                     scope='row'
-                    className='sticky left-0 z-10 border-b border-border bg-slate-50 p-4 text-left'
+                    className='sticky left-0 z-10 border-b border-border bg-slate-50 p-3 text-left md:p-4'
                   >
                     난이도
                   </th>
                   {cells((park) => (
-                    <DifficultyBadge
-                      difficulty={DIFFICULTY_OPTIONS[park.difficulty.level]}
-                    />
+                    <DifficultyBadge difficulty={DIFFICULTY_OPTIONS[park.difficulty.level]} />
                   ))}
                 </tr>
                 <tr>
                   <th
                     scope='row'
-                    className='sticky left-0 z-10 border-b border-border bg-slate-50 p-4 text-left'
+                    className='sticky left-0 z-10 border-b border-border bg-slate-50 p-3 text-left md:p-4'
                   >
                     반려견 이용
                   </th>
                   {cells((park) => (
-                    <PetStatusBadge
-                      status={PET_STATUS_OPTIONS[park.pet.status]}
-                    />
+                    <PetStatusBadge status={PET_STATUS_OPTIONS[park.pet.status]} />
                   ))}
                 </tr>
                 <tr>
                   <th
                     scope='row'
-                    className='sticky left-0 z-10 border-b border-border bg-slate-50 p-4 text-left'
+                    className='sticky left-0 z-10 border-b border-border bg-slate-50 p-3 text-left md:p-4'
                   >
                     이용·제한 안내
                   </th>
