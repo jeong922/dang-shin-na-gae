@@ -1,7 +1,10 @@
-import numpy as np
-from pathlib import Path
 
+import json
+import uuid
+
+import numpy as np
 import pandas as pd
+from pathlib import Path
 
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -9,6 +12,40 @@ RAW_PATH = BASE_DIR / "data" / "raw" / "한국문화정보원_전국 반려동�
 
 OUTPUT_PATH = BASE_DIR / "data" / "processed" / "seoul_pet_facilities.csv"
 
+FACILITY_NAMESPACE = uuid.uuid5(uuid.NAMESPACE_URL,"dang-shin-na-gae/pet-facilities")
+
+# 시설명과 주소를 기준으로 재실행 시에도 동일한 UUID v5 생성
+def generate_facility_id(row):
+    name = row["name"]
+    road_address = row["road_address"]
+    lot_address = row["lot_address"]
+
+    if pd.isna(name) or not str(name).strip():
+        raise ValueError("시설명이 없는 데이터입니다.")
+
+    # 도로명주소 우선 사용, 없으면 지번주소로 대체
+    if pd.notna(road_address) and str(road_address).strip():
+        address_type = "road"
+        address = road_address
+    elif pd.notna(lot_address) and str(lot_address).strip():
+        address_type = "lot"
+        address = lot_address
+    else:
+        raise ValueError(f"주소가 없는 시설입니다: {name}")
+
+    # 시설명, 주소 종류, 주소를 고정된 형식의 문자열로 변환
+    key = json.dumps(
+        [
+            "pet_facility",
+            str(name).strip(),
+            address_type,
+            str(address).strip(),
+        ],
+        ensure_ascii=False,
+        separators=(",", ":"),
+    )
+
+    return str(uuid.uuid5(FACILITY_NAMESPACE, key))
 
 # 파일 읽기
 df = pd.read_csv(
@@ -20,7 +57,6 @@ df = pd.read_csv(
         "애견 동반 추가 요금": "string",
     },
 )
-
 
 # 서울시이면서 반려동물 동반이 가능한 시설만 추출
 seoul_df = df[
@@ -88,9 +124,8 @@ missing_updated_at = seoul_df["record_updated_at"].isna()
 seoul_df["record_updated_at"] = pd.to_datetime(
     seoul_df["record_updated_at"], format="%Y-%m-%d", errors="coerce"
 )
-date_parse_failure_count = int(
-    (~missing_updated_at & seoul_df["record_updated_at"].isna()).sum()
-)
+date_parse_failure_count = int((~missing_updated_at & seoul_df["record_updated_at"].isna()).sum())
+
 before_dedup_count = len(seoul_df)
 
 seoul_df = (
@@ -109,11 +144,28 @@ columns = [
 
 seoul_df[columns] = seoul_df[columns].replace("정보없음", pd.NA)
 
+# 시설 고유 ID 생성
+if seoul_df.empty:
+    raise ValueError("전처리 결과가 0개입니다. 원본 데이터와 필터링 조건을 확인하세요.")
+
+seoul_df.insert(0, "facility_id", seoul_df.apply(generate_facility_id, axis=1))
+
+# 시설 ID 유효성 검증
+missing_id_count = int(seoul_df["facility_id"].isna().sum())
+duplicate_id_count = int(seoul_df["facility_id"].duplicated().sum())
+
+if missing_id_count > 0 or duplicate_id_count > 0:
+    raise ValueError(
+        f"시설 ID 검증 실패: 결측 {missing_id_count}개, 중복 {duplicate_id_count}개"
+    )
+
 print(f"서울시·반려동물 동반 가능 시설 수: {filtered_count:,}개")
 print(f"잘못된 좌표 제거 수: {invalid_coordinate_count:,}개")
 print(f"작성일 원본 결측 수 (좌표 검증 후): {missing_updated_at.sum():,}개")
 print(f"작성일 파싱 실패 수 (원본 결측 제외): {date_parse_failure_count:,}개")
 print(f"중복 제거 수: {before_dedup_count - len(seoul_df):,}개")
+print(f"시설 ID 결측 수: {missing_id_count:,}개")
+print(f"시설 ID 중복 수: {duplicate_id_count:,}개")
 print(f"최종 시설 수: {len(seoul_df):,}개")
 print(f"최종 컬럼 수: {len(seoul_df.columns)}개")
 
