@@ -1,6 +1,6 @@
+import json
 from functools import lru_cache
 from pathlib import Path
-import json
 
 import pandas as pd
 
@@ -10,21 +10,18 @@ DATA_PATH = BASE_DIR / "data" / "features" / "parks_difficulty.csv"
 
 
 def parse_json_column(value):
-    """
-    JSON 문자열 컬럼 변환
-    """
+    """JSON 문자열 컬럼 변환"""
 
     if not value:
         return []
 
     try:
         return json.loads(value)
-
-    except Exception:
+    except (json.JSONDecodeError, TypeError):
         return []
 
 
-@lru_cache()
+@lru_cache
 def load_parks():
     """
     공원 데이터 로드 및 전처리
@@ -95,9 +92,7 @@ def load_parks():
     ]
 
     for column in bool_columns:
-
         if column in df.columns:
-
             df[column] = df[column].astype(bool)
 
     return df
