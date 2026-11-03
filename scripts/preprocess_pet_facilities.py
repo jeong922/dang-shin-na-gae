@@ -65,9 +65,9 @@ df = pd.read_csv(
 )
 
 # 서울시이면서 반려동물 동반이 가능한 시설만 추출
-seoul_df = df[
+seoul_df = df.loc[
     (df["시도 명칭"] == "서울특별시") & (df["반려동물 동반 가능정보"] == "Y")
-].copy()
+]
 
 filtered_count = len(seoul_df)
 
@@ -122,9 +122,11 @@ seoul_df = seoul_df[list(column_mapping)].rename(columns=column_mapping)
 
 # 최신 작성일 기준으로 중복 제거
 missing_updated_at = seoul_df["record_updated_at"].isna()
+
 seoul_df["record_updated_at"] = pd.to_datetime(
     seoul_df["record_updated_at"], format="%Y-%m-%d", errors="coerce"
 )
+
 date_parse_failure_count = int(
     (~missing_updated_at & seoul_df["record_updated_at"].isna()).sum()
 )
