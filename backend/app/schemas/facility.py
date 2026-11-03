@@ -1,13 +1,28 @@
 from datetime import date
+from typing import Literal
 from uuid import UUID
 
 from pydantic import BaseModel
+
+FacilityType = Literal[
+    "동물약국",
+    "동물병원",
+    "반려동물용품",
+    "미용",
+    "카페",
+    "여행지",
+    "위탁관리",
+    "미술관",
+    "식당",
+    "박물관",
+    "펜션",
+]
 
 
 class FacilityMapItem(BaseModel):
     facilityId: UUID
     name: str
-    facilityType: str
+    facilityType: FacilityType
     lat: float
     lon: float
     distanceMeters: float
@@ -45,7 +60,7 @@ class FacilityDetailResponse(BaseModel):
     name: str
     businessCategory: str
     facilityCategory: str
-    facilityType: str
+    facilityType: FacilityType
     city: str
     district: str
     neighborhood: str | None
