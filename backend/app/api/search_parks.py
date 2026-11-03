@@ -1,5 +1,6 @@
-from fastapi import APIRouter, Query
 from typing import Annotated
+
+from fastapi import APIRouter, Query
 
 from app.schemas.park import ParkSearchResponse
 from app.services.search import get_search_parks

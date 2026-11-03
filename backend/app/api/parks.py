@@ -1,8 +1,9 @@
+from typing import Annotated
+
 from fastapi import APIRouter, Query
 
-from typing import Annotated
-from app.services.parks import get_parks
 from app.schemas.park import ParkListResponse
+from app.services.parks import get_parks
 
 router = APIRouter(
     prefix="/parks",

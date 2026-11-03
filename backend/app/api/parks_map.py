@@ -1,5 +1,7 @@
-from fastapi import APIRouter, Query
 from typing import Annotated
+
+from fastapi import APIRouter, Query
+
 from app.services.parks import get_parks
 
 router = APIRouter(

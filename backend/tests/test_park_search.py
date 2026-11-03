@@ -2,7 +2,6 @@ import unittest
 from unittest.mock import patch
 
 import pandas as pd
-
 from app.services import parks, search
 
 
@@ -81,7 +80,9 @@ class ParkSearchTests(unittest.TestCase):
                     page_size=1,
                     columns=["id"],
                 )
-                self.assertEqual(result["items"], [{"id": park_id} for park_id in expected_ids])
+                self.assertEqual(
+                    result["items"], [{"id": park_id} for park_id in expected_ids]
+                )
                 self.assertEqual(result["total"], 2)
                 self.assertEqual(result["page"], page)
                 self.assertEqual(result["pageSize"], 1)
